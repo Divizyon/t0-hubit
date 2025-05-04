@@ -440,10 +440,28 @@ export default class World {
         this.sections.kapsul = new KapsulSection({
             ...options,
             materials: this.materials,
-            x: 20,
-            y: -10,
+            x: 40,
+            y: 10,
         })
         this.container.add(this.sections.kapsul.container)
+
+        // YoungCenterSection
+        try {
+            if (this.resources.items.youngCenterBase) {
+                console.log('YoungCenter modeli yüklendi, section oluşturuluyor...');
+                this.sections.youngCenter = new YoungCenterSection({
+                    ...options,
+                    materials: this.materials,
+                    x: -35, // Daha sola yerleştir
+                    y: -5   // Yukarı/aşağı pozisyon
+                })
+                this.container.add(this.sections.youngCenter.container)
+            } else {
+                console.warn('YoungCenter modeli bulunamadı, section oluşturulamıyor!');
+            }
+        } catch (error) {
+            console.error('YoungCenter section oluşturulurken hata:', error);
+        }
     }
 
     setEasterEggs() {

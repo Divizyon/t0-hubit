@@ -32,10 +32,10 @@ export default class KapsulSection {
                 // Base model - GLB dosyasını yükleme
                 this.model.base = this.resources.items.kapsulBase.scene.clone()
                 // Modeli ölçeklendir
-                this.model.base.scale.set(1.5, 1.5, 1.5)
+                this.model.base.scale.set(2.5, 2.5, 2.5)
                 this.model.base.position.x = this.x
                 this.model.base.position.y = this.y
-                this.model.base.position.z = 0
+                this.model.base.position.z = 1 // Zeminden biraz yüksekte
                 this.model.base.rotation.x = 0
                 this.model.base.rotation.y = 0
                 this.model.base.rotation.z = 0

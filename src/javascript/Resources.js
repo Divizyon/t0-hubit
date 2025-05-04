@@ -198,6 +198,9 @@ export default class Resources extends EventEmitter {
             // MyCustomModel
             { name: 'myCustomModelBase', source: './models/soundRoom/soundRoom.glb' },
             
+            // YoungCenter
+            { name: 'youngCenterBase', source: './models/YoungCenter/CalisanGenclikMerkezi.glb' },
+            
             // Tiles
             { name: 'tilesABase', source: './models/tiles/a/base.glb' },
             { name: 'tilesACollision', source: './models/tiles/a/collision.glb' },
@@ -230,9 +233,6 @@ export default class Resources extends EventEmitter {
 
             // Divizyon Building
             { name: 'divizyonBuilding', source: './models/DivizyonBuilding/DivizyonBina.glb' },
-            // YoungCenter 
-            { name: 'youngCenterBase', source: './models/YoungCenter/CalisanGenclikMerkezi.glb' },
-            
             // GreenScreen Room
             { name: 'greenScreenRoomBase', source: './models/greenScreen/GreenScreenRoom.glb' },
             { name: 'kapsulBase', source: './models/kapsul/Kapsul_BlockOut.glb' },

@@ -113,7 +113,7 @@ export default class Camera
         // Set up
         this.zoom = {}
         this.zoom.easing = 0.1
-        this.zoom.minDistance = 14
+        this.zoom.minDistance = 14 // 14 orjinal ayar en son eski haline getir 
         this.zoom.amplitude = 15
         this.zoom.value = this.config.cyberTruck ? 0.3 : 0.5
         this.zoom.targetValue = this.zoom.value
