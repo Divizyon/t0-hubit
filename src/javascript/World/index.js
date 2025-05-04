@@ -21,6 +21,8 @@ import gsap from 'gsap'
 import EasterEggs from './EasterEggs.js'
 import KapsulSection from './Sections/KapsulSection.js'
 import SosyalInavasyonAjansSection from './Sections/SosyalInavasyonAjansSection.js'
+import KonyaGencKartSection from './Sections/KonyaGencKartSection.js'
+import BilimMerkeziSection from './Sections/BilimMerkeziSection.js'
 
 export default class World {
     constructor(_options) {
@@ -472,6 +474,42 @@ export default class World {
             }
         } catch (error) {
             console.error('SosyalInavasyonAjans section oluşturulurken hata:', error);
+        }
+
+        // Konya Genc Kart Section
+        try {
+            if (this.resources.items.konyaGencKartBase) {
+                console.log('Konya Genc Kart section oluşturuluyor...');
+                this.sections.konyaGencKart = new KonyaGencKartSection({
+                    ...options,
+                    materials: this.materials,
+                    x: -20, // Sol tarafta
+                    y: 20   // Yukarda
+                })
+                this.container.add(this.sections.konyaGencKart.container)
+            } else {
+                console.warn('Konya Genc Kart modeli bulunamadı, section oluşturulamıyor!');
+            }
+        } catch (error) {
+            console.error('Konya Genc Kart section oluşturulurken hata:', error);
+        }
+
+        // Bilim Merkezi Section
+        try {
+            if (this.resources.items.bilimMerkeziBase) {
+                console.log('Bilim Merkezi section oluşturuluyor...');
+                this.sections.bilimMerkezi = new BilimMerkeziSection({
+                    ...options,
+                    materials: this.materials,
+                    x: 25, // Sağ tarafta
+                    y: 35  // Yukarıda
+                })
+                this.container.add(this.sections.bilimMerkezi.container)
+            } else {
+                console.warn('Bilim Merkezi modeli bulunamadı, section oluşturulamıyor!');
+            }
+        } catch (error) {
+            console.error('Bilim Merkezi section oluşturulurken hata:', error);
         }
     }
 

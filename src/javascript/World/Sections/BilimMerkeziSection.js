@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-export default class SosyalInavasyonAjansSection {
+export default class BilimMerkeziSection {
     constructor(_options) {
         // Options
         this.config = _options.config
@@ -25,8 +25,8 @@ export default class SosyalInavasyonAjansSection {
 
     setModel() {
         // Kaynakları kontrol et
-        if (!this.resources.items.sosyalInavasyonAjansBase) {
-            console.warn('SosyalInavasyonAjans modelini yüklerken sorun oluştu - Kaynak bulunamadı');
+        if (!this.resources.items.bilimMerkeziBase) {
+            console.warn('BilimMerkezi modelini yüklerken sorun oluştu - Kaynak bulunamadı');
             return;
         }
 
@@ -37,27 +37,27 @@ export default class SosyalInavasyonAjansSection {
             };
             
             // Eğim değerleri (derece cinsinden)
-            const xRotation = -90;  // X ekseni eğimi (öne/arkaya eğim) - 90 derece dik yapacak
-            const yRotation = 0; // Y ekseni dönüşü (sağa/sola dönüş) - 180 derece döndür
-            const zRotation = 180;  // Z ekseni dönüşü (yatay düzlemde dönüş)
+            const xRotation = 0;  // X ekseni eğimi - düz yap (eğim yok)
+            const yRotation = 0;  // Y ekseni dönüşü - düz baksın
+            const zRotation = 0;  // Z ekseni dönüşü - düz yap (yatay düzlemde dönüş yok)
             
-            // SosyalInavasyonAjans modelini yükle
+            // BilimMerkezi modelini yükle
             this.objects.add({
-                base: this.resources.items.sosyalInavasyonAjansBase.scene,
-                collision: this.resources.items.sosyalInavasyonAjansBase.scene, // Collision için aynı modeli kullanıyoruz
-                offset: new THREE.Vector3(this.x, this.y, 0), // Negatif değer vererek modeli aşağı indiriyorum
+                base: this.resources.items.bilimMerkeziBase.scene,
+                collision: this.resources.items.bilimMerkeziBase.scene, // Collision için aynı modeli kullanıyoruz
+                offset: new THREE.Vector3(this.x, this.y, 2.5), // Z değeri 2.5 yaparak modeli zeminden yukarı çıkart
                 rotation: new THREE.Euler(
                     degToRad(xRotation), 
                     degToRad(yRotation), 
                     degToRad(zRotation)
                 ), // Derece cinsinden belirtilen eğimler
-                scale: new THREE.Vector3(5, 5, 5), // Modelin ölçeğini 5 birim olarak ayarla
+                scale: new THREE.Vector3(3, 3, 3), // Modelin ölçeğini 3 birim olarak ayarla
                 mass: 0, // 0 = statik (hareket etmez)
-                shadow: { sizeX: 10, sizeY: 10, offsetX: 0, offsetY: 0 } // Gölge boyutunu artır
+                shadow: { sizeX: 10, sizeY: 10, offsetX: 0, offsetY: 0 } // Gölge boyutunu ayarla
             });
-            console.log('SosyalInavasyonAjans modeli başarıyla yüklendi');
+            console.log('BilimMerkezi modeli başarıyla yüklendi');
         } catch (error) {
-            console.error('SosyalInavasyonAjans modelini yüklerken hata oluştu:', error);
+            console.error('BilimMerkezi modelini yüklerken hata oluştu:', error);
         }
     }
 } 
