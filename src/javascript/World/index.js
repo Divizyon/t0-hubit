@@ -21,6 +21,7 @@ import RocketSection from './Sections/RocketSection.js'
 // import DistinctionBSection from './Sections/DistinctionBSection.js'
 // import DistinctionCSection from './Sections/DistinctionCSection.js'
 // import DistinctionDSection from './Sections/DistinctionDSection.js'
+import MycustomSection from './Sections/MycustomSection.js' 
 import Controls from './Controls.js'
 import Sounds from './Sounds.js'
 import gsap from 'gsap'
@@ -413,6 +414,15 @@ export default class World {
             y: -10
         })
         this.container.add(this.sections.rocketSection.container)
+        
+        // Ses Odası (SoundRoom)
+        this.sections.soundRoom = new MycustomSection({
+            ...options,
+            materials: this.materials,
+            x: -10, // Green Box'tan uzakta, sol tarafta
+            y: 10  // Aynı y düzleminde
+        })
+        this.container.add(this.sections.soundRoom.container)
     }
 
     setEasterEggs() {

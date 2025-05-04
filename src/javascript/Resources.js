@@ -195,6 +195,9 @@ export default class Resources extends EventEmitter {
             { name: 'areaReset', source: './models/area/reset.png', type: 'texture' },
             { name: 'areaQuestionMark', source: './models/area/questionMark.png', type: 'texture' },
 
+            // MyCustomModel
+            { name: 'myCustomModelBase', source: './models/soundRoom/soundRoom.glb' },
+            
             // Tiles
             { name: 'tilesABase', source: './models/tiles/a/base.glb' },
             { name: 'tilesACollision', source: './models/tiles/a/collision.glb' },
