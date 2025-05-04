@@ -16,6 +16,7 @@ import CrossroadsSection from './Sections/CrossroadsSection.js'
 import InformationSection from './Sections/InformationSection.js'
 import PlaygroundSection from './Sections/PlaygroundSection.js'
 import GreenScreenRoom from './Sections/GreenScreenRoom.js'
+import RocketSection from './Sections/RocketSection.js'
 // import DistinctionASection from './Sections/DistinctionASection.js'
 // import DistinctionBSection from './Sections/DistinctionBSection.js'
 // import DistinctionCSection from './Sections/DistinctionCSection.js'
@@ -387,6 +388,14 @@ export default class World {
         })
         this.container.add(this.sections.area.container)
 
+        // Projects
+        this.sections.projects = new ProjectsSection({
+            ...options,
+            x: 0, 
+            y: 20
+        })
+        this.container.add(this.sections.projects.container)
+
         // GreenScreenRoom
         this.sections.greenScreenRoom = new GreenScreenRoom({
             ...options,
@@ -395,6 +404,15 @@ export default class World {
             y: 10
         })
         this.container.add(this.sections.greenScreenRoom.container)
+        
+        // RocketSection
+        this.sections.rocketSection = new RocketSection({
+            ...options,
+            materials: this.materials,
+            x: -10,
+            y: -10
+        })
+        this.container.add(this.sections.rocketSection.container)
     }
 
     setEasterEggs() {
