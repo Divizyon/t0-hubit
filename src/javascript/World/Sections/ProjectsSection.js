@@ -71,108 +71,43 @@ export default class ProjectsSection
     {
         this.list = [
             {
-                name: 'HUBİT Projesi 1',
-                imageSources:
-                [
-                    './models/projects/threejsJourney/slideA.webp',
-                    './models/projects/threejsJourney/slideB.webp',
-                    './models/projects/threejsJourney/slideC.webp',
-                    './models/projects/threejsJourney/slideD.webp'
-                ],
-                floorTexture: this.resources.items.projectsThreejsJourneyFloorTexture,
-                link:
-                {
-                    href: 'https://hubit.com.tr/',
-                    x: - 4.8,
-                    y: - 3,
-                    halfExtents:
-                    {
-                        x: 3.2,
-                        y: 1.5
+                name: 'E-Ticaret Projesi',
+                imageSource: './models/projects/hubit/kurumsal1.webp',
+                link: {
+                    href: 'https://www.amazon.com',
+                    x: 0, // Merkez noktası
+                    y: 0, // Merkez noktası
+                    halfExtents: {
+                        x: 4,
+                        y: 2
                     }
-                },
-                distinctions:
-                [
-                    { type: 'fwa', x: 3.95, y: 4.15 }
-                ]
+                }
             },
             {
-                name: 'HUBİT Projesi 2',
-                imageSources:
-                [
-                    './models/projects/chartogne/slideA.jpg',
-                    './models/projects/chartogne/slideB.jpg',
-                    './models/projects/chartogne/slideC.jpg'
-                ],
-                floorTexture: this.resources.items.projectsChartogneFloorTexture,
-                link:
-                {
-                    href: 'https://hubit.com.tr/projects',
-                    x: - 4.8,
-                    y: - 3.3,
-                    halfExtents:
-                    {
-                        x: 3.2,
-                        y: 1.5
+                name: 'Kişisel Blog',
+                imageSource: './models/projects/hubit/kurumsal2.webp',
+                link: {
+                    href: 'https://www.medium.com',
+                    x: 0,
+                    y: 0,
+                    halfExtents: {
+                        x: 4,
+                        y: 2
                     }
-                },
-                distinctions:
-                [
-                    { type: 'awwwards', x: 3.95, y: 4.15 },
-                    { type: 'fwa', x: 5.6, y: 4.15 }
-                ]
+                }
             },
             {
-                name: 'HUBİT Projesi 3',
-                imageSources:
-                [
-                    './models/projects/bonhomme10ans/slideA.webp',
-                    './models/projects/bonhomme10ans/slideB.webp',
-                    './models/projects/bonhomme10ans/slideC.webp',
-                    './models/projects/bonhomme10ans/slideD.webp'
-                ],
-                floorTexture: this.resources.items.projectsBonhomme10ansFloorTexture,
-                link:
-                {
-                    href: 'https://hubit.com.tr/about',
-                    x: - 4.8,
-                    y: - 2,
-                    halfExtents:
-                    {
-                        x: 3.2,
-                        y: 1.5
+                name: 'Mobil Uygulama',
+                imageSource: './models/projects/hubit/kurumsal3.webp',
+                link: {
+                    href: 'https://www.google.com',
+                    x: 0,
+                    y: 0,
+                    halfExtents: {
+                        x: 4,
+                        y: 2
                     }
-                },
-                distinctions:
-                [
-                    { type: 'cssda', x: 3.95, y: 4.15 }
-                ]
-            },
-            {
-                name: 'HUBİT Projesi 4',
-                imageSources:
-                [
-                    './models/projects/luni/slideA.webp',
-                    './models/projects/luni/slideB.webp',
-                    './models/projects/luni/slideC.webp',
-                    './models/projects/luni/slideD.webp'
-                ],
-                floorTexture: this.resources.items.projectsLuniFloorTexture,
-                link:
-                {
-                    href: 'https://hubit.com.tr/contact',
-                    x: - 4.8,
-                    y: - 3,
-                    halfExtents:
-                    {
-                        x: 3.2,
-                        y: 1.5
-                    }
-                },
-                distinctions:
-                [
-                    { type: 'awwwards', x: 3.95, y: 4.15 }
-                ]
+                }
             }
         ]
     }
