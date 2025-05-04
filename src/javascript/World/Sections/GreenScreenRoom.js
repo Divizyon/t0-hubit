@@ -3,6 +3,13 @@ import CANNON from 'cannon'
 import gsap from 'gsap'
 
 export default class GreenScreenRoom {
+    // Arrow function olarak tanımlandığında, fonksiyon otomatik olarak sınıf 
+    // instance'ına bağlanır, böylece bind etmeye gerek kalmaz
+    handleDocumentClick = (event) => {
+        // HTML popup kullandığımız için bu fonksiyonu artık kullanmıyoruz
+        // Bu fonksiyonu boş bırakıyoruz çünkü her tıklama direkt HTML elementleri üzerinden yönetiliyor
+    }
+
     constructor(_options) {
         // Options
         this.config = _options.config
@@ -16,12 +23,71 @@ export default class GreenScreenRoom {
         this.debug = _options.debug
         this.x = _options.x
         this.y = _options.y
+        
+        // Kamera referansını doğrudan options'tan alıyoruz
+        this.camera = _options.camera
 
         // Set up
         this.container = new THREE.Object3D()
         this.container.matrixAutoUpdate = false
         this.container.updateMatrix()
 
+        // Arkaplan verileri - 8 farklı arkaplan (çalışan URL'ler)
+        this.backgrounds = [
+            { 
+                id: 'desert', 
+                name: 'Çöl', 
+                color: '#e1c78f',
+                image: 'https://images.unsplash.com/photo-1473580044384-7ba9967e16a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'
+            },
+            { 
+                id: 'beach', 
+                name: 'Plaj', 
+                color: '#87ceeb',
+                image: 'https://images.unsplash.com/photo-1520942702018-0862200e6873?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'
+            },
+            { 
+                id: 'forest', 
+                name: 'Orman', 
+                color: '#228b22',
+                image: 'https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'
+            },
+            { 
+                id: 'mountain', 
+                name: 'Dağ', 
+                color: '#696969',
+                image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'
+            },
+            { 
+                id: 'city', 
+                name: 'Şehir', 
+                color: '#4682b4',
+                image: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'
+            },
+            { 
+                id: 'sunset', 
+                name: 'Gün Batımı', 
+                color: '#ff7f50',
+                image: 'https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'
+            },
+            { 
+                id: 'winter', 
+                name: 'Kış', 
+                color: '#b0e0e6',
+                image: 'https://images.unsplash.com/photo-1418985991508-e47386d96a71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'
+            },
+            { 
+                id: 'lake', 
+                name: 'Göl', 
+                color: '#1e90ff',
+                image: 'https://images.unsplash.com/photo-1439824745566-5bc8a3a35a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'
+            }
+        ];
+
+        // Popup kontrol
+        this.isPopupOpen = false;
+        this.popup = null;
+        
         this.setModel()
         this.createButtons()
         
@@ -104,23 +170,67 @@ export default class GreenScreenRoom {
     }
 
     createButtons() {
-        // Texture butonlarını hazırla - Zemin üzerinde olacak şekilde
-        this.locationButtons = {}
+        // Tek bir "Arka Plan Seç" butonu oluştur
+        this.mainButton = {}
         
-        // Butonları zeminde, kameradan görünecek şekilde konumlandır
-        const buttonY = this.y - 8; // Yeşil ekrandan çok daha uzakta
+        // Buton konumu - zemin üzerinde, ortada
+        const buttonY = this.y - 5; 
         
-        // Çöl butonu (sol)
-        this.locationButtons.desert = this.createLocationButton('Çöl', -3.5, buttonY + 1, '#ffc125', 'desert');
+        // Ana butonu oluştur
+        this.mainButton = this.createLocationButton('Arka Plan Seç', 0, buttonY, '#4169e1', 'selectBackground');
         
-        // Sivas butonu (orta)
-        this.locationButtons.sivas = this.createLocationButton('Sivas', 0, buttonY, '#5b7fff', 'sivas');
+        // Buton etkileşimini ayarla
+        this.mainButton.triggerArea.on('interact', () => {
+            this.showBackgroundSelector();
+        });
         
-        // New York butonu (sağ)
-        this.locationButtons.newYork = this.createLocationButton('New York', 3.5, buttonY + 1, '#3cb371', 'newYork');
+        // Hover efekti
+        this.mainButton.triggerArea.on('in', () => {
+            // Zemin için hover - yukarı kaldırma efekti
+            gsap.to(this.mainButton.label.mesh.position, {
+                z: 0.25, // Biraz daha yukarı kaldır
+                duration: 0.3,
+                ease: 'back.out'
+            });
+            
+            // Opaklığı artır
+            gsap.to(this.mainButton.label.material, {
+                opacity: 1,
+                duration: 0.3
+            });
+            
+            // Enter ikonunu da yukarı kaldır
+            if(this.mainButton.enter && this.mainButton.enter.mesh) {
+                gsap.to(this.mainButton.enter.mesh.position, {
+                    z: 0.26, // Label'dan biraz daha yüksek
+                    duration: 0.3,
+                    ease: 'back.out'
+                });
+            }
+        });
         
-        // Buton etkileşimlerini ayarla
-        this.setupLocationButtonInteractions();
+        this.mainButton.triggerArea.on('out', () => {
+            // Hover bitince normale döndür
+            gsap.to(this.mainButton.label.mesh.position, {
+                z: 0.15, // Normal yükseklik
+                duration: 0.3,
+                ease: 'back.in'
+            });
+            
+            gsap.to(this.mainButton.label.material, {
+                opacity: 0.7,
+                duration: 0.3
+            });
+            
+            // Enter ikonu da normale dönsün
+            if(this.mainButton.enter && this.mainButton.enter.mesh) {
+                gsap.to(this.mainButton.enter.mesh.position, {
+                    z: 0.16, // Normal yükseklik
+                    duration: 0.3,
+                    ease: 'back.in'
+                });
+            }
+        });
     }
     
     createLocationButton(locationName, offsetX, offsetY, color, type) {
@@ -140,21 +250,11 @@ export default class GreenScreenRoom {
         
         // Label - Zemine oturacak şekilde
         button.label = {}
-        button.label.size = 2.5  // Daha küçük boyut
+        button.label.size = 3.0  // Daha büyük boyut
         button.label.geometry = new THREE.PlaneGeometry(button.label.size, button.label.size / 2.5, 1, 1)
         
-        // Hazır texture'ları kullanmaya çalış
-        const textureName = `greenScreen${type.charAt(0).toUpperCase() + type.slice(1)}ButtonTexture`;
-        
-        if (this.resources.items[textureName]) {
-            // Eğer hazır texture varsa onu kullan
-            button.label.texture = this.resources.items[textureName];
-            button.label.texture.magFilter = THREE.LinearFilter;
-            button.label.texture.minFilter = THREE.LinearFilter;
-        } else {
-            // Yoksa canvas ile oluştur
-            button.label.texture = this.createButtonTexture(locationName, color);
-        }
+        // Buton texture'ını oluştur
+        button.label.texture = this.createButtonTexture(locationName, color);
         
         // Materyal oluştur
         button.label.material = new THREE.MeshBasicMaterial({ 
@@ -174,11 +274,11 @@ export default class GreenScreenRoom {
         // Konteynere ekle
         button.container.add(button.label.mesh)
         
-        // Enter texture ekle
+        // Enter texture ekle (varsa)
         if (this.resources.items.greenScreenEnterKeyTexture) {
             // Enter ikonu ekle
             button.enter = {};
-            button.enter.size = 0.6; // Daha küçük enter ikonu
+            button.enter.size = 0.6; // Enter ikonu
             button.enter.geometry = new THREE.PlaneGeometry(button.enter.size, button.enter.size, 1, 1);
             
             button.enter.texture = this.resources.items.greenScreenEnterKeyTexture;
@@ -203,7 +303,7 @@ export default class GreenScreenRoom {
         } else if (this.resources.items.areaKeyEnterTexture) {
             // Area keyEnter texture'ını kullan
             button.enter = {};
-            button.enter.size = 0.8; // Daha büyük enter ikonu
+            button.enter.size = 0.8; // Enter ikonu
             button.enter.geometry = new THREE.PlaneGeometry(button.enter.size, button.enter.size, 1, 1);
             
             button.enter.texture = this.resources.items.areaKeyEnterTexture;
@@ -230,7 +330,7 @@ export default class GreenScreenRoom {
         // Trigger alanı oluştur - invisible
         button.triggerArea = this.areas.add({
             position: new THREE.Vector2(button.position.x, button.position.y),
-            halfExtents: new THREE.Vector2(1.4, 0.8), // Buton boyutuna uygun tetikleme alanı
+            halfExtents: new THREE.Vector2(1.5, 1.0), // Buton boyutuna uygun tetikleme alanı
             hasKey: true,
             testCar: true, // Arabayı test et
             active: true
@@ -316,7 +416,7 @@ export default class GreenScreenRoom {
         ctx.lineTo(x + radius, y + height);
         ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
         ctx.lineTo(x, y + radius);
-        ctx.quadraticCurveTo(x + radius, y);
+        ctx.quadraticCurveTo(x, y, x + radius, y); // Fix: Added missing end point coordinates
         ctx.closePath();
         ctx.fill();
         
@@ -514,7 +614,7 @@ export default class GreenScreenRoom {
             this.areas.car.physics.car.chassis.body.position.copy(spawnPosition);
             
             // Arabanın yönünü ayarla - kameraya dönük olacak
-            const rotationAngle = this.getRotationForLocation(location);
+            const rotationAngle = -Math.PI * 0.2; // Kameraya dönük
             const rotation = new CANNON.Quaternion();
             rotation.setFromAxisAngle(new CANNON.Vec3(0, 0, 1), rotationAngle);
             this.areas.car.physics.car.chassis.body.quaternion.copy(rotation);
@@ -564,7 +664,7 @@ export default class GreenScreenRoom {
         return -Math.PI * 0.2; // Tüm konumlar için kameraya dönük
     }
     
-    changeBackgroundByLocation(location) {
+    changeBackgroundByLocation(locationId) {
         // Yeşil ekran mesh'ini bul
         let greenScreenMesh = null;
         
@@ -580,258 +680,61 @@ export default class GreenScreenRoom {
             return;
         }
         
-        // Geçiş efekti - eski materyal üzerine alpha crossfade
-        const oldMaterial = greenScreenMesh.material;
-        const oldColor = oldMaterial.color ? oldMaterial.color.clone() : new THREE.Color(0x00ff00);
+        // Seçilen arka plan bilgilerini bul
+        const selectedBackground = this.backgrounds.find(bg => bg.id === locationId);
         
-        // Lokasyona göre arka plan materyalini değiştir
-        switch(location) {
-            case 'desert':
-                // Çöl temalı materyal - gradient ve doku ile
-                if(this.materials.items.desertMaterial) {
-                    // Varolan materyali kullan
-                    this.animateMaterialChange(greenScreenMesh, this.materials.items.desertMaterial);
-                } else {
-                    // Hazır resim varsa onu kullan
-                    if(this.resources.items.greenScreenDesertBackgroundTexture) {
-                        // Hazır resmi materyal olarak kullan
-                        const desertMaterial = new THREE.MeshBasicMaterial({
-                            map: this.resources.items.greenScreenDesertBackgroundTexture,
-                            side: THREE.FrontSide
-                        });
-                        
-                        // Animation ile geçiş
-                        this.animateMaterialChange(greenScreenMesh, desertMaterial);
-                        
-                        // Materials sınıfında kullanmak için kaydedelim
-                        if(this.materials.items) {
-                            this.materials.items.desertMaterial = desertMaterial;
-                        }
-                    } else {
-                        // Yeni çöl materyali oluştur
-                        const desertMaterial = new THREE.MeshBasicMaterial({ 
-                            color: 0xe1c78f // Kum rengi
-                        });
-                        
-                        // Doku ekle (sahte bir doku oluştur)
-                        const canvas = document.createElement('canvas');
-                        const ctx = canvas.getContext('2d');
-                        canvas.width = 512;
-                        canvas.height = 512;
-                        
-                        // Gradyan arkaplan
-                        const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-                        gradient.addColorStop(0, '#f7e7ce'); // Açık kum rengi
-                        gradient.addColorStop(0.7, '#d2b48c'); // Orta kum rengi
-                        gradient.addColorStop(1, '#8b7355'); // Koyu kum rengi
-                        
-                        ctx.fillStyle = gradient;
-                        ctx.fillRect(0, 0, canvas.width, canvas.height);
-                        
-                        // Kum deseni ekle
-                        ctx.fillStyle = 'rgba(210, 180, 140, 0.3)';
-                        for (let i = 0; i < 2000; i++) {
-                            const x = Math.random() * canvas.width;
-                            const y = Math.random() * canvas.height;
-                            const size = Math.random() * 2 + 1;
-                            ctx.fillRect(x, y, size, size);
-                        }
-                        
-                        // Uzakta dağlar çiz
-                        ctx.fillStyle = '#8b7355';
-                        ctx.beginPath();
-                        ctx.moveTo(0, canvas.height * 0.4);
-                        ctx.lineTo(canvas.width * 0.2, canvas.height * 0.3);
-                        ctx.lineTo(canvas.width * 0.3, canvas.height * 0.35);
-                        ctx.lineTo(canvas.width * 0.5, canvas.height * 0.25);
-                        ctx.lineTo(canvas.width * 0.7, canvas.height * 0.35);
-                        ctx.lineTo(canvas.width * 0.85, canvas.height * 0.3);
-                        ctx.lineTo(canvas.width, canvas.height * 0.35);
-                        ctx.lineTo(canvas.width, canvas.height);
-                        ctx.lineTo(0, canvas.height);
-                        ctx.closePath();
-                        ctx.fill();
-                        
-                        // Doku olarak kullan
-                        const texture = new THREE.CanvasTexture(canvas);
-                        desertMaterial.map = texture;
-                        
-                        // Animation ile geçiş
-                        this.animateMaterialChange(greenScreenMesh, desertMaterial);
-                        
-                        // Materials sınıfında kullanmak için kaydedelim
-                        if(this.materials.items) {
-                            this.materials.items.desertMaterial = desertMaterial;
-                        }
-                    }
-                }
-                console.log('Çöl arka planı yüklendi');
-                break;
-                
-            case 'sivas':
-                // Sivas temalı materyal - kar ve karlı dağ görünümü
-                if(this.materials.items.sivasMaterial) {
-                    this.animateMaterialChange(greenScreenMesh, this.materials.items.sivasMaterial);
-                } else {
-                    // Yeni Sivas materyali oluştur
-                    const sivasMaterial = new THREE.MeshBasicMaterial();
+        if (!selectedBackground) {
+            console.error(`${locationId} ID'li arkaplan bulunamadı!`);
+            return;
+        }
+        
+        // Arkaplan materyali oluştur veya varolan materyali kullan
+        const materialKey = `${locationId}Material`;
+        
+        if (this.materials.items && this.materials.items[materialKey]) {
+            // Varolan materyali kullan
+            this.animateMaterialChange(greenScreenMesh, this.materials.items[materialKey]);
+            console.log(`${selectedBackground.name} arka planı (önbellek) yüklendi`);
+        } else {
+            console.log(`${selectedBackground.name} arkaplanı için resim yükleniyor: ${selectedBackground.image}`);
+            
+            // Fallback olarak önce renk materyali oluştur
+            const fallbackMaterial = new THREE.MeshBasicMaterial({
+                color: new THREE.Color(selectedBackground.color),
+                side: THREE.FrontSide
+            });
+            
+            // Materyal geçişini hemen başlat - önce renk ile
+            this.animateMaterialChange(greenScreenMesh, fallbackMaterial);
+            
+            // Resim yüklemesi deneyelim
+            this.loadTexture(selectedBackground.image)
+                .then(texture => {
+                    // Başarılı yükleme
+                    const newMaterial = new THREE.MeshBasicMaterial({
+                        map: texture,
+                        side: THREE.FrontSide
+                    });
                     
-                    // Doku ekle (sahte kar manzarası oluştur)
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    canvas.width = 512;
-                    canvas.height = 512;
+                    // Animasyonla geçiş yap
+                    this.animateMaterialChange(greenScreenMesh, newMaterial);
                     
-                    // Mavi gökyüzü gradyanı
-                    const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height * 0.6);
-                    gradient.addColorStop(0, '#6495ed'); // Gök mavi
-                    gradient.addColorStop(1, '#b0c4de'); // Açık mavi
-                    
-                    ctx.fillStyle = gradient;
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    
-                    // Karlı dağlar
-                    ctx.fillStyle = '#ffffff';
-                    ctx.beginPath();
-                    ctx.moveTo(0, canvas.height * 0.5);
-                    ctx.lineTo(canvas.width * 0.2, canvas.height * 0.3);
-                    ctx.lineTo(canvas.width * 0.4, canvas.height * 0.4);
-                    ctx.lineTo(canvas.width * 0.6, canvas.height * 0.25);
-                    ctx.lineTo(canvas.width * 0.8, canvas.height * 0.35);
-                    ctx.lineTo(canvas.width, canvas.height * 0.3);
-                    ctx.lineTo(canvas.width, canvas.height);
-                    ctx.lineTo(0, canvas.height);
-                    ctx.closePath();
-                    ctx.fill();
-                    
-                    // Kar taneleri ekle
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-                    for (let i = 0; i < 100; i++) {
-                        const x = Math.random() * canvas.width;
-                        const y = Math.random() * canvas.height * 0.6; // Sadece gökyüzünde
-                        const size = Math.random() * 3 + 1;
-                        ctx.beginPath();
-                        ctx.arc(x, y, size, 0, Math.PI * 2);
-                        ctx.fill();
+                    // Materyali daha sonra kullanmak üzere sakla
+                    if (this.materials.items) {
+                        this.materials.items[materialKey] = newMaterial;
                     }
                     
-                    // Doku olarak kullan
-                    const texture = new THREE.CanvasTexture(canvas);
-                    sivasMaterial.map = texture;
+                    console.log(`${selectedBackground.name} resmi başarıyla yüklendi`);
+                })
+                .catch(error => {
+                    // Yükleme hatası - zaten fallback materyal kullanılıyor
+                    console.warn(`${selectedBackground.name} resmi yüklenemedi, düz renk kullanılıyor`, error);
                     
-                    // Animation ile geçiş
-                    this.animateMaterialChange(greenScreenMesh, sivasMaterial);
-                    
-                    // Materials sınıfında kullanmak için kaydedelim
-                    if(this.materials.items) {
-                        this.materials.items.sivasMaterial = sivasMaterial;
+                    // Fallback materyali kaydet
+                    if (this.materials.items) {
+                        this.materials.items[materialKey] = fallbackMaterial;
                     }
-                }
-                console.log('Sivas arka planı yüklendi');
-                break;
-                
-            case 'newYork':
-                // New York temalı materyal - şehir silüeti
-                if(this.materials.items.newYorkMaterial) {
-                    this.animateMaterialChange(greenScreenMesh, this.materials.items.newYorkMaterial);
-                } else {
-                    // Hazır resim varsa onu kullan
-                    if(this.resources.items.greenScreenNewYorkBackgroundTexture) {
-                        // Hazır resmi materyal olarak kullan
-                        const newYorkMaterial = new THREE.MeshBasicMaterial({
-                            map: this.resources.items.greenScreenNewYorkBackgroundTexture,
-                            side: THREE.FrontSide
-                        });
-                        
-                        // Animation ile geçiş
-                        this.animateMaterialChange(greenScreenMesh, newYorkMaterial);
-                        
-                        // Materials sınıfında kullanmak için kaydedelim
-                        if(this.materials.items) {
-                            this.materials.items.newYorkMaterial = newYorkMaterial;
-                        }
-                    } else {
-                        // Hazır resim yoksa canvas ile oluştur
-                        const newYorkMaterial = new THREE.MeshBasicMaterial();
-                        
-                        // Doku ekle (şehir silüeti oluştur)
-                        const canvas = document.createElement('canvas');
-                        const ctx = canvas.getContext('2d');
-                        canvas.width = 512;
-                        canvas.height = 512;
-                        
-                        // Gece gökyüzü gradyanı
-                        const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-                        gradient.addColorStop(0, '#191970'); // Gece mavisi
-                        gradient.addColorStop(0.7, '#483d8b'); // Koyu mor
-                        gradient.addColorStop(1, '#000000'); // Siyah
-                        
-                        ctx.fillStyle = gradient;
-                        ctx.fillRect(0, 0, canvas.width, canvas.height);
-                        
-                        // Yıldızlar ekle
-                        ctx.fillStyle = '#ffffff';
-                        for (let i = 0; i < 200; i++) {
-                            const x = Math.random() * canvas.width;
-                            const y = Math.random() * canvas.height * 0.7;
-                            const size = Math.random() * 1.5;
-                            ctx.beginPath();
-                            ctx.arc(x, y, size, 0, Math.PI * 2);
-                            ctx.fill();
-                        }
-                        
-                        // Şehir silüeti çiz
-                        ctx.fillStyle = '#000000';
-                        ctx.beginPath();
-                        
-                        // Başlangıç noktası
-                        ctx.moveTo(0, canvas.height * 0.8);
-                        
-                        // Binalar oluştur
-                        for (let x = 0; x < canvas.width; x += 15) {
-                            const buildingHeight = Math.random() * (canvas.height * 0.3) + (canvas.height * 0.4);
-                            ctx.lineTo(x, buildingHeight);
-                            ctx.lineTo(x + 15, buildingHeight);
-                        }
-                        
-                        // Silüeti tamamla
-                        ctx.lineTo(canvas.width, canvas.height);
-                        ctx.lineTo(0, canvas.height);
-                        ctx.closePath();
-                        ctx.fill();
-                        
-                        // Bina pencerelerini ekle (ışıklar)
-                        ctx.fillStyle = 'rgba(255, 255, 0, 0.7)';
-                        for (let i = 0; i < 300; i++) {
-                            const x = Math.random() * canvas.width;
-                            const y = Math.random() * (canvas.height * 0.3) + (canvas.height * 0.5);
-                            const width = Math.random() * 4 + 2;
-                            const height = Math.random() * 4 + 2;
-                            ctx.fillRect(x, y, width, height);
-                        }
-                        
-                        // Doku olarak kullan
-                        const texture = new THREE.CanvasTexture(canvas);
-                        newYorkMaterial.map = texture;
-                        
-                        // Animation ile geçiş
-                        this.animateMaterialChange(greenScreenMesh, newYorkMaterial);
-                        
-                        // Materials sınıfında kullanmak için kaydedelim
-                        if(this.materials.items) {
-                            this.materials.items.newYorkMaterial = newYorkMaterial;
-                        }
-                    }
-                }
-                console.log('New York arka planı yüklendi');
-                break;
-                
-            default:
-                // Varsayılan yeşil materyal
-                if(this.materials.items.hubitGreen) {
-                    this.animateMaterialChange(greenScreenMesh, this.materials.items.hubitGreen);
-                }
-                console.log('Varsayılan arka plan yüklendi');
+                });
         }
     }
     
@@ -916,4 +819,198 @@ export default class GreenScreenRoom {
             console.log('Arka plan yeşile döndürüldü');
         }
     }
-} 
+
+    // Arka plan seçim popup'ını göster
+    showBackgroundSelector() {
+        if (this.isPopupOpen) return;
+        
+        console.log('Arka plan seçiciyi göster');
+        
+        // Popup'ı oluştur
+        this.createPopup();
+        
+        // Popup'ı aktif olarak işaretle
+        this.isPopupOpen = true;
+    }
+    
+    createPopup() {
+        // Eğer zaten bir popup varsa, önce onu kaldır
+        if (document.getElementById('greenScreenPopup')) {
+            document.getElementById('greenScreenPopup').remove();
+        }
+        
+        // Popup container oluştur
+        const popupContainer = document.createElement('div');
+        popupContainer.id = 'greenScreenPopup';
+        popupContainer.style.position = 'fixed';
+        popupContainer.style.top = '50%';
+        popupContainer.style.left = '50%';
+        popupContainer.style.transform = 'translate(-50%, -50%)';
+        popupContainer.style.backgroundColor = '#333';
+        popupContainer.style.borderRadius = '10px';
+        popupContainer.style.padding = '20px';
+        popupContainer.style.width = '700px';
+        popupContainer.style.maxWidth = '90%';
+        popupContainer.style.maxHeight = '80vh';
+        popupContainer.style.boxShadow = '0 0 20px rgba(0, 0, 0, 0.5)';
+        popupContainer.style.zIndex = '1000';
+        popupContainer.style.color = '#fff';
+        popupContainer.style.fontFamily = 'Arial, sans-serif';
+        popupContainer.style.overflow = 'auto';
+        
+        // Başlık oluştur
+        const title = document.createElement('h2');
+        title.textContent = 'Arka Plan Seçiniz';
+        title.style.textAlign = 'center';
+        title.style.margin = '0 0 20px 0';
+        title.style.padding = '0 0 10px 0';
+        title.style.borderBottom = '1px solid #555';
+        
+        // Kapat butonu
+        const closeButton = document.createElement('button');
+        closeButton.textContent = 'X';
+        closeButton.style.position = 'absolute';
+        closeButton.style.top = '10px';
+        closeButton.style.right = '10px';
+        closeButton.style.background = '#ff0000';
+        closeButton.style.color = 'white';
+        closeButton.style.border = 'none';
+        closeButton.style.borderRadius = '50%';
+        closeButton.style.width = '30px';
+        closeButton.style.height = '30px';
+        closeButton.style.cursor = 'pointer';
+        closeButton.style.fontSize = '16px';
+        closeButton.style.fontWeight = 'bold';
+        closeButton.onclick = () => this.closePopup();
+        
+        // Arkaplan grid container
+        const gridContainer = document.createElement('div');
+        gridContainer.style.display = 'grid';
+        gridContainer.style.gridTemplateColumns = 'repeat(2, 1fr)';
+        gridContainer.style.gap = '15px';
+        
+        // Her arkaplan için grid item oluştur
+        this.backgrounds.forEach(bg => {
+            const bgItem = document.createElement('div');
+            bgItem.style.padding = '0';
+            bgItem.style.borderRadius = '5px';
+            bgItem.style.cursor = 'pointer';
+            bgItem.style.textAlign = 'center';
+            bgItem.style.border = '2px solid white';
+            bgItem.style.transition = 'transform 0.2s';
+            bgItem.style.position = 'relative';
+            bgItem.style.overflow = 'hidden';
+            bgItem.style.height = '150px';
+            
+            // Resim arka planı
+            const bgImage = document.createElement('div');
+            bgImage.style.position = 'absolute';
+            bgImage.style.top = '0';
+            bgImage.style.left = '0';
+            bgImage.style.right = '0';
+            bgImage.style.bottom = '0';
+            bgImage.style.backgroundImage = `url(${bg.image})`;
+            bgImage.style.backgroundSize = 'cover';
+            bgImage.style.backgroundPosition = 'center';
+            bgImage.style.opacity = '0.8';
+            
+            // Arkaplan ismi
+            const bgName = document.createElement('div');
+            bgName.textContent = bg.name;
+            bgName.style.position = 'absolute';
+            bgName.style.bottom = '0';
+            bgName.style.left = '0';
+            bgName.style.right = '0';
+            bgName.style.padding = '10px';
+            bgName.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
+            bgName.style.color = 'white';
+            bgName.style.fontSize = '18px';
+            bgName.style.fontWeight = 'bold';
+            bgName.style.textShadow = '1px 1px 2px rgba(0,0,0,0.8)';
+            
+            // Tıklama olayı
+            bgItem.onclick = () => this.selectBackground(bg);
+            
+            // Hover efekti
+            bgItem.onmouseover = () => {
+                bgItem.style.transform = 'scale(1.05)';
+                bgImage.style.opacity = '1';
+            };
+            bgItem.onmouseout = () => {
+                bgItem.style.transform = 'scale(1)';
+                bgImage.style.opacity = '0.8';
+            };
+            
+            bgItem.appendChild(bgImage);
+            bgItem.appendChild(bgName);
+            gridContainer.appendChild(bgItem);
+        });
+        
+        // Elemanları container'a ekle
+        popupContainer.appendChild(closeButton);
+        popupContainer.appendChild(title);
+        popupContainer.appendChild(gridContainer);
+        
+        // Popup'ı sayfaya ekle
+        document.body.appendChild(popupContainer);
+        
+        // Popup objesini referans olarak sakla
+        this.popup = {
+            element: popupContainer
+        };
+    }
+    
+    // Popup'ı kapat - HTML popup için güncellendi
+    closePopup() {
+        if (!this.isPopupOpen) return;
+        
+        console.log('Popup kapatılıyor');
+        
+        // HTML popup'ı kaldır
+        if (this.popup && this.popup.element) {
+            document.body.removeChild(this.popup.element);
+            this.popup = null;
+        }
+        
+        // Olay dinleyicilerini temizle - 3D popup için kullanılan dinleyiciyi kaldır
+        document.removeEventListener('click', this.handleDocumentClick);
+        
+        // Popup'ı kapalı olarak işaretle
+        this.isPopupOpen = false;
+    }
+    
+    // Arkaplan seç ve popup'ı kapat
+    selectBackground(background) {
+        console.log(`${background.name} arkaplanı seçildi`);
+        
+        // Popup'ı kapat
+        this.closePopup();
+        
+        // Arabayı yeşil ekrana spawn et
+        this.spawnCarInGreenScreen(background.id);
+    }
+
+    // Arkaplan için texture yükleme fonksiyonu
+    loadTexture(url) {
+        return new Promise((resolve, reject) => {
+            const loader = new THREE.TextureLoader();
+            loader.crossOrigin = 'anonymous'; // CORS için gerekli
+            
+            loader.load(
+                url,
+                (texture) => {
+                    // Texture başarıyla yüklendi
+                    texture.magFilter = THREE.LinearFilter;
+                    texture.minFilter = THREE.LinearFilter;
+                    resolve(texture);
+                },
+                undefined, // Progress callback
+                (error) => {
+                    // Hata olduğunda
+                    console.error('Texture yüklenemedi:', error);
+                    reject(error);
+                }
+            );
+        });
+    }
+}
