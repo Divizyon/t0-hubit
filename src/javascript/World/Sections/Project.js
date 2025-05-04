@@ -19,191 +19,152 @@ export default class Project
         this.name = _options.name
         this.x = _options.x
         this.y = _options.y
-        this.imageSources = _options.imageSources
-        this.floorTexture = _options.floorTexture
+        this.imageSource = _options.imageSource
         this.link = _options.link
-        this.distinctions = _options.distinctions
 
         // Set up
         this.container = new THREE.Object3D()
         this.container.matrixAutoUpdate = false
         // this.container.updateMatrix()
 
-        this.setBoards()
-        this.setFloor()
+        this.setBoard()
     }
 
-    setBoards()
+    setBoard()
     {
         // Set up
-        this.boards = {}
-        this.boards.items = []
-        this.boards.xStart = - 5
-        this.boards.xInter = 5
-        this.boards.y = 5
-        this.boards.color = '#8e7161'
-        this.boards.threeColor = new THREE.Color(this.boards.color)
+        this.board = {}
+        this.board.color = '#8e7161'
+        this.board.threeColor = new THREE.Color(this.board.color)
 
         if(this.debug)
         {
-            this.debug.addColor(this.boards, 'color').name('boardColor').onChange(() =>
+            this.debug.addColor(this.board, 'color').name('boardColor').onChange(() =>
             {
-                this.boards.threeColor.set(this.boards.color)
+                this.board.threeColor.set(this.board.color)
             })
         }
 
-        // Create each board
-        let i = 0
+        // Set up board position
+        this.board.x = this.x
+        this.board.y = this.y
 
-        for(const _imageSource of this.imageSources)
+        // Create structure with collision
+        this.objects.add({
+            base: this.resources.items.projectsBoardStructure.scene,
+            collision: this.resources.items.projectsBoardCollision.scene,
+            floorShadowTexture: this.resources.items.projectsBoardStructureFloorShadowTexture,
+            offset: new THREE.Vector3(this.board.x, this.board.y, 0),
+            rotation: new THREE.Euler(0, 0, 0),
+            duplicated: true,
+            mass: 0
+        })
+
+        // Image load
+        const image = new Image()
+        image.addEventListener('load', () =>
         {
-            // Set up
-            const board = {}
-            board.x = this.x + this.boards.xStart + i * this.boards.xInter
-            board.y = this.y + this.boards.y
+            this.board.texture = new THREE.Texture(image)
+            this.board.texture.anisotropy = 4
+            this.board.texture.needsUpdate = true
 
-            // Create structure with collision
-            this.objects.add({
-                base: this.resources.items.projectsBoardStructure.scene,
-                collision: this.resources.items.projectsBoardCollision.scene,
-                floorShadowTexture: this.resources.items.projectsBoardStructureFloorShadowTexture,
-                offset: new THREE.Vector3(board.x, board.y, 0),
-                rotation: new THREE.Euler(0, 0, 0),
-                duplicated: true,
-                mass: 0
-            })
+            this.board.planeMesh.material.uniforms.uTexture.value = this.board.texture
 
-            // Image load
-            const image = new Image()
-            image.addEventListener('load', () =>
-            {
-                board.texture = new THREE.Texture(image)
-                // board.texture.magFilter = THREE.NearestFilter
-                // board.texture.minFilter = THREE.LinearFilter
-                board.texture.anisotropy = 4
-                // board.texture.colorSpace = THREE.SRGBColorSpace
-                board.texture.needsUpdate = true
+            gsap.to(this.board.planeMesh.material.uniforms.uTextureAlpha, { value: 1, duration: 1, ease: 'power4.inOut' })
+        })
 
-                board.planeMesh.material.uniforms.uTexture.value = board.texture
+        image.src = this.imageSource
 
-                gsap.to(board.planeMesh.material.uniforms.uTextureAlpha, { value: 1, duration: 1, ease: 'power4.inOut' })
-            })
+        // Plane
+        this.board.planeMesh = this.meshes.boardPlane.clone()
+        this.board.planeMesh.position.x = this.board.x
+        this.board.planeMesh.position.y = this.board.y
+        this.board.planeMesh.matrixAutoUpdate = false
+        this.board.planeMesh.updateMatrix()
+        this.board.planeMesh.material = new ProjectBoardMaterial()
+        this.board.planeMesh.material.uniforms.uColor.value = this.board.threeColor
+        this.board.planeMesh.material.uniforms.uTextureAlpha.value = 0
+        this.container.add(this.board.planeMesh)
 
-            image.src = _imageSource
-
-            // Plane
-            board.planeMesh = this.meshes.boardPlane.clone()
-            board.planeMesh.position.x = board.x
-            board.planeMesh.position.y = board.y
-            board.planeMesh.matrixAutoUpdate = false
-            board.planeMesh.updateMatrix()
-            board.planeMesh.material = new ProjectBoardMaterial()
-            board.planeMesh.material.uniforms.uColor.value = this.boards.threeColor
-            board.planeMesh.material.uniforms.uTextureAlpha.value = 0
-            this.container.add(board.planeMesh)
-
-            // Save
-            this.boards.items.push(board)
-
-            i++
-        }
-    }
-
-    setFloor()
-    {
-        this.floor = {}
-
-        this.floor.x = 0
-        this.floor.y = - 2
-
-        // Container
-        this.floor.container = new THREE.Object3D()
-        this.floor.container.position.x = this.x + this.floor.x
-        this.floor.container.position.y = this.y + this.floor.y
-        this.floor.container.matrixAutoUpdate = false
-        this.floor.container.updateMatrix()
-        this.container.add(this.floor.container)
-
-        // Texture
-        this.floor.texture = this.floorTexture
-        this.floor.texture.magFilter = THREE.NearestFilter
-        this.floor.texture.minFilter = THREE.LinearFilter
-
-        // Geometry
-        this.floor.geometry = this.geometries.floor
-
-        // Material
-        this.floor.material =  new THREE.MeshBasicMaterial({ transparent: true, depthWrite: false, alphaMap: this.floor.texture })
-
-        // Mesh
-        this.floor.mesh = new THREE.Mesh(this.floor.geometry, this.floor.material)
-        this.floor.mesh.matrixAutoUpdate = false
-        this.floor.container.add(this.floor.mesh)
-
-        // Distinctions
-        if(this.distinctions)
-        {
-            for(const _distinction of this.distinctions)
-            {
-                let base = null
-                let collision = null
-                let shadowSizeX = null
-                let shadowSizeY = null
-
-                switch(_distinction.type)
-                {
-                    case 'awwwards':
-                        base = this.resources.items.projectsDistinctionsAwwwardsBase.scene
-                        collision = this.resources.items.projectsDistinctionsAwwwardsCollision.scene
-                        shadowSizeX = 1.5
-                        shadowSizeY = 1.5
-                        break
-
-                    case 'fwa':
-                        base = this.resources.items.projectsDistinctionsFWABase.scene
-                        collision = this.resources.items.projectsDistinctionsFWACollision.scene
-                        shadowSizeX = 2
-                        shadowSizeY = 1
-                        break
-
-                    case 'cssda':
-                        base = this.resources.items.projectsDistinctionsCSSDABase.scene
-                        collision = this.resources.items.projectsDistinctionsCSSDACollision.scene
-                        shadowSizeX = 1.2
-                        shadowSizeY = 1.2
-                        break
-                }
-
-                this.objects.add({
-                    base: base,
-                    collision: collision,
-                    offset: new THREE.Vector3(this.x + this.floor.x + _distinction.x, this.y + this.floor.y + _distinction.y, 0),
-                    rotation: new THREE.Euler(0, 0, 0),
-                    duplicated: true,
-                    shadow: { sizeX: shadowSizeX, sizeY: shadowSizeY, offsetZ: - 0.1, alpha: 0.5 },
-                    mass: 1.5,
-                    soundName: 'woodHit'
-                })
-            }
-        }
-
+        // Add tıklanabilir alan doğrudan billboard'a
         // Area
-        this.floor.area = this.areas.add({
-            position: new THREE.Vector2(this.x + this.link.x, this.y + this.floor.y + this.link.y),
+        this.board.area = this.areas.add({
+            position: new THREE.Vector2(this.x + this.link.x, this.y + this.link.y),
             halfExtents: new THREE.Vector2(this.link.halfExtents.x, this.link.halfExtents.y)
         })
-        this.floor.area.on('interact', () =>
+        
+        // Hover efekti
+        this.board.area.on('in', () => {
+            // Bilboard'a gelince parlaklık/renk değişimi efekti
+            if (this.board.planeMesh && this.board.planeMesh.material) {
+                gsap.to(this.board.planeMesh.material.uniforms.uTextureAlpha, { 
+                    value: 1.8, // Parlaklığı daha da artırdık (1.5'ten 1.8'e)
+                    duration: 0.3 // Daha hızlı (0.5'ten 0.3'e)
+                });
+                
+                // Enter alanını daha görünür yap
+                gsap.to(this.board.areaLabel.material, {
+                    opacity: 1,
+                    duration: 0.3
+                });
+                
+                // Butonun boyutunu büyüt
+                gsap.to(this.board.areaLabel.scale, {
+                    x: 1.5,
+                    y: 1.5,
+                    z: 1.5,
+                    duration: 0.3
+                });
+            }
+        });
+        
+        this.board.area.on('out', () => {
+            // Bilboard'dan çıkınca normale dön
+            if (this.board.planeMesh && this.board.planeMesh.material) {
+                gsap.to(this.board.planeMesh.material.uniforms.uTextureAlpha, { 
+                    value: 1, 
+                    duration: 0.3
+                });
+                
+                // Enter alanını hafif saydam yap
+                gsap.to(this.board.areaLabel.material, {
+                    opacity: 0.7,
+                    duration: 0.3
+                });
+                
+                // Butonun boyutunu normale döndür
+                gsap.to(this.board.areaLabel.scale, {
+                    x: 1.2,
+                    y: 1.2,
+                    z: 1.2,
+                    duration: 0.3
+                });
+            }
+        });
+        
+        this.board.area.on('interact', () =>
         {
             window.open(this.link.href, '_blank')
         })
 
-        // Area label
-        this.floor.areaLabel = this.meshes.areaLabel.clone()
-        this.floor.areaLabel.position.x = this.link.x
-        this.floor.areaLabel.position.y = this.link.y
-        this.floor.areaLabel.position.z = 0.001
-        this.floor.areaLabel.matrixAutoUpdate = false
-        this.floor.areaLabel.updateMatrix()
-        this.floor.container.add(this.floor.areaLabel)
+        // Area label - daha öne ve görünür olacak şekilde pozisyonu ayarlandı
+        this.board.areaLabel = this.meshes.areaLabel.clone()
+        this.board.areaLabel.position.x = this.link.x
+        this.board.areaLabel.position.y = this.link.y - 3.5 // Bilboardun altında
+        this.board.areaLabel.position.z = 2.5 // Çok daha öne getirdik (1.5'ten 2.5'e)
+        this.board.areaLabel.scale.set(1.2, 1.2, 1.2)
+        this.board.areaLabel.matrixAutoUpdate = false
+        this.board.areaLabel.updateMatrix()
+        this.container.add(this.board.areaLabel)
+        
+        // Butonun dikkat çekmesi için hafif animasyonlu efekt
+        this.time.on('tick', () => {
+            // Buton üzerinde sallanma efekti
+            const time = this.time.elapsed * 0.001
+            const scale = 1.2 + Math.sin(time * 2) * 0.1 // Sallanma hızını azalttık, genliğini artırdık
+            
+            this.board.areaLabel.scale.set(scale, scale, scale)
+            this.board.areaLabel.updateMatrix()
+        })
     }
 }

@@ -29,9 +29,9 @@ export default class ProjectsSection
         // Set up
         this.items = []
 
-        this.interDistance = 24
-        this.positionRandomess = 5
-        this.projectHalfWidth = 9
+        this.interDistance = 4 // Kullanıcının istediği değer - bilboardlar çok yakın olacak
+        this.positionRandomess = 0
+        this.projectHalfWidth = 5 // 6'dan 5'e düşürdüm - bilboardların çakışma olasılığını azaltmak için
 
         this.container = new THREE.Object3D()
         this.container.matrixAutoUpdate = false
@@ -60,10 +60,37 @@ export default class ProjectsSection
         this.meshes = {}
 
         // this.meshes.boardStructure = this.objects.getConvertedMesh(this.resources.items.projectsBoardStructure.scene.children, { floorShadowTexture: this.resources.items.projectsBoardStructureFloorShadowTexture })
-        this.resources.items.areaOpenTexture.magFilter = THREE.NearestFilter
-        this.resources.items.areaOpenTexture.minFilter = THREE.LinearFilter
         this.meshes.boardPlane = this.resources.items.projectsBoardPlane.scene.children[0]
-        this.meshes.areaLabel = new THREE.Mesh(new THREE.PlaneGeometry(2, 0.5), new THREE.MeshBasicMaterial({ transparent: true, depthWrite: false, color: 0xffffff, alphaMap: this.resources.items.areaOpenTexture }))
+        
+        // "OPEN" yazısı içeren texture yerine basit bir yuvarlak buton oluştur
+        const canvas = document.createElement('canvas')
+        canvas.width = 128
+        canvas.height = 64
+        const context = canvas.getContext('2d')
+        
+        // Buton arka planı - kırmızı ok işareti
+        context.fillStyle = '#FF4500'
+        context.beginPath()
+        context.moveTo(54, 12); // Sol üst
+        context.lineTo(74, 32); // Orta
+        context.lineTo(54, 52); // Sol alt
+        context.closePath();
+        context.fill();
+        
+        // Texture oluştur
+        const buttonTexture = new THREE.CanvasTexture(canvas)
+        buttonTexture.magFilter = THREE.NearestFilter
+        buttonTexture.minFilter = THREE.LinearFilter
+        
+        // Area label için yeni material
+        this.meshes.areaLabel = new THREE.Mesh(
+            new THREE.PlaneGeometry(2, 1), 
+            new THREE.MeshBasicMaterial({ 
+                transparent: true, 
+                depthWrite: false, 
+                map: buttonTexture 
+            })
+        )
         this.meshes.areaLabel.matrixAutoUpdate = false
     }
 
@@ -72,14 +99,14 @@ export default class ProjectsSection
         this.list = [
             {
                 name: 'E-Ticaret Projesi',
-                imageSource: './models/projects/hubit/kurumsal1.webp',
+                imageSource: './models/projects/hubit/genc-kultur.jpeg',
                 link: {
-                    href: 'https://www.amazon.com',
+                    href: 'https://genckultur.com/',
                     x: 0, // Merkez noktası
                     y: 0, // Merkez noktası
                     halfExtents: {
-                        x: 4,
-                        y: 2
+                        x: 5, // 4'ten 5'e büyütüldü
+                        y: 5  // 2'den 5'e büyütüldü
                     }
                 }
             },
@@ -91,8 +118,8 @@ export default class ProjectsSection
                     x: 0,
                     y: 0,
                     halfExtents: {
-                        x: 4,
-                        y: 2
+                        x: 5, // 4'ten 5'e büyütüldü
+                        y: 5  // 2'den 5'e büyütüldü
                     }
                 }
             },
@@ -104,8 +131,8 @@ export default class ProjectsSection
                     x: 0,
                     y: 0,
                     halfExtents: {
-                        x: 4,
-                        y: 2
+                        x: 5, // 4'ten 5'e büyütüldü
+                        y: 5  // 2'den 5'e büyütüldü
                     }
                 }
             }
@@ -114,11 +141,11 @@ export default class ProjectsSection
 
     setZone()
     {
-        const totalWidth = this.list.length * (this.interDistance / 2)
+        const totalWidth = this.list.length * (this.interDistance / 2) - 3
 
         const zone = this.zones.add({
-            position: { x: this.x + totalWidth - this.projectHalfWidth - 6, y: this.y },
-            halfExtents: { x: totalWidth, y: 12 },
+            position: { x: this.x + totalWidth - this.projectHalfWidth - 2, y: this.y },
+            halfExtents: { x: totalWidth, y: 10 },
             data: { cameraAngle: 'projects' }
         })
 
