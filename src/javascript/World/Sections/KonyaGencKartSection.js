@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-export default class SosyalInavasyonAjansSection {
+export default class KonyaGencKartSection {
     constructor(_options) {
         // Options
         this.config = _options.config
@@ -25,8 +25,8 @@ export default class SosyalInavasyonAjansSection {
 
     setModel() {
         // Kaynakları kontrol et
-        if (!this.resources.items.sosyalInavasyonAjansBase) {
-            console.warn('SosyalInavasyonAjans modelini yüklerken sorun oluştu - Kaynak bulunamadı');
+        if (!this.resources.items.konyaGencKartBase) {
+            console.warn('KonyaGencKart modelini yüklerken sorun oluştu - Kaynak bulunamadı');
             return;
         }
 
@@ -37,15 +37,15 @@ export default class SosyalInavasyonAjansSection {
             };
             
             // Eğim değerleri (derece cinsinden)
-            const xRotation = -90;  // X ekseni eğimi (öne/arkaya eğim) - 90 derece dik yapacak
-            const yRotation = 0; // Y ekseni dönüşü (sağa/sola dönüş) - 180 derece döndür
-            const zRotation = 180;  // Z ekseni dönüşü (yatay düzlemde dönüş)
+            const xRotation = 0;  // X ekseni eğimi - düz yap (eğim yok)
+            const yRotation = 180; // Y ekseni dönüşü - 180 derece döndürerek tam tersi yöne çevir
+            const zRotation = 0;  // Z ekseni dönüşü - düz yap (yatay düzlemde dönüş yok)
             
-            // SosyalInavasyonAjans modelini yükle
+            // KonyaGencKart modelini yükle
             this.objects.add({
-                base: this.resources.items.sosyalInavasyonAjansBase.scene,
-                collision: this.resources.items.sosyalInavasyonAjansBase.scene, // Collision için aynı modeli kullanıyoruz
-                offset: new THREE.Vector3(this.x, this.y, 0), // Negatif değer vererek modeli aşağı indiriyorum
+                base: this.resources.items.konyaGencKartBase.scene,
+                collision: this.resources.items.konyaGencKartBase.scene, // Collision için aynı modeli kullanıyoruz
+                offset: new THREE.Vector3(10, -35, 2.5), // Z değeri 2.5 yaparak modeli zeminden yukarı çıkart
                 rotation: new THREE.Euler(
                     degToRad(xRotation), 
                     degToRad(yRotation), 
@@ -55,9 +55,9 @@ export default class SosyalInavasyonAjansSection {
                 mass: 0, // 0 = statik (hareket etmez)
                 shadow: { sizeX: 10, sizeY: 10, offsetX: 0, offsetY: 0 } // Gölge boyutunu artır
             });
-            console.log('SosyalInavasyonAjans modeli başarıyla yüklendi');
+            console.log('KonyaGencKart modeli başarıyla yüklendi');
         } catch (error) {
-            console.error('SosyalInavasyonAjans modelini yüklerken hata oluştu:', error);
+            console.error('KonyaGencKart modelini yüklerken hata oluştu:', error);
         }
     }
 } 
