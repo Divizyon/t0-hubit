@@ -20,6 +20,7 @@ import Sounds from './Sounds.js'
 import gsap from 'gsap'
 import EasterEggs from './EasterEggs.js'
 import KapsulSection from './Sections/KapsulSection.js'
+import SosyalInavasyonAjansSection from './Sections/SosyalInavasyonAjansSection.js'
 
 export default class World {
     constructor(_options) {
@@ -453,6 +454,24 @@ export default class World {
             }
         } catch (error) {
             console.error('YoungCenter section oluşturulurken hata:', error);
+        }
+
+        // SosyalInavasyonAjansSection
+        try {
+            if (this.resources.items.sosyalInavasyonAjansBase) {
+                console.log('SosyalInavasyonAjans modeli yüklendi, section oluşturuluyor...');
+                this.sections.sosyalInavasyonAjans = new SosyalInavasyonAjansSection({
+                    ...options,
+                    materials: this.materials,
+                    x: 30, // X pozisyonu
+                    y: -20  // Y pozisyonu
+                })
+                this.container.add(this.sections.sosyalInavasyonAjans.container)
+            } else {
+                console.warn('SosyalInavasyonAjans modeli bulunamadı, section oluşturulamıyor!');
+            }
+        } catch (error) {
+            console.error('SosyalInavasyonAjans section oluşturulurken hata:', error);
         }
     }
 
