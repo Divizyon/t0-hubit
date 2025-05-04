@@ -11,6 +11,13 @@ export default class ThreejsJourney
 
         // Setup
         this.$container = document.querySelector('.js-threejs-journey')
+        
+        // Container kontrolü - eğer yoksa sessizce çık
+        if (!this.$container) {
+            console.warn('ThreejsJourney container bulunamadı, komponent devre dışı bırakılıyor.');
+            return;
+        }
+        
         this.$messages = [...this.$container.querySelectorAll('.js-message')]
         this.$yes = this.$container.querySelector('.js-yes')
         this.$no = this.$container.querySelector('.js-no')
@@ -48,6 +55,9 @@ export default class ThreejsJourney
 
     setYesNo()
     {
+        // Container kontrolü
+        if (!this.$container) return;
+
         // Clicks
         this.$yes.addEventListener('click', () =>
         {
@@ -135,6 +145,9 @@ export default class ThreejsJourney
 
     hide()
     {
+        // Container kontrolü
+        if (!this.$container) return;
+
         for(const _$message of this.$messages)
         {
             _$message.classList.remove('is-visible')
@@ -148,6 +161,9 @@ export default class ThreejsJourney
 
     start()
     {
+        // Container kontrolü
+        if (!this.$container) return;
+
         this.$container.classList.add('is-active')
 
         window.requestAnimationFrame(() =>
@@ -171,6 +187,9 @@ export default class ThreejsJourney
 
     updateMessages()
     {
+        // Container kontrolü
+        if (!this.$container || !this.$messages || !this.$messages.length) return;
+
         let i = 0
 
         // Visibility

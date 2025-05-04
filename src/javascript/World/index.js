@@ -17,6 +17,7 @@ import InformationSection from './Sections/InformationSection.js'
 import PlaygroundSection from './Sections/PlaygroundSection.js'
 import GreenScreenRoom from './Sections/GreenScreenRoom.js'
 import RocketSection from './Sections/RocketSection.js'
+import YoungCenterSection from './Sections/YoungCenterSection.js'
 // import DistinctionASection from './Sections/DistinctionASection.js'
 // import DistinctionBSection from './Sections/DistinctionBSection.js'
 // import DistinctionCSection from './Sections/DistinctionCSection.js'
@@ -399,22 +400,30 @@ export default class World {
         this.container.add(this.sections.projects.container)
 
         // GreenScreenRoom
-        this.sections.greenScreenRoom = new GreenScreenRoom({
-            ...options,
-            materials: this.materials,
-            x: 10,
-            y: 10
-        })
-        this.container.add(this.sections.greenScreenRoom.container)
+        try {
+            this.sections.greenScreenRoom = new GreenScreenRoom({
+                ...options,
+                materials: this.materials,
+                x: 10,
+                y: 10
+            })
+            this.container.add(this.sections.greenScreenRoom.container)
+        } catch (error) {
+            console.error('GreenScreenRoom yüklenirken hata:', error);
+        }
         
         // RocketSection
-        this.sections.rocketSection = new RocketSection({
-            ...options,
-            materials: this.materials,
-            x: -10,
-            y: -10
-        })
-        this.container.add(this.sections.rocketSection.container)
+        try {
+            this.sections.rocketSection = new RocketSection({
+                ...options,
+                materials: this.materials,
+                x: -10,
+                y: -10
+            })
+            this.container.add(this.sections.rocketSection.container)
+        } catch (error) {
+            console.error('RocketSection yüklenirken hata:', error);
+        }
         
         // Ses Odası (SoundRoom)
         this.sections.soundRoom = new SoundRoomSection({

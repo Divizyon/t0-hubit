@@ -230,6 +230,8 @@ export default class Resources extends EventEmitter {
 
             // Divizyon Building
             { name: 'divizyonBuilding', source: './models/DivizyonBuilding/DivizyonBina.glb' },
+            // YoungCenter 
+            { name: 'youngCenterBase', source: './models/YoungCenter/CalisanGenclikMerkezi.glb' },
             
             // GreenScreen Room
             { name: 'greenScreenRoomBase', source: './models/greenScreen/GreenScreenRoom.glb' },

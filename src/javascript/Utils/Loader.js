@@ -100,9 +100,48 @@ export default class Resources extends EventEmitter
      */
     load(_resources = [])
     {
+        // Counter
+        let count = 0
+        this.toLoad = _resources.length
+
+        // Loaded check
+        const checkLoaded = () => {
+            count++
+            this.loaded = count
+            this.trigger('progress', [count / this.toLoad])
+
+            console.log(`[Loader] ${count}/${this.toLoad} yüklendi`)
+
+            if (count === this.toLoad) {
+                console.log(`[Loader] Tüm kaynaklar yüklendi (${this.toLoad}/${this.toLoad})`)
+                this.trigger('end')
+            }
+        }
+
+        // Handler
+        const fileLoadEnd = (_resource, _data) => {
+            this.trigger('fileEnd', [_resource, _data])
+            checkLoaded()
+        }
+
+        // Error
+        const onError = (_resource, _error) => {
+            console.error(`[Loader] ${_resource.source} yüklenirken hata:`, _error)
+            this.trigger('error', [_resource, _error])
+            fileLoadEnd(_resource, null)
+        }
+
+        // Loop through all resources and load them
+        if (this.toLoad === 0) {
+            console.log('[Loader] Yüklenecek kaynak yok, işlem bitiriliyor')
+            setTimeout(() => {
+                this.trigger('end')
+            }, 1)
+            return
+        }
+
         for(const _resource of _resources)
         {
-            this.toLoad++
             const extensionMatch = _resource.source.match(/\.([a-z]+)$/)
 
             if(typeof extensionMatch[1] !== 'undefined')

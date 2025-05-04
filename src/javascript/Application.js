@@ -249,11 +249,16 @@ export default class Application {
      * Set Three.js Journey
      */
     setThreejsJourney() {
-        this.threejsJourney = new ThreejsJourney({
-            config: this.config,
-            time: this.time,
-            world: this.world
-        })
+        // Hata yönetimi ile tekrar aktifleştirildi
+        try {
+            this.threejsJourney = new ThreejsJourney({
+                config: this.config,
+                time: this.time,
+                world: this.world
+            })
+        } catch (error) {
+            console.warn('ThreejsJourney aktifleştirilemedi:', error);
+        }
     }
 
     /**
