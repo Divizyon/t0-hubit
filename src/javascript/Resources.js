@@ -233,6 +233,7 @@ export default class Resources extends EventEmitter {
             
             // GreenScreen Room
             { name: 'greenScreenRoomBase', source: './models/greenScreen/GreenScreenRoom.glb' },
+            { name: 'kapsulBase', source: './models/kapsul/Kapsul_BlockOut.glb' },
             // { name: 'greenScreenDesertButtonTexture', source: './models/greenScreen/desertButton.png', type: 'texture' },
             // { name: 'greenScreenSivasButtonTexture', source: './models/greenScreen/sivasButton.png', type: 'texture' },
             // { name: 'greenScreenNewYorkButtonTexture', source: './models/greenScreen/newYorkButton.png', type: 'texture' },
