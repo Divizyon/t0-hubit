@@ -40,6 +40,53 @@ html
     cursor: pointer;
 }
 
+/* Hoşgeldin mesajı stilleri */
+.welcome-message {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    border: 2px solid #ffffff;
+    border-radius: 8px;
+    color: #ffffff;
+    padding: 15px 20px;
+    background: linear-gradient(#fdb572ab, #fdb5721a);
+    font-family: 'Comic Neue', cursive;
+    font-weight: 700;
+    font-size: 18px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    max-width: 320px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.welcome-message h3 {
+    margin: 0 0 10px 0;
+    font-size: 20px;
+    color: #feae69;
+}
+
+.welcome-message p {
+    margin: 0;
+    font-size: 18px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Threejs journey stilleri */
 .threejs-journey
 {
     display: none;
