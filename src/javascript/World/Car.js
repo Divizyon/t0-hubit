@@ -398,36 +398,35 @@ export default class Car
     }
 
     findClosestObject() {
-        let closestObject = null;
-        let closestDistance = Infinity;
-    
-        const carPosition = this.position;
-        
-        const sceneObject = this.objects.container.parent.parent
-        if (!sceneObject) {
-            console.warn("Scene objesi bulunamadı!");
-            return null;
-        }
 
-        sceneObject.children
-            .filter((object) => object.name === 'SoundRoom') 
-            .forEach((object) => {
-                const distance = carPosition.distanceTo(object.position);
-                if (distance < closestDistance) {
-                    closestDistance = distance;
-                    closestObject = object;
-                }
-            });
-    
-        return closestDistance;
+        if (this.sceneObject === undefined) {
+            this.sceneObject = this.objects.container.parent.parent
+        }
+        if (this.soundRoom === null) {
+            this.soundRoom = this.sceneObject.children.find((object) => object.name === 'SoundRoom');
+        }
+        const distance = this.position.distanceTo(this.soundRoom.position);
+        return distance;
     }
 
     soundController()
     {
-        this.time.on('tick', () =>
-        {
-            var distance = this.findClosestObject()
-            //console.log(distance)
+        this.soundRoom = null;
+
+        var sound = new Howl({
+            src: ['./sounds/sound-room/sound-room.mp3'],
+            loop: true,
+            volume: 0,
         })
+
+        sound.play();
+
+        // Howler.pos(this.position.x, this.position.y, this.position.z);
+
+        this.time.on('tick', () => {
+            const distance = this.findClosestObject();
+            const volume = Math.max(0, 1 - (distance / 20));
+            sound.volume(volume);
+        });
     }
 }
