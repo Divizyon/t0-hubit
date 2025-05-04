@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import gsap from 'gsap'
 
-export default class MycustomSection {
+export default class SoundRoomSection {
     constructor(_options) {
         // Options
         this.config = _options.config
@@ -38,6 +38,7 @@ export default class MycustomSection {
                 this.model.base.scale.z = value
             })
         }
+        
     }
     
     setModel() {
@@ -204,6 +205,8 @@ export default class MycustomSection {
         
         // Konteyner'a ekle
         this.container.add(this.model.base)
+
+        
     }
 
     createButton() {

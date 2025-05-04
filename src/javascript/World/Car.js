@@ -40,6 +40,7 @@ export default class Car
         this.setTransformControls()
         this.setShootingBall()
         this.setKlaxon()
+        this.soundController()
     }
 
     setModels()
@@ -393,6 +394,40 @@ export default class Car
                     sleep: false
                 })
             }
+        })
+    }
+
+    findClosestObject() {
+        let closestObject = null;
+        let closestDistance = Infinity;
+    
+        const carPosition = this.position;
+        
+        const sceneObject = this.objects.container.parent.parent
+        if (!sceneObject) {
+            console.warn("Scene objesi bulunamadı!");
+            return null;
+        }
+
+        sceneObject.children
+            .filter((object) => object.name === 'SoundRoom') 
+            .forEach((object) => {
+                const distance = carPosition.distanceTo(object.position);
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestObject = object;
+                }
+            });
+    
+        return closestDistance;
+    }
+
+    soundController()
+    {
+        this.time.on('tick', () =>
+        {
+            var distance = this.findClosestObject()
+            //console.log(distance)
         })
     }
 }
