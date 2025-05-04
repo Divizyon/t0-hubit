@@ -37,7 +37,7 @@ export default class AreaSection {
 
     setFloor() {
         this.floor = new THREE.Mesh(
-            new THREE.PlaneGeometry(64, 64),
+            new THREE.PlaneGeometry(128, 128),
             new THREE.MeshBasicMaterial({
                 color: 0x000000,
                 transparent: true,
@@ -70,9 +70,9 @@ export default class AreaSection {
             {
                 type: 'brick',
                 equilibrateLastLine: true,
-                widthCount: 64,
+                widthCount: 128,
                 heightCount: 2,
-                position: new THREE.Vector3(this.x - 32, this.y - 0, 0),
+                position: new THREE.Vector3(this.x - 64, this.y - 0, 0),
                 offsetWidth: new THREE.Vector3(0, 1.05, 0),
                 offsetHeight: new THREE.Vector3(0, 0, 0.45),
                 randomOffset: new THREE.Vector3(0, 0, 0),
@@ -86,9 +86,9 @@ export default class AreaSection {
             {
                 type: 'brick',
                 equilibrateLastLine: true,
-                widthCount: 64,
+                widthCount: 128,
                 heightCount: 2,
-                position: new THREE.Vector3(this.x + 32, this.y - 0, 0),
+                position: new THREE.Vector3(this.x + 64, this.y - 0, 0),
                 offsetWidth: new THREE.Vector3(0, 1.05, 0),
                 offsetHeight: new THREE.Vector3(0, 0, 0.45),
                 randomOffset: new THREE.Vector3(0, 0, 0),
@@ -106,9 +106,9 @@ export default class AreaSection {
             {
                 type: 'brick',
                 equilibrateLastLine: true,
-                widthCount: 64,
+                widthCount: 128,
                 heightCount: 2,
-                position: new THREE.Vector3(this.x - 0, this.y + 32, 0),
+                position: new THREE.Vector3(this.x - 0, this.y + 64, 0),
                 offsetWidth: new THREE.Vector3(1.05, 0, 0),
                 offsetHeight: new THREE.Vector3(0, 0, 0.45),
                 randomOffset: new THREE.Vector3(0, 0, 0),
@@ -126,15 +126,14 @@ export default class AreaSection {
             {
                 type: 'brick',
                 equilibrateLastLine: true,
-                widthCount: 64,
+                widthCount: 128,
                 heightCount: 2,
-                position: new THREE.Vector3(this.x + 0, this.y - 32, 0),
+                position: new THREE.Vector3(this.x + 0, this.y - 64, 0),
                 offsetWidth: new THREE.Vector3(1.05, 0, 0),
                 offsetHeight: new THREE.Vector3(0, 0, 0.45),
                 randomOffset: new THREE.Vector3(0, 0, 0),
                 randomRotation: new THREE.Vector3(0, 0, 0.2)
             }
         })
-
     }
 }
