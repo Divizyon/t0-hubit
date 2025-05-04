@@ -24,10 +24,11 @@ export default class Resources extends EventEmitter
      */
     setLoaders()
     {
-        this.loaders = []
+        this.loaders = {}
+        this.loadersArray = []
 
         // Images
-        this.loaders.push({
+        this.loadersArray.push({
             extensions: ['jpg', 'png', 'webp'],
             action: (_resource) =>
             {
@@ -48,15 +49,14 @@ export default class Resources extends EventEmitter
         })
 
         // Draco
-        const dracoLoader = new DRACOLoader()
-        dracoLoader.setDecoderPath('draco/')
-        dracoLoader.setDecoderConfig({ type: 'js' })
+        this.loaders.dracoLoader = new DRACOLoader()
+        this.loaders.dracoLoader.setDecoderPath('./draco/')
 
-        this.loaders.push({
+        this.loadersArray.push({
             extensions: ['drc'],
             action: (_resource) =>
             {
-                dracoLoader.load(_resource.source, (_data) =>
+                this.loaders.dracoLoader.load(_resource.source, (_data) =>
                 {
                     this.fileLoadEnd(_resource, _data)
 
@@ -66,24 +66,33 @@ export default class Resources extends EventEmitter
         })
 
         // GLTF
-        const gltfLoader = new GLTFLoader()
-        gltfLoader.setDRACOLoader(dracoLoader)
+        this.loaders.gltfLoader = new GLTFLoader()
+        this.loaders.gltfLoader.setDRACOLoader(this.loaders.dracoLoader)
 
-        this.loaders.push({
+        this.loadersArray.push({
             extensions: ['glb', 'gltf'],
             action: (_resource) =>
             {
-                gltfLoader.load(_resource.source, (_data) =>
-                {
-                    this.fileLoadEnd(_resource, _data)
-                })
+                console.log(`GLB/GLTF model yükleniyor: ${_resource.source}`)
+                this.loaders.gltfLoader.load(
+                    _resource.source,
+                    (_data) => {
+                        console.log(`${_resource.name} modeli başarıyla yüklendi:`, _data)
+                        this.fileLoadEnd(_resource, _data)
+                    },
+                    (_progress) => {},
+                    (_error) => {
+                        console.error(`${_resource.name} modeli yüklenirken hata:`, _error)
+                        this.fileLoadEnd(_resource, null)
+                    }
+                )
             }
         })
 
         // FBX
         const fbxLoader = new FBXLoader()
 
-        this.loaders.push({
+        this.loadersArray.push({
             extensions: ['fbx'],
             action: (_resource) =>
             {
@@ -147,7 +156,7 @@ export default class Resources extends EventEmitter
             if(typeof extensionMatch[1] !== 'undefined')
             {
                 const extension = extensionMatch[1]
-                const loader = this.loaders.find((_loader) => _loader.extensions.find((_extension) => _extension === extension))
+                const loader = this.loadersArray.find((_loader) => _loader.extensions.find((_extension) => _extension === extension))
 
                 if(loader)
                 {
