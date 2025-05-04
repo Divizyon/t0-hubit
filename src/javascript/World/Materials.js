@@ -134,11 +134,47 @@ export default class Materials
         this.shades.items.metal.uniforms.matcap.value = this.resources.items.matcapMetalTexture
         this.items.metal = this.shades.items.metal
 
-        // // Gold
-        // this.shades.items.gold = new MatcapMaterial()
-        // this.shades.items.gold.name = 'shadeGold'
-        // this.shades.items.gold.uniforms.matcap.value = this.resources.items.matcapGoldTexture
-        // this.items.gold = this.shades.items.gold
+        // HubitBlack
+        this.shades.items.hubitBlack = new MatcapMaterial()
+        this.shades.items.hubitBlack.name = 'shadeHubitBlack'
+        this.shades.items.hubitBlack.uniforms.matcap.value = this.resources.items.matcapBlackTexture
+        this.shades.items.hubitBlack.uniforms.uColor.value = new THREE.Color(0x1E1E1E)
+        this.items.hubitBlack = this.shades.items.hubitBlack
+
+        // HubitBlue
+        this.shades.items.hubitBlue = new MatcapMaterial()
+        this.shades.items.hubitBlue.name = 'shadeHubitBlue'
+        this.shades.items.hubitBlue.uniforms.matcap.value = this.resources.items.matcapBlueTexture
+        this.shades.items.hubitBlue.uniforms.uColor.value = new THREE.Color(0x5B8CF5)
+        this.items.hubitBlue = this.shades.items.hubitBlue
+
+        // HubitDarkBlue
+        this.shades.items.hubitDarkBlue = new MatcapMaterial()
+        this.shades.items.hubitDarkBlue.name = 'shadeHubitDarkBlue'
+        this.shades.items.hubitDarkBlue.uniforms.matcap.value = this.resources.items.matcapBlueTexture
+        this.shades.items.hubitDarkBlue.uniforms.uColor.value = new THREE.Color(0x273F85)
+        this.items.hubitDarkBlue = this.shades.items.hubitDarkBlue
+
+        // HubitWhite
+        this.shades.items.hubitWhite = new MatcapMaterial()
+        this.shades.items.hubitWhite.name = 'shadeHubitWhite'
+        this.shades.items.hubitWhite.uniforms.matcap.value = this.resources.items.matcapWhiteTexture
+        this.shades.items.hubitWhite.uniforms.uColor.value = new THREE.Color(0xF5F5F5)
+        this.items.hubitWhite = this.shades.items.hubitWhite
+
+        // HubitRed
+        this.shades.items.hubitRed = new MatcapMaterial()
+        this.shades.items.hubitRed.name = 'shadeHubitRed'
+        this.shades.items.hubitRed.uniforms.matcap.value = this.resources.items.matcapRedTexture
+        this.shades.items.hubitRed.uniforms.uColor.value = new THREE.Color(0xE53935)
+        this.items.hubitRed = this.shades.items.hubitRed
+
+        // HubitGreen
+        this.shades.items.hubitGreen = new MatcapMaterial()
+        this.shades.items.hubitGreen.name = 'shadeHubitGreen'
+        this.shades.items.hubitGreen.uniforms.matcap.value = this.resources.items.matcapGreenTexture
+        this.shades.items.hubitGreen.uniforms.uColor.value = new THREE.Color(0x43A047)
+        this.items.hubitGreen = this.shades.items.hubitGreen
 
         // Update materials uniforms
         this.shades.updateMaterials = () =>

@@ -5,6 +5,7 @@
 uniform vec3 diffuse;
 uniform float opacity;
 uniform sampler2D matcap;
+uniform vec3 uColor;
 
 varying vec3 vViewPosition;
 
@@ -47,7 +48,7 @@ void main() {
 
     #include <clipping_planes_fragment>
 
-    vec4 diffuseColor = vec4( diffuse, opacity );
+    vec4 diffuseColor = vec4( diffuse * uColor, opacity );
 
     #include <logdepthbuf_fragment>
     #include <map_fragment>

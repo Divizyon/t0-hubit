@@ -106,13 +106,13 @@ export default class Car
     setChassis()
     {
         this.chassis = {}
-        this.chassis.offset = new THREE.Vector3(0, 0, - 0.28)
+        this.chassis.offset = new THREE.Vector3(0.05, 0, - 0.45)
         this.chassis.object = this.objects.getConvertedMesh(this.models.chassis.scene.children)
         this.chassis.object.position.copy(this.physics.car.chassis.body.position)
         this.chassis.oldPosition = this.chassis.object.position.clone()
         this.container.add(this.chassis.object)
 
-        this.shadows.add(this.chassis.object, { sizeX: 3, sizeY: 2, offsetZ: 0.2 })
+        this.shadows.add(this.chassis.object, { sizeX: 3, sizeY: 2, offsetZ: 0.1 })
 
         // Time tick
         this.time.on('tick', () =>
@@ -245,6 +245,13 @@ export default class Car
         for(let i = 0; i < 4; i++)
         {
             const object = this.wheels.object.clone()
+            
+            // Z değerini tekerlek bazında ayarla
+            if(i === 0 || i === 1) {
+                object.position.z = -0.02; // Ön tekerlekler
+            } else {
+                object.position.z = -0.02; // Arka tekerlekler
+            }
 
             this.wheels.items.push(object)
             this.container.add(object)
@@ -261,6 +268,8 @@ export default class Car
                     const wheelObject = this.wheels.items[_wheelKey]
 
                     wheelObject.position.copy(wheelBody.position)
+                    // Hafif sola kaydır - miktarı azalttım
+                    wheelObject.position.y -= 0.02;
                     wheelObject.quaternion.copy(wheelBody.quaternion)
                 }
             }

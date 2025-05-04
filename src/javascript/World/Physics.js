@@ -34,7 +34,7 @@ export default class Physics
     setWorld()
     {
         this.world = new CANNON.World()
-        this.world.gravity.set(0, 0, - 3.25 * 4)
+        this.world.gravity.set(0, 0, - 3.25 * 4.5)
         this.world.allowSleep = true
         // this.world.broadphase = new CANNON.SAPBroadphase(this.world)
         this.world.defaultContactMaterial.friction = 0
@@ -119,20 +119,20 @@ export default class Physics
          */
         this.car.options = {}
         this.car.options.chassisWidth = 1.02
-        this.car.options.chassisHeight = 1.16
-        this.car.options.chassisDepth = 2.03
-        this.car.options.chassisOffset = new CANNON.Vec3(0, 0, 0.41)
+        this.car.options.chassisHeight = 0.9
+        this.car.options.chassisDepth = 2.4
+        this.car.options.chassisOffset = new CANNON.Vec3(0.05, 0, 0.35)
         this.car.options.chassisMass = 40
-        this.car.options.wheelFrontOffsetDepth = 0.635
-        this.car.options.wheelBackOffsetDepth = - 0.475
-        this.car.options.wheelOffsetWidth = 0.39
-        this.car.options.wheelRadius = 0.25
-        this.car.options.wheelHeight = 0.24
-        this.car.options.wheelSuspensionStiffness = 50
+        this.car.options.wheelFrontOffsetDepth = 0.7
+        this.car.options.wheelBackOffsetDepth = - 0.7
+        this.car.options.wheelOffsetWidth = 0.44
+        this.car.options.wheelRadius = 0.3
+        this.car.options.wheelHeight = 0.26
+        this.car.options.wheelSuspensionStiffness = 30
         this.car.options.wheelSuspensionRestLength = 0.1
-        this.car.options.wheelFrictionSlip = 10
-        this.car.options.wheelDampingRelaxation = 1.8
-        this.car.options.wheelDampingCompression = 1.5
+        this.car.options.wheelFrictionSlip = 5
+        this.car.options.wheelDampingRelaxation = 2.0
+        this.car.options.wheelDampingCompression = 1.8
         this.car.options.wheelMaxSuspensionForce = 100000
         this.car.options.wheelRollInfluence =  0.01
         this.car.options.wheelMaxSuspensionTravel = 0.3
@@ -180,7 +180,7 @@ export default class Physics
 
             this.car.chassis.body = new CANNON.Body({ mass: this.car.options.chassisMass })
             this.car.chassis.body.allowSleep = false
-            this.car.chassis.body.position.set(0, 0, 12)
+            this.car.chassis.body.position.set(0, 0, 7)
             this.car.chassis.body.sleep()
             this.car.chassis.body.addShape(this.car.chassis.shape, this.car.options.chassisOffset)
             this.car.chassis.body.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 0, 1), - Math.PI * 0.5)
@@ -227,19 +227,19 @@ export default class Physics
             }
 
             // Front left
-            this.car.wheels.options.chassisConnectionPointLocal.set(this.car.options.wheelFrontOffsetDepth, this.car.options.wheelOffsetWidth, 0)
+            this.car.wheels.options.chassisConnectionPointLocal.set(this.car.options.wheelFrontOffsetDepth, this.car.options.wheelOffsetWidth, -0.05)
             this.car.vehicle.addWheel(this.car.wheels.options)
 
             // Front right
-            this.car.wheels.options.chassisConnectionPointLocal.set(this.car.options.wheelFrontOffsetDepth, - this.car.options.wheelOffsetWidth, 0)
+            this.car.wheels.options.chassisConnectionPointLocal.set(this.car.options.wheelFrontOffsetDepth, - this.car.options.wheelOffsetWidth, -0.05)
             this.car.vehicle.addWheel(this.car.wheels.options)
 
             // Back left
-            this.car.wheels.options.chassisConnectionPointLocal.set(this.car.options.wheelBackOffsetDepth, this.car.options.wheelOffsetWidth, 0)
+            this.car.wheels.options.chassisConnectionPointLocal.set(this.car.options.wheelBackOffsetDepth, this.car.options.wheelOffsetWidth, -0.05)
             this.car.vehicle.addWheel(this.car.wheels.options)
 
             // Back right
-            this.car.wheels.options.chassisConnectionPointLocal.set(this.car.options.wheelBackOffsetDepth, - this.car.options.wheelOffsetWidth, 0)
+            this.car.wheels.options.chassisConnectionPointLocal.set(this.car.options.wheelBackOffsetDepth, - this.car.options.wheelOffsetWidth, -0.05)
             this.car.vehicle.addWheel(this.car.wheels.options)
 
             this.car.vehicle.addToWorld(this.world)

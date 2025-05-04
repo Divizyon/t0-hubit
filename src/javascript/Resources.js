@@ -76,7 +76,7 @@ export default class Resources extends EventEmitter {
             { name: 'crossroadsStaticFloorShadow', source: './models/crossroads/static/floorShadow.png', type: 'texture' },
 
             // Car default
-            { name: 'carDefaultChassis', source: './models/car/default/car1.glb' },
+            { name: 'carDefaultChassis', source: './models/car/togg/toggmodel.glb' },
             { name: 'carDefaultWheel', source: './models/car/default/wheel.glb' },
             { name: 'carDefaultBackLightsBrake', source: './models/car/default/backLightsBrake.glb' },
             { name: 'carDefaultBackLightsReverse', source: './models/car/default/backLightsReverse.glb' },
@@ -90,6 +90,8 @@ export default class Resources extends EventEmitter {
             { name: 'carCyberTruckBackLightsBrake', source: './models/car/cyberTruck/backLightsBrake.glb' },
             { name: 'carCyberTruckBackLightsReverse', source: './models/car/cyberTruck/backLightsReverse.glb' },
             { name: 'carCyberTruckAntena', source: './models/car/cyberTruck/antena.glb' },
+
+
 
             // Project
             { name: 'projectsBoardStructure', source: './models/projects/board/structure.glb' },
