@@ -66,16 +66,8 @@ export default class ProjectsSection
         const canvas = document.createElement('canvas')
         canvas.width = 128
         canvas.height = 64
-        const context = canvas.getContext('2d')
         
-        // Buton arka planı - kırmızı ok işareti
-        context.fillStyle = '#FF4500'
-        context.beginPath()
-        context.moveTo(54, 12); // Sol üst
-        context.lineTo(74, 32); // Orta
-        context.lineTo(54, 52); // Sol alt
-        context.closePath();
-        context.fill();
+ 
         
         // Texture oluştur
         const buttonTexture = new THREE.CanvasTexture(canvas)
