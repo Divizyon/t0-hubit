@@ -186,6 +186,13 @@ export default class Resources extends EventEmitter {
             { name: 'bowlingPinBase', source: './models/bowlingPin/base.glb' },
             { name: 'bowlingPinCollision', source: './models/bowlingPin/collision.glb' },
 
+            // GreenScreen
+            { name: 'greenScreenRoomBase', source: './models/greenScreen/GreenScreenRoom.glb' },
+            { name: 'greenScreenEnterKey', source: './models/greenScreen/enterKey.png', type: 'texture' },
+            { name: 'greenScreenDesertButton', source: './models/greenScreen/desertButton.png', type: 'texture' },
+            { name: 'greenScreenSivasButton', source: './models/greenScreen/sivasButton.png', type: 'texture' },
+            { name: 'greenScreenNewYorkButton', source: './models/greenScreen/newYorkButton.png', type: 'texture' },
+
             // Areas
             { name: 'areaKeyEnter', source: './models/area/keyEnter.png', type: 'texture' },
             { name: 'areaEnter', source: './models/area/enter.png', type: 'texture' },
