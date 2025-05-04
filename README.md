@@ -25,5 +25,5 @@ Katılımcılar, açık kaynaklı bu temel proje üzerinden ilerleyerek yazılı
 
 **🛠️ Katılımcılar İçin İlk Adımlar**
 
-`npm install
-npm run dev`
+`npm install`
+`npm run dev`
