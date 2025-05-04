@@ -192,6 +192,8 @@ export default class Resources extends EventEmitter {
             { name: 'greenScreenDesertButton', source: './models/greenScreen/desertButton.png', type: 'texture' },
             { name: 'greenScreenSivasButton', source: './models/greenScreen/sivasButton.png', type: 'texture' },
             { name: 'greenScreenNewYorkButton', source: './models/greenScreen/newYorkButton.png', type: 'texture' },
+            { name: 'greenScreenNewYorkBackground', source: './models/greenScreen/newYorkBackground.jpg', type: 'texture' },
+            { name: 'greenScreenDesertBackground', source: './models/greenScreen/mevlana.png', type: 'texture' },
 
             // Areas
             { name: 'areaKeyEnter', source: './models/area/keyEnter.png', type: 'texture' },
