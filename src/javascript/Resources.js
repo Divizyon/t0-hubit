@@ -186,15 +186,6 @@ export default class Resources extends EventEmitter {
             { name: 'bowlingPinBase', source: './models/bowlingPin/base.glb' },
             { name: 'bowlingPinCollision', source: './models/bowlingPin/collision.glb' },
 
-            // GreenScreen
-            { name: 'greenScreenRoomBase', source: './models/greenScreen/GreenScreenRoom.glb' },
-            { name: 'greenScreenEnterKey', source: './models/greenScreen/enterKey.png', type: 'texture' },
-            { name: 'greenScreenDesertButton', source: './models/greenScreen/desertButton.png', type: 'texture' },
-            { name: 'greenScreenSivasButton', source: './models/greenScreen/sivasButton.png', type: 'texture' },
-            { name: 'greenScreenNewYorkButton', source: './models/greenScreen/newYorkButton.png', type: 'texture' },
-            { name: 'greenScreenNewYorkBackground', source: './models/greenScreen/newYorkBackground.jpg', type: 'texture' },
-            { name: 'greenScreenDesertBackground', source: './models/greenScreen/mevlana.png', type: 'texture' },
-
             // Areas
             { name: 'areaKeyEnter', source: './models/area/keyEnter.png', type: 'texture' },
             { name: 'areaEnter', source: './models/area/enter.png', type: 'texture' },
@@ -231,6 +222,16 @@ export default class Resources extends EventEmitter {
             // // Egg
             // { name: 'eggBase', source: './models/egg/base.glb' },
             // { name: 'eggCollision', source: './models/egg/collision.glb' },
+
+            // Divizyon Building
+            { name: 'divizyonBuilding', source: './models/DivizyonBuilding/DivizyonBina.glb' },
+            
+            // GreenScreen Room
+            { name: 'greenScreenRoomBase', source: './models/greenScreen/GreenScreenRoom.glb' },
+            // { name: 'greenScreenDesertButtonTexture', source: './models/greenScreen/desertButton.png', type: 'texture' },
+            // { name: 'greenScreenSivasButtonTexture', source: './models/greenScreen/sivasButton.png', type: 'texture' },
+            // { name: 'greenScreenNewYorkButtonTexture', source: './models/greenScreen/newYorkButton.png', type: 'texture' },
+            // { name: 'greenScreenEnterKeyTexture', source: './models/area/keyEnter.png', type: 'texture' },
         ])
 
         this.loader.on('fileEnd', (_resource, _data) => {
