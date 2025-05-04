@@ -76,7 +76,7 @@ export default class Resources extends EventEmitter {
             { name: 'crossroadsStaticFloorShadow', source: './models/crossroads/static/floorShadow.png', type: 'texture' },
 
             // Car default
-            { name: 'carDefaultChassis', source: './models/car/default/chassis.glb' },
+            { name: 'carDefaultChassis', source: './models/car/default/car1.glb' },
             { name: 'carDefaultWheel', source: './models/car/default/wheel.glb' },
             { name: 'carDefaultBackLightsBrake', source: './models/car/default/backLightsBrake.glb' },
             { name: 'carDefaultBackLightsReverse', source: './models/car/default/backLightsReverse.glb' },
