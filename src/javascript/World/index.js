@@ -26,6 +26,7 @@ import Controls from './Controls.js'
 import Sounds from './Sounds.js'
 import gsap from 'gsap'
 import EasterEggs from './EasterEggs.js'
+import KapsulSection from './Sections/KapsulSection.js'
 
 export default class World {
     constructor(_options) {
@@ -423,6 +424,15 @@ export default class World {
             y: 10  // Aynı y düzleminde
         })
         this.container.add(this.sections.soundRoom.container)
+
+        // Kapsül
+        this.sections.kapsul = new KapsulSection({
+            ...options,
+            materials: this.materials,
+            x: 20,
+            y: -10,
+        })
+        this.container.add(this.sections.kapsul.container)
     }
 
     setEasterEggs() {
