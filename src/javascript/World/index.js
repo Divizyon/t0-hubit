@@ -9,7 +9,8 @@ import Car from './Car.js'
 import Areas from './Areas.js'
 import Tiles from './Tiles.js'
 import Walls from './Walls.js'
-import AreaSection from './Sections/AreaSection.js'
+import Ground from './Sections/Ground.js'
+import Road from './Sections/Road.js'
 import ProjectsSection from './Sections/ProjectsSection.js'
 import GreenScreenRoom from './Sections/GreenScreenRoom.js'
 import RocketSection from './Sections/RocketSection.js'
@@ -379,7 +380,7 @@ export default class World {
         }
 
         // Area
-        this.sections.area = new AreaSection({
+        this.sections.area = new Ground({
             ...options,
             x: 0,
             y: 0
@@ -418,6 +419,19 @@ export default class World {
             this.container.add(this.sections.rocketSection.container)
         } catch (error) {
             console.error('RocketSection yüklenirken hata:', error);
+        }
+
+        // Roaad
+        try {
+            this.sections.roadSection = new Road({
+                ...options,
+                materials: this.materials,
+                x: -10,
+                y: -10
+            })
+            this.container.add(this.sections.roadSection.container)
+        } catch (error) {
+            console.error('road yüklenirken hata:', error);
         }
         
         // Ses Odası (SoundRoom)

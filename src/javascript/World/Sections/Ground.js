@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-export default class AreaSection {
+export default class Ground {
     constructor(_options) {
         // Options
         this.config = _options.config
