@@ -37,9 +37,9 @@ export default class Ground {
 
     setFloor() {
         this.floor = new THREE.Mesh(
-            new THREE.PlaneGeometry(128, 128),
+            new THREE.PlaneGeometry(160, 96),
             new THREE.MeshBasicMaterial({
-                color: 0x000000,
+                color: 0xd6c685 ,
                 transparent: true,
                 opacity: 0.5,
                 depthWrite: false
@@ -64,15 +64,16 @@ export default class Ground {
             soundName: 'brick'
         }
 
+        // Batı Samanlık
         this.walls.add({
             object: this.dikes.brickOptions,
             shape:
             {
                 type: 'brick',
                 equilibrateLastLine: true,
-                widthCount: 128,
+                widthCount: 93,
                 heightCount: 2,
-                position: new THREE.Vector3(this.x - 64, this.y - 0, 0),
+                position: new THREE.Vector3(this.x - 80, this.y - 0, 0),
                 offsetWidth: new THREE.Vector3(0, 1.05, 0),
                 offsetHeight: new THREE.Vector3(0, 0, 0.45),
                 randomOffset: new THREE.Vector3(0, 0, 0),
@@ -80,15 +81,16 @@ export default class Ground {
             }
         })
 
+        // Doğu Samanlık
         this.walls.add({
             object: this.dikes.brickOptions,
             shape:
             {
                 type: 'brick',
                 equilibrateLastLine: true,
-                widthCount: 128,
+                widthCount: 93,
                 heightCount: 2,
-                position: new THREE.Vector3(this.x + 64, this.y - 0, 0),
+                position: new THREE.Vector3(this.x + 80, this.y - 0, 0),
                 offsetWidth: new THREE.Vector3(0, 1.05, 0),
                 offsetHeight: new THREE.Vector3(0, 0, 0.45),
                 randomOffset: new THREE.Vector3(0, 0, 0),
@@ -96,6 +98,7 @@ export default class Ground {
             }
         })
 
+        // Kuzey Samanlık
         this.walls.add({
             object:
             {
@@ -106,9 +109,9 @@ export default class Ground {
             {
                 type: 'brick',
                 equilibrateLastLine: true,
-                widthCount: 128,
+                widthCount: 153,
                 heightCount: 2,
-                position: new THREE.Vector3(this.x - 0, this.y + 64, 0),
+                position: new THREE.Vector3(this.x - 0, this.y + 48, 0),
                 offsetWidth: new THREE.Vector3(1.05, 0, 0),
                 offsetHeight: new THREE.Vector3(0, 0, 0.45),
                 randomOffset: new THREE.Vector3(0, 0, 0),
@@ -116,6 +119,7 @@ export default class Ground {
             }
         })
 
+        // Güney Samanlık
         this.walls.add({
             object:
             {
@@ -126,9 +130,9 @@ export default class Ground {
             {
                 type: 'brick',
                 equilibrateLastLine: true,
-                widthCount: 128,
+                widthCount: 153,
                 heightCount: 2,
-                position: new THREE.Vector3(this.x + 0, this.y - 64, 0),
+                position: new THREE.Vector3(this.x + 0, this.y - 48, 0),
                 offsetWidth: new THREE.Vector3(1.05, 0, 0),
                 offsetHeight: new THREE.Vector3(0, 0, 0.45),
                 randomOffset: new THREE.Vector3(0, 0, 0),
