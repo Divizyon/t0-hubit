@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-export default class BilimMerkeziSection {
+export default class AlaaddinHillSection {
     constructor(_options) {
         // Options
         this.config = _options.config
@@ -25,8 +25,8 @@ export default class BilimMerkeziSection {
 
     setModel() {
         // Kaynakları kontrol et
-        if (!this.resources.items.bilimMerkeziBase) {
-            console.warn('BilimMerkezi modelini yüklerken sorun oluştu - Kaynak bulunamadı');
+        if (!this.resources.items.alaaddinHillBase) {
+            console.warn('AlaaddinHill modelini yüklerken sorun oluştu - Kaynak bulunamadı');
             return;
         }
 
@@ -39,13 +39,13 @@ export default class BilimMerkeziSection {
             // Eğim değerleri (derece cinsinden)
             const xRotation = 180;  // X ekseni eğimi (öne/arkaya eğim)
             const yRotation = 0;    // Y ekseni dönüşü (sağa/sola dönüş)
-            const zRotation = 20;  // Z ekseni dönüşü (yatay düzlemde dönüş)
+            const zRotation = 0;    // Z ekseni dönüşü (yatay düzlemde dönüş)
             
             // Model klonlanır
-            const bilimMerkeziModel = this.resources.items.bilimMerkeziBase.scene.clone();
+            const alaaddinHillModel = this.resources.items.alaaddinHillBase.scene.clone();
             
             // Modelin materyallerini düzeltme
-            bilimMerkeziModel.traverse((child) => {
+            alaaddinHillModel.traverse((child) => {
                 if (child.isMesh) {
                     // Mesh görünürlüğünü ayarla
                     child.visible = true;
@@ -73,27 +73,34 @@ export default class BilimMerkeziSection {
                         }
                     }
                     
+                    // Normal ve UV haritaları da güncelle
+                    if (child.geometry) {
+                        child.geometry.computeVertexNormals();
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                    }
+                    
                     console.log('Mesh düzeltildi:', child.name);
                 }
             });
             
-            // BilimMerkezi modelini yükle
+            // AlaaddinHill modelini yükle
             this.objects.add({
-                base: bilimMerkeziModel,
-                collision: bilimMerkeziModel, // Collision için aynı modeli kullanıyoruz
-                offset: new THREE.Vector3(this.x, this.y, -2), // Z pozisyonu 0 olarak ayarlanır
+                base: alaaddinHillModel,
+                collision: alaaddinHillModel, // Collision için aynı modeli kullanıyoruz
+                offset: new THREE.Vector3(this.x, this.y, -3), // Z pozisyonunu negatif yaparak yere yaklaştırıyoruz
                 rotation: new THREE.Euler(
                     degToRad(xRotation), 
                     degToRad(yRotation), 
                     degToRad(zRotation)
-                ), // Derece cinsinden belirtilen eğimler
-                scale: new THREE.Vector3(5, 5, 5), // Modelin ölçeğini 5 birim olarak ayarla
+                ),
+                scale: new THREE.Vector3(2, 2, 2), // Biraz büyütelim
                 mass: 0, // 0 = statik (hareket etmez)
                 shadow: { sizeX: 10, sizeY: 10, offsetX: 0, offsetY: 0 } // Gölge boyutunu artır
             });
-            console.log('BilimMerkezi modeli başarıyla yüklendi');
+            console.log('AlaaddinHill modeli başarıyla yüklendi');
         } catch (error) {
-            console.error('BilimMerkezi modelini yüklerken hata oluştu:', error);
+            console.error('AlaaddinHill modelini yüklerken hata oluştu:', error);
         }
     }
 } 

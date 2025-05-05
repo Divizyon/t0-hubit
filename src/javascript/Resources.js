@@ -205,7 +205,10 @@ export default class Resources extends EventEmitter {
             { name: 'konyaGencKartBase', source: './models/KonyaGencKart/konyagenckart.glb' },
             
             // BilimMerkezi
-            { name: 'bilimMerkeziBase', source: './models/BilimMerkezi/BilimMerkezi_BlockOut.glb' },
+            { name: 'bilimMerkeziBase', source: './models/BilimMerkezi/BilimMerkezi.glb' },
+            
+            // AlaaddinHill
+            { name: 'alaaddinHillBase', source: './models/AlaaddinHill/AlaaddinHill.glb' },
             
             // Tiles
             { name: 'tilesABase', source: './models/tiles/a/base.glb' },
