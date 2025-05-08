@@ -34,7 +34,6 @@ export default class Car
         this.setModels()
         this.setMovement()
         this.setChassis()
-        // this.setAntena()
         this.setBackLights()
         this.setWheels()
         this.setTransformControls()
@@ -140,71 +139,6 @@ export default class Car
             // Update position
             this.position.copy(this.chassis.object.position)
         })
-    }
-
-    setAntena()
-    {
-        this.antena = {}
-
-        this.antena.speedStrength = 10
-        this.antena.damping = 0.035
-        this.antena.pullBackStrength = 0.02
-
-        this.antena.object = this.objects.getConvertedMesh(this.models.antena.scene.children)
-        this.chassis.object.add(this.antena.object)
-
-        // this.antena.bunnyEarLeft = this.objects.getConvertedMesh(this.models.bunnyEarLeft.scene.children)
-        // this.chassis.object.add(this.antena.bunnyEarLeft)
-
-        // this.antena.bunnyEarRight = this.objects.getConvertedMesh(this.models.bunnyEarRight.scene.children)
-        // this.chassis.object.add(this.antena.bunnyEarRight)
-
-        this.antena.speed = new THREE.Vector2()
-        this.antena.absolutePosition = new THREE.Vector2()
-        this.antena.localPosition = new THREE.Vector2()
-
-        // Time tick
-        this.time.on('tick', () =>
-        {
-            const max = 1
-            const accelerationX = Math.min(Math.max(this.movement.acceleration.x, - max), max)
-            const accelerationY = Math.min(Math.max(this.movement.acceleration.y, - max), max)
-
-            this.antena.speed.x -= accelerationX * this.antena.speedStrength
-            this.antena.speed.y -= accelerationY * this.antena.speedStrength
-
-            const position = this.antena.absolutePosition.clone()
-            const pullBack = position.negate().multiplyScalar(position.length() * this.antena.pullBackStrength)
-            this.antena.speed.add(pullBack)
-
-            this.antena.speed.x *= 1 - this.antena.damping
-            this.antena.speed.y *= 1 - this.antena.damping
-
-            this.antena.absolutePosition.add(this.antena.speed)
-
-            this.antena.localPosition.copy(this.antena.absolutePosition)
-            this.antena.localPosition.rotateAround(new THREE.Vector2(), - this.chassis.object.rotation.z)
-
-            this.antena.object.rotation.y = this.antena.localPosition.x * 0.1
-            this.antena.object.rotation.x = this.antena.localPosition.y * 0.1
-
-            // this.antena.bunnyEarLeft.rotation.y = this.antena.localPosition.x * 0.1
-            // this.antena.bunnyEarLeft.rotation.x = this.antena.localPosition.y * 0.1
-
-            // this.antena.bunnyEarRight.rotation.y = this.antena.localPosition.x * 0.1
-            // this.antena.bunnyEarRight.rotation.x = this.antena.localPosition.y * 0.1
-        })
-
-        // Debug
-        if(this.debug)
-        {
-            const folder = this.debugFolder.addFolder('antena')
-            folder.open()
-
-            folder.add(this.antena, 'speedStrength').step(0.001).min(0).max(50)
-            folder.add(this.antena, 'damping').step(0.0001).min(0).max(0.1)
-            folder.add(this.antena, 'pullBackStrength').step(0.0001).min(0).max(0.1)
-        }
     }
 
     setBackLights()
