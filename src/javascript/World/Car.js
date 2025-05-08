@@ -70,8 +70,6 @@ export default class Car
         {
             this.models.chassis = this.resources.items.carDefaultChassis
             this.models.antena = this.resources.items.carDefaultAntena
-            // this.models.bunnyEarLeft = this.resources.items.carDefaultBunnyEarLeft
-            // this.models.bunnyEarRight = this.resources.items.carDefaultBunnyEarRight
             this.models.backLightsBrake = this.resources.items.carDefaultBackLightsBrake
             this.models.backLightsReverse = this.resources.items.carDefaultBackLightsReverse
             this.models.wheel = this.resources.items.carDefaultWheel
@@ -140,6 +138,7 @@ export default class Car
             this.position.copy(this.chassis.object.position)
         })
     }
+
 
     setBackLights()
     {
