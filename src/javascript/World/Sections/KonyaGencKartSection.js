@@ -45,7 +45,7 @@ export default class KonyaGencKartSection {
             this.objects.add({
                 base: this.resources.items.konyaGencKartBase.scene,
                 collision: this.resources.items.konyaGencKartBase.scene, // Collision için aynı modeli kullanıyoruz
-                offset: new THREE.Vector3(10, -35, 2.5), // Z değeri 2.5 yaparak modeli zeminden yukarı çıkart
+                offset: new THREE.Vector3(10, -35, 1.25), // Z değeri 2.5 yaparak modeli zeminden yukarı çıkart
                 rotation: new THREE.Euler(
                     degToRad(xRotation), 
                     degToRad(yRotation), 
