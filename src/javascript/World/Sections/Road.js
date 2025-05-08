@@ -56,9 +56,9 @@ export default class Road {
                 mass: 0, // 0 = statik (hareket etmez)
                 shadow: { sizeX: 10, sizeY: 10, offsetX: 0, offsetY: 0 } // Gölge boyutunu artır
             });
-            console.log('ROADDDDDDDDDDDDDD modeli başarıyla yüklendi');
+            console.log('Road modeli başarıyla yüklendi');
         } catch (error) {
-            console.error('ROADDDDDDDDDDDDDD modelini yüklerken hata oluştu:', error);
+            console.error('Road modelini yüklerken hata oluştu:', error);
         }
     }
 } 

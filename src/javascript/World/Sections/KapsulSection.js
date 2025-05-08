@@ -30,7 +30,11 @@ export default class KapsulSection {
         try {
             if (this.resources.items.kapsulBase && this.resources.items.kapsulBase.scene) {
                 // Base model - GLB dosyasını yükleme
-                this.model.base = this.resources.items.kapsulBase.scene.clone()
+                this.model.base = this.resources.items.kapsulBase.scene
+                
+                // Clone the base model for collision
+                this.model.collision = this.resources.items.kapsulBase.scene.clone()
+                
                 // Modeli ölçeklendir
                 this.model.base.scale.set(2.5, 2.5, 2.5)
                 this.model.base.position.x = this.x
@@ -39,6 +43,10 @@ export default class KapsulSection {
                 this.model.base.rotation.x = 0
                 this.model.base.rotation.y = 0
                 this.model.base.rotation.z = 0
+                
+                // Same scaling for collision model
+                this.model.collision.scale.set(2.5, 2.5, 2.5)
+                
                 // Materyalleri atama (isteğe bağlı, mesh isimlerine göre özelleştirilebilir)
                 this.model.base.traverse((child) => {
                     if(child instanceof THREE.Mesh) {
@@ -68,6 +76,7 @@ export default class KapsulSection {
                         }
                     }
                 })
+                
                 // Bounding box ile modelin altını bul
                 const box = new THREE.Box3().setFromObject(this.model.base)
                 const size = new THREE.Vector3()
@@ -79,6 +88,18 @@ export default class KapsulSection {
                 // Modelin tabanı z=0'da olacak şekilde yukarı taşı
                 this.model.base.position.z -= minZ
                 this.container.add(this.model.base)
+
+                this.objects.add({
+                    base: this.model.base,               
+                    collision: this.resources.items.brickCollision.scene,       
+                    offset: new THREE.Vector3(this.x, this.y, 0), 
+                    rotation: new THREE.Euler(0, 0, 0),
+                    duplicated: true,                      
+                    scale: new THREE.Vector3(3, 3, 3),  
+                    mass: 0,
+                    shadow: { sizeX: 3.5, sizeY: 3.5, offsetZ: 0, alpha: 0.35 }
+                })
+                
             } else {
                 console.error("kapsul.glb modeli yüklenemedi, yedek model oluşturuluyor.")
                 this.createFallbackModel()
@@ -97,6 +118,20 @@ export default class KapsulSection {
         )
         this.model.base.position.set(this.x, this.y, 1) // fallback için z=1
         this.container.add(this.model.base)
+        
+        // Create a dedicated collision model for fallback too
+        this.model.collision = this.model.base.clone()
+        
+        // Fallback model için collider ekleme - aligned with the working collision pattern
+        this.objects.add({
+            base: this.model.base,
+            collision: this.model.collision,
+            offset: new THREE.Vector3(this.x, this.y, 0),
+            rotation: new THREE.Euler(0, 0, 0),
+            duplicated: true,
+            mass: 0,
+            shadow: { sizeX: 1.5, sizeY: 1.5, offsetZ: 0, alpha: 0.35 }
+        })
     }
 
     animateModel() {
@@ -114,4 +149,4 @@ export default class KapsulSection {
             }
         })
     }
-} 
+}
