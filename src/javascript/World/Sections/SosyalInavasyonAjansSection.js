@@ -38,7 +38,7 @@ export default class SosyalInavasyonAjansSection {
             
             // Eğim değerleri (derece cinsinden)
             const xRotation = -90;  // X ekseni eğimi (öne/arkaya eğim) - 90 derece dik yapacak
-            const yRotation = 0; // Y ekseni dönüşü (sağa/sola dönüş) - 180 derece döndür
+            const yRotation = -25; // Y ekseni dönüşü (sağa/sola dönüş) - 180 derece döndür
             const zRotation = 180;  // Z ekseni dönüşü (yatay düzlemde dönüş)
             
             // SosyalInavasyonAjans modelini yükle

@@ -480,7 +480,7 @@ export default class World {
                     ...options,
                     materials: this.materials,
                     x: 30, // X pozisyonu
-                    y: -20  // Y pozisyonu
+                    y: -19  // Y pozisyonu
                 })
                 this.container.add(this.sections.sosyalInavasyonAjans.container)
             } else {
