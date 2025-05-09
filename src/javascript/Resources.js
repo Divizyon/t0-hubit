@@ -200,6 +200,7 @@ export default class Resources extends EventEmitter {
             
             // YoungCenter
             { name: 'youngCenterBase', source: './models/YoungCenter/CalisanGenclikMerkezi.glb' },
+            { name: 'youngCenterCollision', source: './models/YoungCenter/young_center_collision.glb' },
             
             // KonyaGencKart
             { name: 'konyaGencKartBase', source: './models/KonyaGencKart/konyagenckart.glb' },

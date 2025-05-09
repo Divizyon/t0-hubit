@@ -33,7 +33,7 @@ export default class YoungCenterSection {
             // YoungCenter modelini yükle
             this.objects.add({
                 base: this.resources.items.youngCenterBase.scene,
-                collision: this.resources.items.youngCenterBase.scene, // Collision için aynı modeli kullanıyoruz
+                collision: this.resources.items.youngCenterCollision.scene, // Collision için aynı modeli kullanıyoruz
                 offset: new THREE.Vector3(this.x +85, this.y - 10, 0), // Konum ayarı
                 rotation: new THREE.Euler(0, 0, 0), // Modeli sağa doğru 30 derece döndür (Math.PI/6 = 30 derece)
                 scale: new THREE.Vector3(0.04, 0.04, 0.04), // Modeli biraz daha küçült
