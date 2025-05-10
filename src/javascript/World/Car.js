@@ -34,7 +34,6 @@ export default class Car
         this.setModels()
         this.setMovement()
         this.setChassis()
-        this.setAntena()
         this.setBackLights()
         this.setWheels()
         this.setTransformControls()
@@ -57,13 +56,20 @@ export default class Car
             this.models.wheel = this.resources.items.carCyberTruckWheel
         }
 
+        // TOGG Modeli
+        else if(this.config.togg)
+            {
+                this.models.chassis = this.resources.items.carToggChassis
+                this.models.backLightsBrake = this.resources.items.carToggBackLightsBrake
+                this.models.backLightsReverse = this.resources.items.carToggBackLightsReverse
+                this.models.wheel = this.resources.items.carToggWheel
+            }
+
         // Default
         else
         {
             this.models.chassis = this.resources.items.carDefaultChassis
             this.models.antena = this.resources.items.carDefaultAntena
-            // this.models.bunnyEarLeft = this.resources.items.carDefaultBunnyEarLeft
-            // this.models.bunnyEarRight = this.resources.items.carDefaultBunnyEarRight
             this.models.backLightsBrake = this.resources.items.carDefaultBackLightsBrake
             this.models.backLightsReverse = this.resources.items.carDefaultBackLightsReverse
             this.models.wheel = this.resources.items.carDefaultWheel
@@ -77,8 +83,8 @@ export default class Car
         this.movement.localSpeed = new THREE.Vector3()
         this.movement.acceleration = new THREE.Vector3()
         this.movement.localAcceleration = new THREE.Vector3()
-        this.movement.lastScreech = 0
-
+        this.movement.lastScreech = this.time.elapsed
+    
         // Time tick
         this.time.on('tick', () =>
         {
@@ -88,14 +94,14 @@ export default class Car
             movementSpeed.multiplyScalar(1 / this.time.delta * 17)
             this.movement.acceleration = movementSpeed.clone().sub(this.movement.speed)
             this.movement.speed.copy(movementSpeed)
-
+    
             this.movement.localSpeed = this.movement.speed.clone().applyAxisAngle(new THREE.Vector3(0, 0, 1), - this.chassis.object.rotation.z)
             this.movement.localAcceleration = this.movement.acceleration.clone().applyAxisAngle(new THREE.Vector3(0, 0, 1), - this.chassis.object.rotation.z)
-
+    
             // Sound
             this.sounds.engine.speed = this.movement.localSpeed.x
             this.sounds.engine.acceleration = this.controls.actions.up ? (this.controls.actions.boost ? 1 : 0.5) : 0
-
+    
             if(this.movement.localAcceleration.x > 0.03 && this.time.elapsed - this.movement.lastScreech > 5000)
             {
                 this.movement.lastScreech = this.time.elapsed
@@ -107,13 +113,13 @@ export default class Car
     setChassis()
     {
         this.chassis = {}
-        this.chassis.offset = new THREE.Vector3(0.05, 0, - 0.45)
+        this.chassis.offset = new THREE.Vector3(0, 0, - 0.52)
         this.chassis.object = this.objects.getConvertedMesh(this.models.chassis.scene.children)
         this.chassis.object.position.copy(this.physics.car.chassis.body.position)
         this.chassis.oldPosition = this.chassis.object.position.clone()
         this.container.add(this.chassis.object)
 
-        this.shadows.add(this.chassis.object, { sizeX: 3, sizeY: 2, offsetZ: 0.1 })
+        this.shadows.add(this.chassis.object, { sizeX: 3, sizeY: 2, offsetZ: 0.35 })
 
         // Time tick
         this.time.on('tick', () =>
@@ -133,70 +139,6 @@ export default class Car
         })
     }
 
-    setAntena()
-    {
-        this.antena = {}
-
-        this.antena.speedStrength = 10
-        this.antena.damping = 0.035
-        this.antena.pullBackStrength = 0.02
-
-        this.antena.object = this.objects.getConvertedMesh(this.models.antena.scene.children)
-        this.chassis.object.add(this.antena.object)
-
-        // this.antena.bunnyEarLeft = this.objects.getConvertedMesh(this.models.bunnyEarLeft.scene.children)
-        // this.chassis.object.add(this.antena.bunnyEarLeft)
-
-        // this.antena.bunnyEarRight = this.objects.getConvertedMesh(this.models.bunnyEarRight.scene.children)
-        // this.chassis.object.add(this.antena.bunnyEarRight)
-
-        this.antena.speed = new THREE.Vector2()
-        this.antena.absolutePosition = new THREE.Vector2()
-        this.antena.localPosition = new THREE.Vector2()
-
-        // Time tick
-        this.time.on('tick', () =>
-        {
-            const max = 1
-            const accelerationX = Math.min(Math.max(this.movement.acceleration.x, - max), max)
-            const accelerationY = Math.min(Math.max(this.movement.acceleration.y, - max), max)
-
-            this.antena.speed.x -= accelerationX * this.antena.speedStrength
-            this.antena.speed.y -= accelerationY * this.antena.speedStrength
-
-            const position = this.antena.absolutePosition.clone()
-            const pullBack = position.negate().multiplyScalar(position.length() * this.antena.pullBackStrength)
-            this.antena.speed.add(pullBack)
-
-            this.antena.speed.x *= 1 - this.antena.damping
-            this.antena.speed.y *= 1 - this.antena.damping
-
-            this.antena.absolutePosition.add(this.antena.speed)
-
-            this.antena.localPosition.copy(this.antena.absolutePosition)
-            this.antena.localPosition.rotateAround(new THREE.Vector2(), - this.chassis.object.rotation.z)
-
-            this.antena.object.rotation.y = this.antena.localPosition.x * 0.1
-            this.antena.object.rotation.x = this.antena.localPosition.y * 0.1
-
-            // this.antena.bunnyEarLeft.rotation.y = this.antena.localPosition.x * 0.1
-            // this.antena.bunnyEarLeft.rotation.x = this.antena.localPosition.y * 0.1
-
-            // this.antena.bunnyEarRight.rotation.y = this.antena.localPosition.x * 0.1
-            // this.antena.bunnyEarRight.rotation.x = this.antena.localPosition.y * 0.1
-        })
-
-        // Debug
-        if(this.debug)
-        {
-            const folder = this.debugFolder.addFolder('antena')
-            folder.open()
-
-            folder.add(this.antena, 'speedStrength').step(0.001).min(0).max(50)
-            folder.add(this.antena, 'damping').step(0.0001).min(0).max(0.1)
-            folder.add(this.antena, 'pullBackStrength').step(0.0001).min(0).max(0.1)
-        }
-    }
 
     setBackLights()
     {
@@ -204,7 +146,7 @@ export default class Car
 
         this.backLightsBrake.material = this.materials.pures.items.red.clone()
         this.backLightsBrake.material.transparent = true
-        this.backLightsBrake.material.opacity = 0.5
+        this.backLightsBrake.material.opacity = 1
 
         this.backLightsBrake.object = this.objects.getConvertedMesh(this.models.backLightsBrake.scene.children)
         for(const _child of this.backLightsBrake.object.children)
@@ -270,7 +212,7 @@ export default class Car
 
                     wheelObject.position.copy(wheelBody.position)
                     // Hafif sola kaydır - miktarı azalttım
-                    wheelObject.position.y -= 0.02;
+                    wheelObject.position.y -= -0.02;
                     wheelObject.quaternion.copy(wheelBody.quaternion)
                 }
             }

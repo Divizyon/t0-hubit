@@ -247,7 +247,7 @@ export default class RocketSection {
         }
         
         // Ateş konteynerini roket altına konumlandır
-        this.fireParticles.container.position.set(0, 0, 0.1);
+        this.fireParticles.container.position.set(-0.2, 0.7, 0.25); // 08.05.25 GÜNCELLENDI. ATEŞ, ROKETIN ALTINA KONUMLANDIRILDI.
         this.fireParticles.container.visible = false;
         this.model.base.add(this.fireParticles.container);
         

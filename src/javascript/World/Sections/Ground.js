@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-export default class AreaSection {
+export default class Ground {
     constructor(_options) {
         // Options
         this.config = _options.config
@@ -143,9 +143,9 @@ export default class AreaSection {
 
     setFloor() {
         this.floor = new THREE.Mesh(
-            new THREE.PlaneGeometry(128, 128),
+            new THREE.PlaneGeometry(160, 96),
             new THREE.MeshBasicMaterial({
-                color: 0x000000,
+                color: 0xd6c685 ,
                 transparent: true,
                 opacity: 0.5,
                 depthWrite: false
@@ -170,15 +170,16 @@ export default class AreaSection {
             soundName: 'brick'
         }
 
+        // Batı Samanlık
         this.walls.add({
             object: this.dikes.brickOptions,
             shape:
             {
                 type: 'brick',
                 equilibrateLastLine: true,
-                widthCount: 128,
+                widthCount: 93,
                 heightCount: 2,
-                position: new THREE.Vector3(this.x - 64, this.y - 0, 0),
+                position: new THREE.Vector3(this.x - 80, this.y - 0, 0),
                 offsetWidth: new THREE.Vector3(0, 1.05, 0),
                 offsetHeight: new THREE.Vector3(0, 0, 0.45),
                 randomOffset: new THREE.Vector3(0, 0, 0),
@@ -186,15 +187,16 @@ export default class AreaSection {
             }
         })
 
+        // Doğu Samanlık
         this.walls.add({
             object: this.dikes.brickOptions,
             shape:
             {
                 type: 'brick',
                 equilibrateLastLine: true,
-                widthCount: 128,
+                widthCount: 93,
                 heightCount: 2,
-                position: new THREE.Vector3(this.x + 64, this.y - 0, 0),
+                position: new THREE.Vector3(this.x + 80, this.y - 0, 0),
                 offsetWidth: new THREE.Vector3(0, 1.05, 0),
                 offsetHeight: new THREE.Vector3(0, 0, 0.45),
                 randomOffset: new THREE.Vector3(0, 0, 0),
@@ -202,6 +204,7 @@ export default class AreaSection {
             }
         })
 
+        // Kuzey Samanlık
         this.walls.add({
             object:
             {
@@ -212,9 +215,9 @@ export default class AreaSection {
             {
                 type: 'brick',
                 equilibrateLastLine: true,
-                widthCount: 128,
+                widthCount: 153,
                 heightCount: 2,
-                position: new THREE.Vector3(this.x - 0, this.y + 64, 0),
+                position: new THREE.Vector3(this.x - 0, this.y + 48, 0),
                 offsetWidth: new THREE.Vector3(1.05, 0, 0),
                 offsetHeight: new THREE.Vector3(0, 0, 0.45),
                 randomOffset: new THREE.Vector3(0, 0, 0),
@@ -222,6 +225,7 @@ export default class AreaSection {
             }
         })
 
+        // Güney Samanlık
         this.walls.add({
             object:
             {
@@ -232,9 +236,9 @@ export default class AreaSection {
             {
                 type: 'brick',
                 equilibrateLastLine: true,
-                widthCount: 128,
+                widthCount: 153,
                 heightCount: 2,
-                position: new THREE.Vector3(this.x + 0, this.y - 64, 0),
+                position: new THREE.Vector3(this.x + 0, this.y - 48, 0),
                 offsetWidth: new THREE.Vector3(1.05, 0, 0),
                 offsetHeight: new THREE.Vector3(0, 0, 0.45),
                 randomOffset: new THREE.Vector3(0, 0, 0),

@@ -200,7 +200,8 @@ export default class Resources extends EventEmitter {
 
             // YoungCenter
             { name: 'youngCenterBase', source: './models/YoungCenter/CalisanGenclikMerkezi.glb' },
-
+            { name: 'youngCenterCollision', source: './models/YoungCenter/young_center_collision.glb' },
+            
             // KonyaGencKart
             { name: 'konyaGencKartBase', source: './models/KonyaGencKart/konyagenckart.glb' },
 
@@ -250,6 +251,9 @@ export default class Resources extends EventEmitter {
             // { name: 'greenScreenSivasButtonTexture', source: './models/greenScreen/sivasButton.png', type: 'texture' },
             // { name: 'greenScreenNewYorkButtonTexture', source: './models/greenScreen/newYorkButton.png', type: 'texture' },
             // { name: 'greenScreenEnterKeyTexture', source: './models/area/keyEnter.png', type: 'texture' },
+        
+            // Road
+            { name: 'road', source: './models/road/road.glb' },
         ])
 
         this.loader.on('fileEnd', (_resource, _data) => {
