@@ -11,6 +11,7 @@ export default class Ground {
         this.walls = _options.walls
         this.tiles = _options.tiles
         this.materials = _options.materials
+
         this.debug = _options.debug
         this.x = _options.x
         this.y = _options.y
@@ -23,6 +24,7 @@ export default class Ground {
         // this.setStatic()
         this.setDikes()
         this.setFloor()
+
 
         // Divizyon Building ekleme
         this.setDivizyonBuilding()
@@ -139,6 +141,7 @@ export default class Ground {
         } catch (error) {
             console.error('DivizyonBuilding modelini yüklerken hata oluştu:', error);
         }
+
     }
 
     setFloor() {

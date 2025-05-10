@@ -16,8 +16,8 @@ export default class ProjectsSection
         this.zones = _options.zones
         this.tiles = _options.tiles
         this.debug = _options.debug
-        this.x = _options.x
-        this.y = _options.y
+        this.x = _options.x -12 // Bu değeri değiştirin
+        this.y = _options.y + 6  // Bu değeri değiştirin
 
         // Debug
         if(this.debug)
@@ -29,7 +29,7 @@ export default class ProjectsSection
         // Set up
         this.items = []
 
-        this.interDistance = 4 // Kullanıcının istediği değer - bilboardlar çok yakın olacak
+        this.interDistance = 12 // Kullanıcının istediği değer - bilboardlar çok yakın olacak
         this.positionRandomess = 0
         this.projectHalfWidth = 5 // 6'dan 5'e düşürdüm - bilboardların çakışma olasılığını azaltmak için
 

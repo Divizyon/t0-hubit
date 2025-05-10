@@ -79,11 +79,13 @@ export default class YoungCenterSection {
             
             // YoungCenter modelini yükle - orijinal ayarlarla
             this.objects.add({
+
                 base: youngCenterModel,
                 collision: youngCenterModel, // Collision için aynı modeli kullanıyoruz
                 offset: new THREE.Vector3(this.x + 85, this.y - 10, 0), // Orijinal konum ayarı
                 rotation: new THREE.Euler(0, 0, 0), 
                 scale: new THREE.Vector3(0.04, 0.04, 0.04), // Orijinal ölçek
+
                 mass: 0, // 0 = statik (hareket etmez)
                 shadow: { sizeX: 5, sizeY: 5, offsetX: 0, offsetY: 0 } // Orijinal gölge ayarlari
             });

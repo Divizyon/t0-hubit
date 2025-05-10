@@ -28,6 +28,7 @@ export default class Project
         // this.container.updateMatrix()
 
         this.setBoard()
+        this.createButton()
     }
 
     setBoard()
@@ -86,85 +87,67 @@ export default class Project
         this.board.planeMesh.material.uniforms.uTextureAlpha.value = 0
         this.container.add(this.board.planeMesh)
 
-        // Add tıklanabilir alan doğrudan billboard'a
-        // Area
-        this.board.area = this.areas.add({
-            position: new THREE.Vector2(this.x + this.link.x, this.y + this.link.y),
-            halfExtents: new THREE.Vector2(this.link.halfExtents.x, this.link.halfExtents.y)
-        })
-        
-        // Hover efekti
-        this.board.area.on('in', () => {
-            // Bilboard'a gelince parlaklık/renk değişimi efekti
-            if (this.board.planeMesh && this.board.planeMesh.material) {
-                gsap.to(this.board.planeMesh.material.uniforms.uTextureAlpha, { 
-                    value: 1.8, // Parlaklığı daha da artırdık (1.5'ten 1.8'e)
-                    duration: 0.3 // Daha hızlı (0.5'ten 0.3'e)
-                });
-                
-                // Enter alanını daha görünür yap
-                gsap.to(this.board.areaLabel.material, {
-                    opacity: 1,
-                    duration: 0.3
-                });
-                
-                // Butonun boyutunu büyüt
-                gsap.to(this.board.areaLabel.scale, {
-                    x: 1.5,
-                    y: 1.5,
-                    z: 1.5,
-                    duration: 0.3
-                });
-            }
-        });
-        
-        this.board.area.on('out', () => {
-            // Bilboard'dan çıkınca normale dön
-            if (this.board.planeMesh && this.board.planeMesh.material) {
-                gsap.to(this.board.planeMesh.material.uniforms.uTextureAlpha, { 
-                    value: 1, 
-                    duration: 0.3
-                });
-                
-                // Enter alanını hafif saydam yap
-                gsap.to(this.board.areaLabel.material, {
-                    opacity: 0.7,
-                    duration: 0.3
-                });
-                
-                // Butonun boyutunu normale döndür
-                gsap.to(this.board.areaLabel.scale, {
-                    x: 1.2,
-                    y: 1.2,
-                    z: 1.2,
-                    duration: 0.3
-                });
-            }
-        });
-        
-        this.board.area.on('interact', () =>
-        {
-            window.open(this.link.href, '_blank')
-        })
+    }
 
-        // Area label - daha öne ve görünür olacak şekilde pozisyonu ayarlandı
-        this.board.areaLabel = this.meshes.areaLabel.clone()
-        this.board.areaLabel.position.x = this.link.x
-        this.board.areaLabel.position.y = this.link.y - 3.5 // Bilboardun altında
-        this.board.areaLabel.position.z = 2.5 // Çok daha öne getirdik (1.5'ten 2.5'e)
-        this.board.areaLabel.scale.set(1.2, 1.2, 1.2)
-        this.board.areaLabel.matrixAutoUpdate = false
-        this.board.areaLabel.updateMatrix()
-        this.container.add(this.board.areaLabel)
+    createButton() {
+        // Etkileşimli buton oluştur
+        this.button = {}
         
-        // Butonun dikkat çekmesi için hafif animasyonlu efekt
-        this.time.on('tick', () => {
-            // Buton üzerinde sallanma efekti
-            const time = this.time.elapsed * 0.001
-            const scale = 1.2 + Math.sin(time * 2) * 0.1 // Sallanma hızını azalttık, genliğini artırdık
-            
-            this.board.areaLabel.scale.set(scale, scale, scale)
-            this.board.areaLabel.updateMatrix()
+        // Buton konumu - ses odası için uygun konum
+        this.button.position = new THREE.Vector3(
+            this.x , // Modelin önünde
+            this.y - 4, // Modelin önünde
+            2 // Zemin üzerinde, görünür olacak şekilde
+        )
+        
+        
+        // Buton konteyneri
+        this.button.container = new THREE.Object3D()
+        this.button.container.position.copy(this.button.position)
+        this.container.add(this.button.container)
+        
+        // Label
+        this.button.label = {}
+        this.button.label.size = 4 // Genişliği 2'den 4'e artırdık
+        this.button.label.geometry = new THREE.PlaneGeometry(this.button.label.size, this.button.label.size / 2.5, 1, 1)
+        
+        // Texture oluştur
+        this.button.label.texture = new THREE.Texture(this.button.label.canvas)
+        this.button.label.texture.magFilter = THREE.LinearFilter
+        this.button.label.texture.minFilter = THREE.LinearFilter
+        this.button.label.texture.needsUpdate = true
+        
+        // Materyal oluştur
+        this.button.label.material = new THREE.MeshBasicMaterial({ 
+            map: this.button.label.texture,
+            transparent: true,
+            opacity: 1.0,
+            depthWrite: false
+        })
+        
+        // Mesh oluştur - Zemine dik konumlandır
+        this.button.label.mesh = new THREE.Mesh(this.button.label.geometry, this.button.label.material)
+        this.button.label.mesh.position.z = 0.15
+        this.button.label.mesh.matrixAutoUpdate = false
+        this.button.label.mesh.updateMatrix()
+        
+        // Konteynere ekle
+        this.button.container.add(this.button.label.mesh)
+        
+        
+        // Alan tetikleyici oluştur
+        this.button.triggerArea = this.areas.add({
+            position: new THREE.Vector2(this.button.position.x, this.button.position.y),
+            halfExtents: new THREE.Vector2(1.4, 0.8),
+            hasKey: true,
+            testCar: true,
+            active: true
+        })
+        
+        // Butona tıklandığında
+        this.button.triggerArea.on('interact', () => {
+            console.log('Model inceleniyor!')
+            this.animateModel()
         })
     }
 }
