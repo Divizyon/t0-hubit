@@ -3,7 +3,12 @@ import CANNON from 'cannon'
 
 let positionX = 0
 let positionY = 0
-let positionZ = 0
+let positionZ = 0.03
+
+// DegToRad fonksiyonu eklendi
+const degToRad = (degrees) => {
+    return degrees * (Math.PI / 180)
+}
 
 export default class Road  {
     constructor(_options) {
@@ -57,13 +62,20 @@ export default class Road  {
         // Collision Eklemek İçin
         this.physics.world.addBody(body)
 
+            const xRotation = -90;  // X ekseni eğimi (öne/arkaya eğim) - 90 derece dik yapacak
+            const yRotation = 180; // Y ekseni dönüşü (sağa/sola dönüş) - 180 derece döndür
+            const zRotation = 180;  // Z ekseni dönüşü (yatay düzlemde dönüş)
+
         // Modeli Ekliyoruz
         this.model = {}
         this.model.base = this.objects.add({
             base: { children: baseChildren },
             collision: { children: baseChildren },
             offset: new THREE.Vector3(positionX, positionY, positionZ),
-            rotation: new THREE.Vector3(0, 0, 45),
+            rotation: new THREE.Euler(
+                degToRad(xRotation), 
+                degToRad(yRotation), 
+                degToRad(zRotation)),
             mass: 0
         })
 
