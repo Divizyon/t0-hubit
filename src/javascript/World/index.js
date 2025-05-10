@@ -445,13 +445,10 @@ export default class World {
 
     setCapsule() {
         this.sectionCapsule = new SectionCapsule({
+            scene: this.scene,
             time: this.time,
-            resources: this.resources,
-            objects: this.objects,
-            physics: this.physics,
-            debug: this.debugFolder
-        })
-        this.container.add(this.sectionCapsule.container)
+            physics: this.physics
+        });
     }
 
     setYoungCard() {
