@@ -24,6 +24,7 @@ import KapsulSection from './Sections/KapsulSection.js'
 import SosyalInavasyonAjansSection from './Sections/SosyalInavasyonAjansSection.js'
 import KonyaGencKartSection from './Sections/KonyaGencKartSection.js'
 import BilimMerkeziSection from './Sections/BilimMerkeziSection.js'
+import AlaaddinHillSection from './Sections/AlaaddinHillSection.js'
 
 export default class World {
     constructor(_options) {
@@ -511,20 +512,41 @@ export default class World {
 
         // Bilim Merkezi Section
         try {
-            if (this.resources.items.bilimMerkeziBase) {
-                console.log('Bilim Merkezi section oluşturuluyor...');
-                this.sections.bilimMerkezi = new BilimMerkeziSection({
-                    ...options,
-                    materials: this.materials,
-                    x: 25, // Sağ tarafta
-                    y: 35  // Yukarıda
-                })
+            console.log('Bilim Merkezi section oluşturuluyor...');
+            console.log('bilimMerkeziBase kaynağı:', this.resources.items.bilimMerkeziBase ? 'Bulundu' : 'Bulunamadı');
+            
+            this.sections.bilimMerkezi = new BilimMerkeziSection({
+                ...options,
+                materials: this.materials,
+                x: 25, // Sağa doğru yerleştir (pozitif değer)
+                y: 40  // Aşağıya doğru yerleştir (negatif değer)
+            })
+            
+            if (this.sections.bilimMerkezi) {
+                console.log('BilimMerkezi section başarıyla oluşturuldu');
                 this.container.add(this.sections.bilimMerkezi.container)
-            } else {
-                console.warn('Bilim Merkezi modeli bulunamadı, section oluşturulamıyor!');
+                console.log('BilimMerkezi container sahneye eklendi')
             }
         } catch (error) {
             console.error('Bilim Merkezi section oluşturulurken hata:', error);
+        }
+
+        // Alaaddin Hill Section
+        try {
+            if (this.resources.items.alaaddinHillBase) {
+                console.log('Alaaddin Hill section oluşturuluyor...');
+                this.sections.alaaddinHill = new AlaaddinHillSection({
+                    ...options,
+                    materials: this.materials,
+                    x: 35, // Sol kısma yerleştir
+                    y: -40   // Yukarı yerleştir
+                })
+                this.container.add(this.sections.alaaddinHill.container)
+            } else {
+                console.warn('Alaaddin Hill modeli bulunamadı, section oluşturulamıyor!');
+            }
+        } catch (error) {
+            console.error('Alaaddin Hill section oluşturulurken hata:', error);
         }
     }
 
