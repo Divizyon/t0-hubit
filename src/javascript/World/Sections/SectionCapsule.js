@@ -1,11 +1,11 @@
 import * as THREE from 'three'
 import CANNON from 'cannon'
 
-let positionX = 0
-let positionY = 0
-let positionZ = 0
+let positionX = 15
+let positionY = 5
+let positionZ = 2
 
-export default class Road  {
+export default class SectionCapsule  {
     constructor(_options) {
         this.time = _options.time
         this.resources = _options.resources
@@ -21,11 +21,7 @@ export default class Road  {
 
     setModel() {
 
-        const baseScene = this.resources.items.Road?.scene;
-        if (!baseScene) {
-            console.error('Road model not found in resources');
-            return;
-        }
+        const baseScene = this.resources.items.Capsule?.scene;
         let baseChildren = [];
         if (baseScene.children && baseScene.children.length > 0) {
             baseChildren = baseScene.children;
@@ -42,15 +38,15 @@ export default class Road  {
         // Create CANNON body (tek collision)
         const body = new CANNON.Body({
             mass: 0,
-            position: new CANNON.Vec3(positionX, positionY, positionZ),
+            position: new CANNON.Vec3(positionX+1, positionY, positionZ-2),
             material: this.physics.materials.items.floor
         })
 
         // Tek bir box collision (modelin tamamı için)
         const mainShape = new CANNON.Box(new CANNON.Vec3(
-            0,
-            0,
-            0
+            Math.abs(size.x) * scaleFactor / 2,
+            Math.abs(size.y) * scaleFactor / 2,
+            Math.abs(size.z) * scaleFactor / 2
         ))
         body.addShape(mainShape)
 
@@ -63,11 +59,10 @@ export default class Road  {
             base: { children: baseChildren },
             collision: { children: baseChildren },
             offset: new THREE.Vector3(positionX, positionY, positionZ),
-            rotation: new THREE.Vector3(0, 0, 45),
             mass: 0
         })
 
-        // this.model.base.collision = { body }
+        this.model.base.collision = { body }
 
         this.container.add(this.model.base.container)
 

@@ -19,20 +19,8 @@ export default class Ground {
         this.container.matrixAutoUpdate = false
         this.container.updateMatrix()
 
-        // this.setStatic()
         this.setDikes()
         this.setFloor()
-
-        // DivizyonBuilding
-     
-        this.objects.add({
-            base: this.resources.items.divizyonBuilding.scene,
-            collision: this.resources.items.divizyonBuilding.scene, // Eğer collision için ayrı bir model yoksa aynısı kullanılabilir
-            offset: new THREE.Vector3(-22, 0, 0), // Konumu sol tarafa yerleştir
-            rotation: new THREE.Euler(0, 0, 0), // Düz durması için
-            mass: 0,
-            shadow: { sizeX: 2, sizeY: 2, offsetX: 0, offsetY: 0 }
-        });
     }
 
     setFloor() {

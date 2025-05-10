@@ -39,7 +39,7 @@ export default class Car
         this.setTransformControls()
         this.setShootingBall()
         this.setKlaxon()
-        this.soundController()
+        //this.soundController()
     }
 
     setModels()

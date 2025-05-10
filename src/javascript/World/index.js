@@ -9,21 +9,26 @@ import Car from './Car.js'
 import Areas from './Areas.js'
 import Tiles from './Tiles.js'
 import Walls from './Walls.js'
-import Ground from './Sections/Ground.js'
-import Road from './Sections/Road.js'
-import ProjectsSection from './Sections/ProjectsSection.js'
-import GreenScreenRoom from './Sections/GreenScreenRoom.js'
-import RocketSection from './Sections/RocketSection.js'
-import YoungCenterSection from './Sections/YoungCenterSection.js'
-import SoundRoomSection from './Sections/SoundRoomSection.js' 
 import Controls from './Controls.js'
 import Sounds from './Sounds.js'
 import gsap from 'gsap'
-import EasterEggs from './EasterEggs.js'
-import KapsulSection from './Sections/KapsulSection.js'
-import SosyalInavasyonAjansSection from './Sections/SosyalInavasyonAjansSection.js'
-import KonyaGencKartSection from './Sections/KonyaGencKartSection.js'
-import BilimMerkeziSection from './Sections/BilimMerkeziSection.js'
+
+import Ground from './Sections/Ground.js'
+import Road from './Sections/Road.js'
+
+import SectionAlaaddin from './Sections/SectionAlaaddin.js'
+import SectionAtmosphere from './Sections/SectionAtmosphere.js'
+import SectionCapsule from './Sections/SectionCapsule.js'
+import SectionDivision from './Sections/SectionDivision.js'
+import SectionGreenScreen from './Sections/SectionGreenScreen.js'
+import SectionRocket from './Sections/SectionRocket.js'
+import SectionScienceCenter from './Sections/SectionScienceCenter.js'
+import SectionSocialInovation from './Sections/SectionSocialInovation.js'
+import SectionSoundRoom from './Sections/SectionSoundRoom.js'
+import SectionStadium from './Sections/SectionStadium.js'
+import SectionYoungCard from './Sections/SectionYoungCard.js'
+import SectionYoungCenter from './Sections/SectionYoungCenter.js'
+
 
 export default class World {
     constructor(_options) {
@@ -48,12 +53,25 @@ export default class World {
         this.container = new THREE.Object3D()
         this.container.matrixAutoUpdate = false
 
-        // this.setAxes()
         this.setSounds()
         this.setControls()
         this.setFloor()
         this.setAreas()
         this.setStartingScreen()
+
+        this.options = {
+            config: this.config,
+            time: this.time,
+            resources: this.resources,
+            camera: this.camera,
+            passes: this.passes,
+            objects: this.objects,
+            areas: this.areas,
+            zones: this.zones,
+            walls: this.walls,
+            tiles: this.tiles,
+            debug: this.debugFolder
+        }
     }
 
     start() {
@@ -61,6 +79,8 @@ export default class World {
             this.camera.pan.enable()
         }, 2000)
 
+        this.sections = {}
+        
         this.setReveal()
         this.setMaterials()
         this.setShadows()
@@ -71,8 +91,22 @@ export default class World {
         this.areas.car = this.car
         this.setTiles()
         this.setWalls()
-        this.setSections()
-        this.setEasterEggs()
+
+        this.setGround()
+        this.setRoad()
+
+        this.setAlaaddin()
+        this.setAtmosphere()
+        this.setCapsule()
+        this.setDivision()
+        this.setGreenScreen()
+        this.setRocket()
+        this.setScienceCenter()
+        this.setSocialInovation()
+        this.setSoundRoom()
+        this.setStadium()
+        this.setYoungCard()
+        this.setYoungCenter()
     }
 
     setReveal() {
@@ -361,184 +395,161 @@ export default class World {
         this.container.add(this.car.container)
     }
 
-    setSections() {
-        this.sections = {}
-
-        // Generic options
-        const options = {
-            config: this.config,
+    setGround() {
+        this.sections.ground = new Ground({
+            ...this.options,
+            x: 0,
+            y: 0,
             time: this.time,
             resources: this.resources,
-            camera: this.camera,
-            passes: this.passes,
             objects: this.objects,
-            areas: this.areas,
-            zones: this.zones,
-            walls: this.walls,
-            tiles: this.tiles,
-            debug: this.debugFolder
-        }
-
-        // Area
-        this.sections.area = new Ground({
-            ...options,
-            x: 0,
-            y: 0
+            physics: this.physics,
+            debug: this.debugFolder,
+            walls : this.walls,
         })
-        this.container.add(this.sections.area.container)
-
-        // Projects
-        this.sections.projects = new ProjectsSection({
-            ...options,
-            x: 0, 
-            y: 20
-        })
-        this.container.add(this.sections.projects.container)
-
-        // GreenScreenRoom
-        try {
-            this.sections.greenScreenRoom = new GreenScreenRoom({
-                ...options,
-                materials: this.materials,
-                x: 10,
-                y: 10
-            })
-            this.container.add(this.sections.greenScreenRoom.container)
-        } catch (error) {
-            console.error('GreenScreenRoom yüklenirken hata:', error);
-        }
-        
-        // RocketSection
-        try {
-            this.sections.rocketSection = new RocketSection({
-                ...options,
-                materials: this.materials,
-                x: -10,
-                y: -10
-            })
-            this.container.add(this.sections.rocketSection.container)
-        } catch (error) {
-            console.error('RocketSection yüklenirken hata:', error);
-        }
-
-        // Roaad
-        try {
-            this.sections.roadSection = new Road({
-                ...options,
-                materials: this.materials,
-                x: -10,
-                y: -10
-            })
-            this.container.add(this.sections.roadSection.container)
-        } catch (error) {
-            console.error('road yüklenirken hata:', error);
-        }
-        
-        // Ses Odası (SoundRoom)
-        this.sections.soundRoom = new SoundRoomSection({
-            ...options,
-            materials: this.materials,
-            x: -10, // Green Box'tan uzakta, sol tarafta
-            y: 10  // Aynı y düzleminde
-        })
-        this.container.add(this.sections.soundRoom.container)
-        this.container.name = 'SoundRoom'
-        this.container.position.set(-10, 10, 0)
-
-        // Kapsül
-        this.sections.kapsul = new KapsulSection({
-            ...options,
-            materials: this.materials,
-            x: 40,
-            y: 10,
-        })
-        this.container.add(this.sections.kapsul.container)
-
-        // YoungCenterSection
-        try {
-            if (this.resources.items.youngCenterBase) {
-                console.log('YoungCenter modeli yüklendi, section oluşturuluyor...');
-                this.sections.youngCenter = new YoungCenterSection({
-                    ...options,
-                    materials: this.materials,
-                    x: -35, // Daha sola yerleştir
-                    y: -5   // Yukarı/aşağı pozisyon
-                })
-                this.container.add(this.sections.youngCenter.container)
-            } else {
-                console.warn('YoungCenter modeli bulunamadı, section oluşturulamıyor!');
-            }
-        } catch (error) {
-            console.error('YoungCenter section oluşturulurken hata:', error);
-        }
-
-        // SosyalInavasyonAjansSection
-        try {
-            if (this.resources.items.sosyalInavasyonAjansBase) {
-                console.log('SosyalInavasyonAjans modeli yüklendi, section oluşturuluyor...');
-                this.sections.sosyalInavasyonAjans = new SosyalInavasyonAjansSection({
-                    ...options,
-                    materials: this.materials,
-                    x: 30, // X pozisyonu
-                    y: -19  // Y pozisyonu
-                })
-                this.container.add(this.sections.sosyalInavasyonAjans.container)
-            } else {
-                console.warn('SosyalInavasyonAjans modeli bulunamadı, section oluşturulamıyor!');
-            }
-        } catch (error) {
-            console.error('SosyalInavasyonAjans section oluşturulurken hata:', error);
-        }
-
-        // Konya Genc Kart Section
-        try {
-            if (this.resources.items.konyaGencKartBase) {
-                console.log('Konya Genc Kart section oluşturuluyor...');
-                this.sections.konyaGencKart = new KonyaGencKartSection({
-                    ...options,
-                    materials: this.materials,
-                    physics: this.physics,
-                    x: -20,
-                    y: 20
-                })
-                this.container.add(this.sections.konyaGencKart.container)
-            } else {
-                console.warn('Konya Genc Kart modeli bulunamadı, section oluşturulamıyor!');
-            }
-        } catch (error) {
-            console.error('Konya Genc Kart section oluşturulurken hata:', error);
-        }
-
-        // Bilim Merkezi Section
-        try {
-            if (this.resources.items.bilimMerkeziBase) {
-                console.log('Bilim Merkezi section oluşturuluyor...');
-                this.sections.bilimMerkezi = new BilimMerkeziSection({
-                    ...options,
-                    materials: this.materials,
-                    x: 25, // Sağ tarafta
-                    y: 35  // Yukarıda
-                })
-                this.container.add(this.sections.bilimMerkezi.container)
-            } else {
-                console.warn('Bilim Merkezi modeli bulunamadı, section oluşturulamıyor!');
-            }
-        } catch (error) {
-            console.error('Bilim Merkezi section oluşturulurken hata:', error);
-        }
+        this.container.add(this.sections.ground.container)
     }
 
-    setEasterEggs() {
-        this.easterEggs = new EasterEggs({
+    setRoad() {
+        this.road = new Road({
+            time: this.time,
             resources: this.resources,
-            car: this.car,
-            walls: this.walls,
             objects: this.objects,
-            materials: this.materials,
-            areas: this.areas,
-            config: this.config,
-            physics: this.physics
+            physics: this.physics,
+            debug: this.debugFolder
         })
-        this.container.add(this.easterEggs.container)
+        this.container.add(this.road.container)
+    }
+
+    setScienceCenter() {
+        this.sectionScienceCenter = new SectionScienceCenter({
+            time: this.time,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder
+        })
+        this.container.add(this.sectionScienceCenter.container)
+    }
+
+    setGreenScreen() {
+        this.sectionGreenScreen = new SectionGreenScreen({
+            time: this.time,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder
+        })
+        this.container.add(this.sectionGreenScreen.container)
+    }
+
+    setCapsule() {
+        this.sectionCapsule = new SectionCapsule({
+            time: this.time,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder
+        })
+        this.container.add(this.sectionCapsule.container)
+    }
+
+    setYoungCard() {
+        this.sectionYoungCard = new SectionYoungCard({
+            time: this.time,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder
+        })
+        this.container.add(this.sectionYoungCard.container)
+    }
+
+    setRocket() {
+        this.sectionRocket = new SectionRocket({
+            time: this.time,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder
+        })
+        this.container.add(this.sectionRocket.container)
+    }
+
+    setSocialInovation() {
+        this.sectionSocialInovation = new SectionSocialInovation({
+            time: this.time,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder
+        })
+        this.container.add(this.sectionSocialInovation.container)
+    }
+
+    setSoundRoom() {
+        this.sectionSoundRoom = new SectionSoundRoom({
+            time: this.time,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder
+        })
+        this.container.add(this.sectionSoundRoom.container)
+    }
+
+    setYoungCenter() {
+        this.sectionYoungCenter = new SectionYoungCenter({
+            time: this.time,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder
+        })
+        this.container.add(this.sectionYoungCenter.container)
+    }
+
+    setAlaaddin() {
+        this.sectionAlaaddin = new SectionAlaaddin({
+            time: this.time,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder
+        })
+        this.container.add(this.sectionAlaaddin.container)
+    }
+
+    setAtmosphere() {
+        this.sectionAtmosphere = new SectionAtmosphere({
+            time: this.time,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder
+        })
+        this.container.add(this.sectionAtmosphere.container)
+    }
+
+    setDivision() {
+        this.sectionDivision = new SectionDivision({
+            time: this.time,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder
+        })
+        this.container.add(this.sectionDivision.container)
+    }
+
+    setStadium() {
+        this.sectionStadium = new SectionStadium({
+            time: this.time,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder
+        })
+        this.container.add(this.sectionStadium.container)
     }
 }

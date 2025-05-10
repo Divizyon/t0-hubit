@@ -198,16 +198,6 @@ export default class Resources extends EventEmitter {
             // MyCustomModel
             { name: 'myCustomModelBase', source: './models/soundRoom/soundRoom.glb' },
             
-            // YoungCenter
-            { name: 'youngCenterBase', source: './models/YoungCenter/CalisanGenclikMerkezi.glb' },
-            { name: 'youngCenterCollision', source: './models/YoungCenter/young_center_collision.glb' },
-            
-            // KonyaGencKart
-            { name: 'konyaGencKartBase', source: './models/KonyaGencKart/konyagenckart.glb' },
-            
-            // BilimMerkezi
-            { name: 'bilimMerkeziBase', source: './models/BilimMerkezi/BilimMerkezi_BlockOut.glb' },
-            
             // Tiles
             { name: 'tilesABase', source: './models/tiles/a/base.glb' },
             { name: 'tilesACollision', source: './models/tiles/a/collision.glb' },
@@ -237,21 +227,20 @@ export default class Resources extends EventEmitter {
             // // Egg
             // { name: 'eggBase', source: './models/egg/base.glb' },
             // { name: 'eggCollision', source: './models/egg/collision.glb' },
+            { name: 'Road', source: './models/Road/base.glb' },
 
-            // Divizyon Building
-            { name: 'divizyonBuilding', source: './models/DivizyonBuilding/DivizyonBina.glb' },
-            // GreenScreen Room
-            { name: 'greenScreenRoomBase', source: './models/greenScreen/GreenScreenRoom.glb' },
-            { name: 'kapsulBase', source: './models/kapsul/Kapsul_BlockOut.glb' },
-            // SosyalInavasyonAjans
-            { name: 'sosyalInavasyonAjansBase', source: './models/SosyalInavasyonAjans/sosyalinavasyonajans.glb' },
-            // { name: 'greenScreenDesertButtonTexture', source: './models/greenScreen/desertButton.png', type: 'texture' },
-            // { name: 'greenScreenSivasButtonTexture', source: './models/greenScreen/sivasButton.png', type: 'texture' },
-            // { name: 'greenScreenNewYorkButtonTexture', source: './models/greenScreen/newYorkButton.png', type: 'texture' },
-            // { name: 'greenScreenEnterKeyTexture', source: './models/area/keyEnter.png', type: 'texture' },
-        
-            // Road
-            { name: 'road', source: './models/road/road.glb' },
+            { name: 'ScienceCenter', source: './models/SectionScienceCenter/base.glb' },
+            { name: 'GreenScreen', source: './models/SectionGreenScreen/base.glb' },
+            { name: 'Capsule', source: './models/SectionCapsule/base.glb' },
+            { name: 'YoungCard', source: './models/SectionYoungCard/base.glb' },
+            { name: 'Rocket', source: './models/SectionRocket/base.glb' },
+            { name: 'SocialInovation', source: './models/SectionSocialInovation/base.glb' },
+            { name: 'SoundRoom', source: './models/SectionSoundRoom/base.glb' },
+            { name: 'YoungCenter', source: './models/SectionYoungCenter/base.glb' },
+            { name: 'Division', source: './models/SectionDivision/base.glb' },
+            { name: 'Alaaddin', source: './models/SectionAlaaddin/base.glb' },
+            { name: 'Atmosphere', source: './models/SectionAtmosphere/base.glb' },
+            { name: 'Stadium', source: './models/SectionStadium/base.glb' },
         ])
 
         this.loader.on('fileEnd', (_resource, _data) => {
