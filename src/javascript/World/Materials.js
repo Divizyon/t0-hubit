@@ -25,17 +25,218 @@ export default class Materials
         this.setFloorShadow()
     }
 
-    setPures()
-    {
+       setPures() {
         // Setup
         this.pures = {}
         this.pures.items = {}
+
+        this.pures.items.uc = new THREE.ShaderMaterial({
+            uniforms: {
+                color1: { value: new THREE.Color('#04F404') },
+                color2: { value: new THREE.Color('#02752c') },
+            },
+            vertexShader: `
+                varying vec2 vUv;
+                void main() {
+                    vUv = uv;
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                }
+            `,
+            fragmentShader: `
+                uniform vec3 color1;
+                uniform vec3 color2;
+                varying vec2 vUv;
+                void main() {
+                    gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+                }
+            `,
+            name: 'pureUc'
+        })
+
+        this.pures.items.uc = new THREE.ShaderMaterial({
+            uniforms: {
+                color1: { value: new THREE.Color('#04F404') },
+                color2: { value: new THREE.Color('#02752c') },
+            },
+            vertexShader: `
+                varying vec2 vUv;
+                void main() {
+                    vUv = uv;
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                }
+            `,
+            fragmentShader: `
+                uniform vec3 color1;
+                uniform vec3 color2;
+                varying vec2 vUv;
+                void main() {
+                    gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+                }
+            `,
+            name: '00066F'
+        })
+
         this.pures.items.red = new THREE.MeshBasicMaterial({ color: 0xff0000 })
         this.pures.items.red.name = 'pureRed'
+
         this.pures.items.white = new THREE.MeshBasicMaterial({ color: 0xffffff })
         this.pures.items.white.name = 'pureWhite'
+
         this.pures.items.yellow = new THREE.MeshBasicMaterial({ color: 0xffe889 })
         this.pures.items.yellow.name = 'pureYellow'
+
+        this.pures.items.golden = new THREE.MeshBasicMaterial({ color: 0xFFD700 })
+        this.pures.items.golden.name = 'pureGolden'
+        this.pures.items.customcolor1 = new THREE.MeshBasicMaterial({ color: 0x04F404 })
+
+        this.pures.items.customcolor1.name = '04F404'
+
+        this.pures.items.customcolor2 = new THREE.MeshBasicMaterial({ color: 0x303030 })
+        this.pures.items.customcolor2.name = '303030'
+
+        this.pures.items.customcolor3 = new THREE.MeshBasicMaterial({ color: 0x6D7367 })
+        this.pures.items.customcolor3.name = '6D7367'
+
+        this.pures.items.customcolor4 = new THREE.MeshBasicMaterial({ color: 0xD7DEE2 })
+        this.pures.items.customcolor4.name = 'D7DEE2'
+
+        this.pures.items.customcolor5 = new THREE.MeshBasicMaterial({ color: 0xEB3F3F })
+        this.pures.items.customcolor5.name = 'EB3F3F'
+
+        this.pures.items.customcolor6 = new THREE.MeshBasicMaterial({ color: 0x4F6A94 })
+        this.pures.items.customcolor6.name = '4F6A94'
+
+        this.pures.items.customcolor7 = new THREE.MeshBasicMaterial({ color: 0xEEEEEE })
+        this.pures.items.customcolor7.name = 'EEEEEE'
+
+        this.pures.items.customcolor8 = new THREE.MeshBasicMaterial({ color: 0xEB3F3F })
+        this.pures.items.customcolor8.name = 'EB3F3F'
+
+        this.pures.items.customcolor9 = new THREE.MeshBasicMaterial({ color: 0x00A29C })
+        this.pures.items.customcolor9.name = '00A29C'
+
+        this.pures.items.customcolor10 = new THREE.MeshBasicMaterial({ color: 0x373A3D })
+        this.pures.items.customcolor10.name = '373A3D'
+
+        this.pures.items.customcolor11 = new THREE.MeshBasicMaterial({ color: 0xFF0200 })
+        this.pures.items.customcolor11.name = 'FF0200'
+
+        this.pures.items.customcolor12 = new THREE.MeshBasicMaterial({ color: 0xFFCFF0 })
+        this.pures.items.customcolor12.name = 'FFCFF0'
+
+        this.pures.items.customcolor13 = new THREE.MeshBasicMaterial({ color: 0x717171 })
+        this.pures.items.customcolor13.name = '717171'
+
+        this.pures.items.customcolor14 = new THREE.MeshBasicMaterial({ color: 0x132227 })
+        this.pures.items.customcolor14.name = '132227'
+
+        this.pures.items.customcolor15 = new THREE.MeshBasicMaterial({ color: 0x01B3E3 })
+        this.pures.items.customcolor15.name = '01B3E3'
+
+        this.pures.items.customcolor16 = new THREE.MeshBasicMaterial({ color: 0xDEDEDE })
+        this.pures.items.customcolor16.name = 'DEDEDE'
+
+        this.pures.items.customcolor17 = new THREE.MeshBasicMaterial({ color: 0xB1B1B1 })
+        this.pures.items.customcolor17.name = 'B1B1B1'
+
+        this.pures.items.customcolor18 = new THREE.MeshBasicMaterial({ color: 0x1E83FF })
+        this.pures.items.customcolor18.name = '1E83FF'
+
+        this.pures.items.customcolor19 = new THREE.MeshBasicMaterial({ color: 0xE9E9E9 })
+        this.pures.items.customcolor19.name = 'E9E9E9'
+
+        this.pures.items.customcolor20 = new THREE.MeshBasicMaterial({ color: 0x49CECE })
+        this.pures.items.customcolor20.name = '49CECE'
+
+        this.pures.items.customcolor21 = new THREE.MeshBasicMaterial({ color: 0x267C6B })
+        this.pures.items.customcolor21.name = '267C6B'
+
+        this.pures.items.customcolor22 = new THREE.MeshBasicMaterial({ color: 0x4C98FF })
+        this.pures.items.customcolor22.name = '4C98FF'
+
+        this.pures.items.customcolor23 = new THREE.MeshBasicMaterial({ color: 0xCCA173 })
+        this.pures.items.customcolor23.name = 'CCA173'
+
+        this.pures.items.customcolor24 = new THREE.MeshBasicMaterial({ color: 0xD1D1D1 })
+        this.pures.items.customcolor24.name = 'D1D1D1'
+
+        this.pures.items.customcolor25 = new THREE.MeshBasicMaterial({ color: 0xCAE0FF })
+        this.pures.items.customcolor25.name = 'CAE0FF'
+
+        this.pures.items.customcolor26 = new THREE.MeshBasicMaterial({ color: 0xBBBBBB })
+        this.pures.items.customcolor26.name = 'BBBBBB'
+
+        this.pures.items.customcolor27 = new THREE.MeshBasicMaterial({ color: 0xEBB54F })
+        this.pures.items.customcolor27.name = 'EBB54F'
+
+        this.pures.items.customcolor28 = new THREE.MeshBasicMaterial({ color: 0x27501F })
+        this.pures.items.customcolor28.name = '27501F'
+
+        this.pures.items.customcolor29 = new THREE.MeshBasicMaterial({ color: 0x76423B })
+        this.pures.items.customcolor29.name = '76423B'
+
+        this.pures.items.customcolor30 = new THREE.MeshBasicMaterial({ color: 0x8CCD70 })
+        this.pures.items.customcolor30.name = '8CCD70'
+
+        this.pures.items.customcolor31 = new THREE.MeshBasicMaterial({ color: 0xFFFFFF })
+        this.pures.items.customcolor31.name = 'FFFFFF'
+
+        this.pures.items.customcolor32 = new THREE.MeshBasicMaterial({ color: 0xD99B59 })
+        this.pures.items.customcolor32.name = 'D99B59'
+
+        this.pures.items.customcolor33 = new THREE.MeshBasicMaterial({ color: 0xD40000 })
+        this.pures.items.customcolor33.name = 'D40000'
+
+        this.pures.items.customcolor34 = new THREE.MeshBasicMaterial({ color: 0xFFFBF3 })
+        this.pures.items.customcolor34.name = 'FFFBF3'
+
+        this.pures.items.customcolor35 = new THREE.MeshBasicMaterial({ color: 0x95A1B1 })
+        this.pures.items.customcolor35.name = '95A1B1'
+
+        this.pures.items.customcolor36 = new THREE.MeshBasicMaterial({ color: 0xF9EDD7 })
+        this.pures.items.customcolor36.name = 'F9EDD7'
+
+        this.pures.items.customcolor37 = new THREE.MeshBasicMaterial({ color: 0xCFCCC7 })
+        this.pures.items.customcolor37.name = 'CFCCC7'
+
+        this.pures.items.customcolor38 = new THREE.MeshBasicMaterial({ color: 0xF4F3F3 })
+        this.pures.items.customcolor38.name = 'F4F3F3'
+
+        this.pures.items.customcolor39 = new THREE.MeshBasicMaterial({ color: 0x00A300 })
+        this.pures.items.customcolor39.name = '00A300'
+
+        this.pures.items.customcolor40 = new THREE.MeshBasicMaterial({ color: 0xFFF3C6 })
+        this.pures.items.customcolor40.name = 'FFF3C6'
+
+        this.pures.items.customcolor41 = new THREE.MeshBasicMaterial({ color: 0x132227 })
+        this.pures.items.customcolor41.name = '132227'
+
+        this.pures.items.customcolor42 = new THREE.MeshBasicMaterial({ color: 0xFEB34A })
+        this.pures.items.customcolor42.name = 'FEB34A'
+
+        this.pures.items.customcolor43 = new THREE.MeshBasicMaterial({ color: 0x404041 })
+        this.pures.items.customcolor43.name = '404041'
+
+        this.pures.items.customcolor44 = new THREE.MeshBasicMaterial({ color: 0xBDC0CC })
+        this.pures.items.customcolor44.name = 'BDC0CC'
+
+        this.pures.items.customcolor45 = new THREE.MeshBasicMaterial({ color: 0x6F6F6F })
+        this.pures.items.customcolor45.name = '6F6F6F'
+
+        this.pures.items.customcolor46 = new THREE.MeshBasicMaterial({ color: 0xBBDAFF })
+        this.pures.items.customcolor46.name = 'BBDAFF'
+
+        this.pures.items.customcolor47 = new THREE.MeshBasicMaterial({ color: 0xBDC0CC })
+        this.pures.items.customcolor47.name = 'BDC0CC'
+
+        this.pures.items.customcolor48 = new THREE.MeshBasicMaterial({ color: 0x5C5C5C })
+        this.pures.items.customcolor48.name = '5C5C5C'
+
+        this.pures.items.customcolor49 = new THREE.MeshBasicMaterial({ color: 0xCD8B61 })
+        this.pures.items.customcolor49.name = 'CD8B61'
+
+        this.pures.items.customcolor50 = new THREE.MeshBasicMaterial({ color: 0x71ECEC })
+        this.pures.items.customcolor50.name = '71ECEC'
     }
 
     setShades()

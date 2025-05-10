@@ -97,14 +97,14 @@ export default class World {
 
         // this.setAlaaddin()
         // this.setAtmosphere()
-        this.setCapsule()
+         this.setCapsule()
         // this.setDivision()
         // this.setGreenScreen()
         // this.setRocket()
         // this.setScienceCenter()
         // this.setSocialInovation()
         // this.setSoundRoom()
-        // this.setStadium()
+         this.setStadium()
         // this.setYoungCard()
         // this.setYoungCenter()
     }
@@ -445,10 +445,13 @@ export default class World {
 
     setCapsule() {
         this.sectionCapsule = new SectionCapsule({
-            scene: this.scene,
             time: this.time,
-            physics: this.physics
-        });
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            scene: this.scene
+        })
     }
 
     setYoungCard() {
@@ -545,8 +548,9 @@ export default class World {
             resources: this.resources,
             objects: this.objects,
             physics: this.physics,
-            debug: this.debugFolder
+            debug: this.debugFolder,
+            scene: this.scene
         })
-        this.container.add(this.sectionStadium.container)
+        //this.container.add(this.sectionStadium.container)
     }
 }

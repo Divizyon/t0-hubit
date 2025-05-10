@@ -29,12 +29,10 @@ export default class SectionCapsule {
 
         const loader = new GLTFLoader();
         loader.load('./models/SectionCapsule/base.glb', (gltf) => {
-            console.log('Balık modeli yüklendi:', gltf);
-            console.log('Animasyonlar:', gltf.animations);
             
             this.model = gltf.scene;
-            this.model.position.set(18, -4, 3);
-            this.model.scale.set(1.5, 1.5, 1.5);
+            this.model.position.set(23, 2, 4);
+            this.model.scale.set(1.8, 1.8, 1.8);
             
             // Modeli döndür
             this.model.rotation.x = 0;
@@ -45,15 +43,15 @@ export default class SectionCapsule {
             if (this.physics) {
                 this.collisionBody = new CANNON.Body({
                     mass: 0,
-                    position: new CANNON.Vec3(18, -4, 3),
+                    position: new CANNON.Vec3(25, 2, 1),
                     material: this.physics.materials.items.floor
                 });
 
                 // Sphere yerine Box collision kullanıyoruz
                 const boxShape = new CANNON.Box(new CANNON.Vec3(
-                    4, // x boyutu
-                    4, // y boyutu
-                    4  // z boyutu
+                    5.2, // x boyutu
+                    5.2, // y boyutu
+                    5.2  // z boyutu
                 ));
                 this.collisionBody.addShape(boxShape);
                 
@@ -91,16 +89,16 @@ export default class SectionCapsule {
 
             // Animasyonları başlat
             if (gltf.animations && gltf.animations.length > 0) {
-                console.log('Animasyonlar yükleniyor...');
+                // console.log('Animasyonlar yükleniyor...');
                 this.mixer = new THREE.AnimationMixer(this.model);
                 gltf.animations.forEach((clip, index) => {
                     console.log(`Animasyon ${index} yükleniyor:`, clip.name);
                     const action = this.mixer.clipAction(clip);
                     action.reset().play();
                 });
-                console.log('Mixer oluşturuldu:', this.mixer);
+                // console.log('Mixer oluşturuldu:', this.mixer);
             } else {
-                console.warn('Hiç animasyon bulunamadı!');
+                // console.warn('Hiç animasyon bulunamadı!');
             }
         });
     }
