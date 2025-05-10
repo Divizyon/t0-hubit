@@ -22,7 +22,7 @@ export default class SoundRoomSection {
         this.container.updateMatrix()
 
         this.setModel()
-        this.createButton()
+       // this.createButton()
         
         // Debug kontrolü ekle
         if(this.debug) {
