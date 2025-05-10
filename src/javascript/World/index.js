@@ -497,8 +497,9 @@ export default class World {
                 this.sections.konyaGencKart = new KonyaGencKartSection({
                     ...options,
                     materials: this.materials,
-                    x: -20, // Sol tarafta
-                    y: 20   // Yukarda
+                    physics: this.physics,
+                    x: -20,
+                    y: 20
                 })
                 this.container.add(this.sections.konyaGencKart.container)
             } else {

@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import * as CANNON from 'cannon'
 
 export default class KonyaGencKartSection {
     constructor(_options) {
@@ -14,13 +15,54 @@ export default class KonyaGencKartSection {
         this.debug = _options.debug
         this.x = _options.x
         this.y = _options.y
+        this.physics = _options.physics // Physics referansını ekle
 
-        // Set up
+        // Set up 
         this.container = new THREE.Object3D()
         this.container.matrixAutoUpdate = false
         this.container.updateMatrix()
 
         this.setModel()
+        this.setCollisionBox() // Yeni collision box fonksiyonunu çağır
+    }
+
+    setCollisionBox() {
+        // Collision box boyutları
+        const boxSize = new CANNON.Vec3(2, 5.15, 3)
+        const position = new CANNON.Vec3(10, -32.5, 1.25)
+
+        // Collision box oluştur
+        const shape = new CANNON.Box(boxSize)
+        
+        // Fizik gövdesi oluştur
+        this.body = new CANNON.Body({
+            mass: 0,
+            position: position,
+            shape: shape,
+            material: new CANNON.Material('konyaGencKartMaterial')
+        })
+
+        // Debug için görsel eklentisi
+        if (this.debug) {
+            const geometry = new THREE.BoxGeometry(
+                boxSize.x * 2,
+                boxSize.y * 2,
+                boxSize.z * 2
+            )
+            const material = new THREE.MeshBasicMaterial({
+                color: 0x000000,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.5
+            })
+            this.debugMesh = new THREE.Mesh(geometry, material)
+            // Debug mesh'in pozisyonunu ayarla
+            this.debugMesh.position.set(position.x, position.y, position.z)
+            this.container.add(this.debugMesh)
+        }
+
+        // Physics world'e ekle
+        this.physics.world.addBody(this.body)
     }
 
     setModel() {
