@@ -97,7 +97,7 @@ export default class World {
 
         // this.setAlaaddin()
         // this.setAtmosphere()
-        // this.setCapsule()
+        this.setCapsule()
         // this.setDivision()
         // this.setGreenScreen()
         // this.setRocket()

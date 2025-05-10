@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import CANNON from 'cannon'
 
-let positionX = 0
+let positionX = 20
 let positionY = 0
 let positionZ = 0.03
 

@@ -1,8 +1,8 @@
 import * as THREE from 'three'
 import CANNON from 'cannon'
 
-let positionX = 15
-let positionY = 5
+let positionX = 17
+let positionY = -3
 let positionZ = 2
 
 export default class SectionCapsule  {
@@ -59,9 +59,8 @@ export default class SectionCapsule  {
             base: { children: baseChildren },
             collision: { children: baseChildren },
             offset: new THREE.Vector3(positionX, positionY, positionZ),
-            mass: 0
+            mass: 0,            
         })
-
         this.model.base.collision = { body }
 
         this.container.add(this.model.base.container)
