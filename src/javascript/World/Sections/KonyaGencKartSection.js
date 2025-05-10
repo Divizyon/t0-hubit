@@ -28,7 +28,7 @@ export default class KonyaGencKartSection {
 
     setCollisionBox() {
         // Collision box boyutları
-        const boxSize = new CANNON.Vec3(2, 5.15, 3)
+        const boxSize = new CANNON.Vec3(2.35, 5.15, 3)
         const position = new CANNON.Vec3(10, -32.5, 1.25)
 
         // Collision box oluştur
