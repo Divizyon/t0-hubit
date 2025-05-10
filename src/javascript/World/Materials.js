@@ -230,6 +230,7 @@ export default class Materials
                 for(const _child of _item.container.children)
                 {
                     if(_child.material instanceof THREE.ShaderMaterial)
+                        
                     {
                         if(_child.material.uniforms.uShadowColor)
                         {
