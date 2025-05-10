@@ -84,7 +84,7 @@ export default class Car
         this.movement.acceleration = new THREE.Vector3()
         this.movement.localAcceleration = new THREE.Vector3()
         this.movement.lastScreech = this.time.elapsed
-
+    
         // Time tick
         this.time.on('tick', () =>
         {
@@ -94,14 +94,14 @@ export default class Car
             movementSpeed.multiplyScalar(1 / this.time.delta * 17)
             this.movement.acceleration = movementSpeed.clone().sub(this.movement.speed)
             this.movement.speed.copy(movementSpeed)
-
+    
             this.movement.localSpeed = this.movement.speed.clone().applyAxisAngle(new THREE.Vector3(0, 0, 1), - this.chassis.object.rotation.z)
             this.movement.localAcceleration = this.movement.acceleration.clone().applyAxisAngle(new THREE.Vector3(0, 0, 1), - this.chassis.object.rotation.z)
-
+    
             // Sound
             this.sounds.engine.speed = this.movement.localSpeed.x
             this.sounds.engine.acceleration = this.controls.actions.up ? (this.controls.actions.boost ? 1 : 0.5) : 0
-
+    
             if(this.movement.localAcceleration.x > 0.03 && this.time.elapsed - this.movement.lastScreech > 5000)
             {
                 this.movement.lastScreech = this.time.elapsed

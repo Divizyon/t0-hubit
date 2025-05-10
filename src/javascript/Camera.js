@@ -33,6 +33,8 @@ export default class Camera
         this.setZoom()
         this.setPan()
         this.setOrbitControls()
+        this.setCarMovementTracking()
+        this.setThirdPersonMode() // Yeni metodu ekleyin
     }
 
     setAngle()
@@ -342,6 +344,147 @@ export default class Camera
         if(this.debug)
         {
             this.debugFolder.add(this.orbitControls, 'enabled').name('orbitControlsEnabled')
+        }
+    }
+
+    setCarMovementTracking()
+    {
+        // Araba hareketini takip etmek için gerekli değişkenler
+        this.carMovement = {
+            speed: new THREE.Vector3(),
+            localSpeed: new THREE.Vector3(),
+            acceleration: new THREE.Vector3(),
+            localAcceleration: new THREE.Vector3(),
+            position: new THREE.Vector3(),
+            lastLogTime: 0
+        }
+    
+        console.log('Araba hareketini takip etmek için kamera hazır');
+        
+        // Global değişkenden araba referansını almayı dene
+        this.time.on('tick', () => {
+            // Global değişkenden araba referansını almayı dene
+            if(window.application && window.application.world && window.application.world.car) {
+                const car = window.application.world.car;
+                
+                if(car.movement && car.chassis) {
+                    // Araba hareketini kopyala
+                    this.carMovement.speed.copy(car.movement.speed);
+                    this.carMovement.localSpeed.copy(car.movement.localSpeed);
+                    this.carMovement.acceleration.copy(car.movement.acceleration);
+                    this.carMovement.localAcceleration.copy(car.movement.localAcceleration);
+                    this.carMovement.position.copy(car.chassis.object.position);
+                    
+                    // Belirli aralıklarla konsola yazdır
+                    const speedThreshold = 0.01;
+                    const logInterval = 500; // milisaniye cinsinden log aralığı
+                    
+                    if (
+                        (Math.abs(this.carMovement.localSpeed.x) > speedThreshold || 
+                         Math.abs(this.carMovement.localSpeed.y) > speedThreshold) && 
+                        (this.time.elapsed - this.carMovement.lastLogTime > logInterval)
+                    ) {
+                        console.log('Araba hareket ediyor:', {
+                            hız_x: this.carMovement.localSpeed.x.toFixed(2),
+                            hız_y: this.carMovement.localSpeed.y.toFixed(2),
+                            ivme_x: this.carMovement.localAcceleration.x.toFixed(2),
+                            ivme_y: this.carMovement.localAcceleration.y.toFixed(2),
+                            pozisyon: {
+                                x: this.carMovement.position.x.toFixed(2),
+                                y: this.carMovement.position.y.toFixed(2),
+                                z: this.carMovement.position.z.toFixed(2)
+                            }
+                        });
+                        this.carMovement.lastLogTime = this.time.elapsed;
+                    }
+                }
+            }
+        });
+    }
+
+    // Araba referansını ayarlamak için yeni bir metot
+    setCarReference(car)
+    {
+        this.car = car;
+        console.log('Araba referansı kameraya eklendi');
+    }
+
+    setThirdPersonMode() {
+        // Üçüncü şahıs kamera modu ayarları
+        this.thirdPerson = {
+            enabled: false,
+            offset: new THREE.Vector3(-8, 0, 3), // Arabanın arkasında ve biraz yukarıda
+            lookAtOffset: new THREE.Vector3(0, 0, 2), // Arabanın biraz önüne bak
+            smoothFactor: 0.001, // Kamera takip yumuşaklığı
+            transitionDuration: 1.0 // Geçiş süresi (saniye)
+        };
+        
+        // O tuşuna basıldığında üçüncü şahıs modunu aç/kapat
+        window.addEventListener('keydown', (event) => {
+            if (event.key === 'o' || event.key === 'O') {
+                this.thirdPerson.enabled = !this.thirdPerson.enabled;
+                
+                if (this.thirdPerson.enabled) {
+                    console.log('Üçüncü şahıs kamera modu aktif');
+                    // Orbit kontrollerini devre dışı bırak
+                    this.orbitControls.enabled = false;
+                    // Pan'i devre dışı bırak
+                    this.pan.disable();
+                } else {
+                    console.log('Normal kamera moduna dönüldü');
+                    // Normal kamera moduna dön
+                    this.target.set(0, 0, 0);
+                }
+            }
+        });
+        
+        // Tick olayına üçüncü şahıs kamera güncellemesini ekle
+        this.time.on('tick', () => {
+            // Eğer üçüncü şahıs modu aktifse ve araba referansı varsa
+            if (this.thirdPerson.enabled && window.application && window.application.world && window.application.world.car) {
+                const car = window.application.world.car;
+                
+                if (car.chassis && car.chassis.object) {
+                    // Arabanın pozisyonu ve rotasyonu
+                    const carPosition = car.chassis.object.position;
+                    const carRotation = car.chassis.object.rotation;
+                    
+                    // Arabanın yönüne göre offset hesapla
+                    const offsetVector = this.thirdPerson.offset.clone();
+                    
+                    // Arabanın rotasyonuna göre offset'i döndür
+                    offsetVector.applyAxisAngle(new THREE.Vector3(0, 0, 1), carRotation.z);
+                    
+                    // Hedef pozisyonu hesapla (araba + offset)
+                    const targetPosition = carPosition.clone().add(offsetVector);
+                    
+                    // Kameranın bakacağı noktayı hesapla
+                    const lookAtOffset = this.thirdPerson.lookAtOffset.clone();
+                    lookAtOffset.applyAxisAngle(new THREE.Vector3(0, 0, 1), carRotation.z);
+                    const lookAtPosition = carPosition.clone().add(lookAtOffset);
+                    
+                    // Hedefi güncelle (kameranın bakacağı nokta)
+                    this.target.copy(lookAtPosition);
+                    
+                    // Kamera pozisyonunu doğrudan güncelle (yumuşak geçiş için)
+                    this.targetEased.copy(this.target);
+                    this.instance.position.copy(targetPosition);
+                    this.instance.lookAt(this.target);
+                }
+            }
+        });
+        
+        // Debug paneline üçüncü şahıs kamera ayarlarını ekle
+        if (this.debug && this.debugFolder) {
+            const thirdPersonFolder = this.debugFolder.addFolder('thirdPersonCamera');
+            thirdPersonFolder.add(this.thirdPerson, 'enabled').name('Aktif').listen();
+            thirdPersonFolder.add(this.thirdPerson.offset, 'x').min(-10).max(10).step(0.1).name('Offset X');
+            thirdPersonFolder.add(this.thirdPerson.offset, 'y').min(-10).max(10).step(0.1).name('Offset Y');
+            thirdPersonFolder.add(this.thirdPerson.offset, 'z').min(-10).max(10).step(0.1).name('Offset Z');
+            thirdPersonFolder.add(this.thirdPerson.lookAtOffset, 'x').min(-10).max(10).step(0.1).name('LookAt X');
+            thirdPersonFolder.add(this.thirdPerson.lookAtOffset, 'y').min(-10).max(10).step(0.1).name('LookAt Y');
+            thirdPersonFolder.add(this.thirdPerson.lookAtOffset, 'z').min(-10).max(10).step(0.1).name('LookAt Z');
+            thirdPersonFolder.add(this.thirdPerson, 'smoothFactor').min(0.01).max(1).step(0.01).name('Yumuşaklık');
         }
     }
 }
