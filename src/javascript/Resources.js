@@ -28,7 +28,7 @@ export default class Resources extends EventEmitter {
             // { name: 'matcapGold', source: './models/matcaps/gold.png', type: 'texture' },
 
             { name: 'rocketBase', source: './models/rocket/RoketModeli.glb' },
-            
+
             // Intro
             { name: 'introStaticBase', source: './models/intro/static/base.glb' },
             { name: 'introStaticCollision', source: './models/intro/static/collision.glb' },
@@ -197,19 +197,18 @@ export default class Resources extends EventEmitter {
 
             // MyCustomModel
             { name: 'myCustomModelBase', source: './models/soundRoom/soundRoom.glb' },
-            
+
             // YoungCenter
             { name: 'youngCenterBase', source: './models/YoungCenter/CalisanGenclikMerkezi.glb' },
-            
+
             // KonyaGencKart
             { name: 'konyaGencKartBase', source: './models/KonyaGencKart/konyagenckart.glb' },
-            
+
             // BilimMerkezi
             { name: 'bilimMerkeziBase', source: './models/BilimMerkezi/BilimMerkezi.glb' },
-            
+
             // AlaaddinHill
             { name: 'alaaddinHillBase', source: './models/AlaaddinHill/AlaaddinHill.glb' },
-            
             // Tiles
             { name: 'tilesABase', source: './models/tiles/a/base.glb' },
             { name: 'tilesACollision', source: './models/tiles/a/collision.glb' },
