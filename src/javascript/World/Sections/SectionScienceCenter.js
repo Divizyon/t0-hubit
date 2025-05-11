@@ -1,112 +1,106 @@
-import * as THREE from 'three'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
-import CANNON from 'cannon'
+import * as THREE from 'three';
+import CANNON from 'cannon';
+
+const DEFAULT_POSITION = new THREE.Vector3(21, 18, 2.7);
 
 export default class SectionScienceCenter {
-    constructor(_options) {
-        this.time = _options.time;
-        this.scene = _options.scene;
-        this.physics = _options.physics;
-        this.mixer = null;
-        this.model = null;
-        this.collisionBody = null;
-        this.setModel();
-        
-        if (this.time) {
-            this.time.on('tick', () => {
-                this.tick(this.time.delta * 0.001);
-            });
-        } else {
-            console.warn('SectionScienceCenter: time parametresi verilmedi, animasyonlar çalışmayacak.');
-        }
+  constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0 }) {
+    this.scene = scene;
+    this.resources = resources;
+    this.objects = objects;
+    this.physics = physics;
+    this.debug = debug;
+
+    this.rotateX = rotateX;
+    this.rotateY = rotateY;
+    this.rotateZ = rotateZ;
+
+    this.container = new THREE.Object3D();
+    this.position = DEFAULT_POSITION.clone();
+
+    this._buildModel();
+    this.scene.add(this.container);
+  }
+
+  
+    
+  _buildModel() {
+    const gltf = this.resources.items.ScienceCenter ;
+    const base = this.resources.items.Base;
+  
+    if (!gltf || !gltf.scene) {
+      console.error('ScienceCenter bina modeli bulunamadı');
+      return;
     }
-
-    setModel() {
-        if (!this.scene) {
-            console.warn('SectionScienceCenter: scene parametresi verilmedi, model sahneye eklenmeyecek.');
-            return;
-        }
-
-        const loader = new GLTFLoader();
-        loader.load('./models/SectionScienceCenter/base.glb', (gltf) => {
-            
-            this.model = gltf.scene;
-            this.model.position.set(28, 15, -1.8);
-            this.model.scale.set(1, 1, 1);
-            
-            // Modeli döndür
-            this.model.rotation.x = 0;
-            this.model.rotation.z = -.3;
-            
-            this.scene.add(this.model);
-
-          
-            if (this.physics) {
-                this.collisionBody = new CANNON.Body({
-                    mass: 0,
-                    position: new CANNON.Vec3(38, 15, 1),
-                    material: this.physics.materials.items.floor
-                });
-
-                // Sphere yerine Box collision kullanıyoruz
-                const boxShape = new CANNON.Box(new CANNON.Vec3(
-                    5.2, // x boyutu
-                    5.2, // y boyutu
-                    5.2  // z boyutu
-                ));
-                // this.collisionBody.addShape(boxShape);
-                
-                this.physics.world.addBody(this.collisionBody);
-            }
-
-            // Işık ekle (sadece bir kez)
-            if (!this.scene.__balikLightAdded) {
-                this.scene.add(new THREE.AmbientLight(0xffffff, 2));
-                const dirLight = new THREE.DirectionalLight(0xffffff, 2);
-                dirLight.position.set(5, 10, 7.5);
-                this.scene.add(dirLight);
-                this.scene.__balikLightAdded = true;
-            }
-
-            // Materyal ve mesh kontrolü
-            this.model.traverse((child) => {
-                if (child.isMesh) {
-                    console.log('Mesh bulundu:', child.name);
-                    if (child.isSkinnedMesh) {
-                        console.log('SkinnedMesh bulundu:', child.name);
-                    }
-                    child.castShadow = true;
-                    child.receiveShadow = true;
-                    if (!child.material) {
-                        child.material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
-                    }
-                    if (child.material && child.material.type === 'MeshBasicMaterial') {
-                        child.material = new THREE.MeshStandardMaterial({ color: child.material.color || 0xffffff });
-                    }
-                    child.material.transparent = false;
-                    child.material.opacity = 1;
-                }
-            });
-
-            // Animasyonları başlat
-            if (gltf.animations && gltf.animations.length > 0) {
-                // console.log('Animasyonlar yükleniyor...');
-                this.mixer = new THREE.AnimationMixer(this.model);
-                gltf.animations.forEach((clip, index) => {
-                    console.log(`Animasyon ${index} yükleniyor:`, clip.name);
-                    const action = this.mixer.clipAction(clip);
-                    action.reset().play();
-                });
-                // console.log('Mixer oluşturuldu:', this.mixer);
-            } else {
-                // console.warn('Hiç animasyon bulunamadı!');
-            }
-        });
+  
+    if (!base || !base.scene) {
+      console.error('Base modeli bulunamadı');
+      return;
     }
-
-    tick(delta) {
-        if (this.mixer) {
-            this.mixer.update(delta);
-        }
+  
+    // Division modelini klonla ve malzemeleri kopyala
+    const model = gltf.scene.clone(true);
+    model.traverse(child => {
+      if (child.isMesh) {
+        const origMat = child.material;
+        const mat = origMat.clone();
+        if (origMat.map) mat.map = origMat.map;
+        if (origMat.normalMap) mat.normalMap = origMat.normalMap;
+        if (origMat.roughnessMap) mat.roughnessMap = origMat.roughnessMap;
+        if (origMat.metalnessMap) mat.metalnessMap = origMat.metalnessMap;
+        mat.needsUpdate = true;
+        child.material = mat;
+        child.castShadow = true;
+        child.receiveShadow = true;
+      }
+    });
+  
+    // Base modelini klonla ve Division modeline ekle
+    const baseModel = base.scene.clone(true);
+    baseModel.position.set(20, 20, 2); // Base modelinin Division altına yerleştirilmesi için pozisyon ayarı
+    baseModel.scale.set(3.2, 1.6, 2,); // Base modelinin ölçeği
+    this.container.add(baseModel);
+    // Division model pozisyonu ve dönüşü
+    model.position.copy(this.position);
+    model.rotation.set(this.rotateX, this.rotateY, this.rotateZ);
+    this.container.add(model);
+  
+    // Bounding box hesapla
+    model.updateMatrixWorld(true);
+    const bbox = new THREE.Box3().setFromObject(model);
+    const size = bbox.getSize(new THREE.Vector3());
+  
+    // Fizik gövdesi oluştur
+    const halfExtents = new CANNON.Vec3(size.x / 3, size.y / 3, size.z / 2);
+    const boxShape = new CANNON.Box(halfExtents);
+  
+    const body = new CANNON.Body({
+      mass: 0,
+      position: new CANNON.Vec3(...this.position.toArray()),
+      material: this.physics.materials.items.floor
+    });
+  
+    // Dönüşü quaternion olarak ayarla
+    const quat = new CANNON.Quaternion();
+    quat.setFromEuler(this.rotateX, this.rotateY, this.rotateZ, 'XYZ');
+    body.quaternion.copy(quat);
+  
+    body.addShape(boxShape);
+    this.physics.world.addBody(body);
+  
+    // Obje sistemine ekle
+    if (this.objects) {
+      const children = model.children.slice();
+      const objectEntry = this.objects.add({
+        base: { children },
+        collision: { children },
+        offset: this.position.clone(),
+        mass: 0
+      });
+      objectEntry.collision = { body };
+      if (objectEntry.container) {
+        this.container.add(objectEntry.container);
+      }
     }
+  }
 }

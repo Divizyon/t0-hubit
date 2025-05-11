@@ -438,13 +438,14 @@ export default class World {
 
     setScienceCenter() {
         this.sectionScienceCenter = new SectionScienceCenter({
-            time: this.time,
-            resources: this.resources,
-            objects: this.objects,
-            physics: this.physics,
-            debug: this.debugFolder,
-            scene: this.scene
-        })
+          scene:     this.scene,
+          resources: this.resources,
+          physics:   this.physics,
+          debug:     this.debugFolder,
+          rotateX:   0,   // 
+          rotateY:   0,
+          rotateZ:   Math.PI / 180 // Y ekseninde 90 derece,
+        });
     }
 
     setGreenScreen() {
@@ -574,14 +575,15 @@ export default class World {
     }
 
     setYoungCenter() {
-        this.sectionYoungCenter = new SectionYoungCenter({
-            time: this.time,
-            resources: this.resources,
-            objects: this.objects,
-            physics: this.physics,
-            debug: this.debugFolder,
-            scene: this.scene
-        })
+        this.division = new SectionYoungCenter({
+          scene:     this.scene,
+          resources: this.resources,
+          physics:   this.physics,
+          debug:     this.debugFolder,
+          rotateX:   0,   // 
+          rotateY:   0,
+          rotateZ:   Math.PI / 2 // Y ekseninde 90 derece,
+        });
     }
 
     setAlaaddin() {
