@@ -82,7 +82,7 @@ export default class SectionCapsule {
         this.position.y,
         this.position.z-2.8
       ),
-      material: this.physics.materials.items.floor
+      material: this.physics.materials.items.floor,
     });
   
     // Dönüşü quaternion olarak ayarla
