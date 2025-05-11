@@ -115,7 +115,7 @@ export default class Car
     setChassis()
     {
         this.chassis = {}
-        this.chassis.offset = new THREE.Vector3(0, 0, - 0.52)
+        this.chassis.offset = new THREE.Vector3(0, 0, -0.32)
         this.chassis.object = this.objects.getConvertedMesh(this.models.chassis.scene.children)
         this.chassis.object.position.copy(this.physics.car.chassis.body.position)
         this.chassis.oldPosition = this.chassis.object.position.clone()

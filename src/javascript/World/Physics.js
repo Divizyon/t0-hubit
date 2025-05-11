@@ -128,16 +128,16 @@ export default class Physics
         // Tekerlek konumları (derinlik = ileri/geri, genişlik = sağ/sol)
         if(this.config && this.config.togg) {
             // Togg modeli için özel tekerlek ayarları
-            this.car.options.wheelFrontLeftPosition = { depth: 0.7, width: 0.35 };  // Sol ön
-            this.car.options.wheelFrontRightPosition = { depth: 0.7, width: -0.4 }; // Sağ ön
-            this.car.options.wheelBackLeftPosition = { depth: -0.65, width: 0.35 };   // Sol arka
-            this.car.options.wheelBackRightPosition = { depth: -0.65, width: -0.4 };  // Sağ arka
+            this.car.options.wheelFrontLeftPosition = { depth: 0.65, width: 0.35 };  // Sol ön
+            this.car.options.wheelFrontRightPosition = { depth: 0.65, width: -0.4 }; // Sağ ön
+            this.car.options.wheelBackLeftPosition = { depth: -0.7, width: 0.35 };   // Sol arka
+            this.car.options.wheelBackRightPosition = { depth: -0.7, width: -0.4 };  // Sağ arka
         } else {
             // Normal araba için tekerlek ayarları
-            this.car.options.wheelFrontLeftPosition = { depth: 0.7, width: 0.35 };  // Sol ön
-            this.car.options.wheelFrontRightPosition = { depth: 0.7, width: -0.4 }; // Sağ ön
-            this.car.options.wheelBackLeftPosition = { depth: -0.65, width: 0.35 };   // Sol arka
-            this.car.options.wheelBackRightPosition = { depth: -0.65, width: -0.4 };  // Sağ arka
+            this.car.options.wheelFrontLeftPosition = { depth: 0.65, width: 0.35 };  // Sol ön
+            this.car.options.wheelFrontRightPosition = { depth: 0.65, width: -0.4 }; // Sağ ön
+            this.car.options.wheelBackLeftPosition = { depth: -0.7, width: 0.35 };   // Sol arka
+            this.car.options.wheelBackRightPosition = { depth: -0.7, width: -0.4 };  // Sağ arka
         }
         
         // Bu değerler sadece geriye dönük uyumluluk için kullanılıyor
