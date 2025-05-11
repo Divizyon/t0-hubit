@@ -31,13 +31,13 @@ export default class SectionGreenScreen {
         loader.load('./models/SectionGreenScreen/base.glb', (gltf) => {
             
             this.model = gltf.scene;
-            this.model.position.set(-23, 1.8, -2);
-            this.model.scale.set(1,1,1);
+            this.model.position.set(-65,0,0);
+            this.model.scale.set(1.4,1.4,1.4);
 
             this.scene.add(this.model);
 
 
-            this.model.rotation.z = -.2;
+            this.model.rotation.z = 0;
 
           
             if (this.physics) {

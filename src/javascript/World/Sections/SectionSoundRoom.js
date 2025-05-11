@@ -31,13 +31,14 @@ export default class SectionSoundRoom {
         loader.load('./models/SectionSoundRoom/base.glb', (gltf) => {
             
             this.model = gltf.scene;
-            this.model.position.set(-28.2, -1, -1);
+            this.model.position.set(-60, -25, 0
+            );
             this.model.scale.set(1, 1, 1);
 
             this.scene.add(this.model);
 
 
-            this.model.rotation.z = 1.7;
+            this.model.rotation.z = 1.6;
 
           
             if (this.physics) {
