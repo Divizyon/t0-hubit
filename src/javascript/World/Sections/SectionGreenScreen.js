@@ -32,7 +32,7 @@ export default class SectionGreenScreen {
             
             this.model = gltf.scene;
             this.model.position.set(-23, 1.8, -2);
-            this.model.scale.set(.5, .5, .5);
+            this.model.scale.set(1,1,1);
 
             this.scene.add(this.model);
 

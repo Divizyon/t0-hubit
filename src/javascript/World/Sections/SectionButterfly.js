@@ -32,7 +32,7 @@ export default class SectionScienceCenter {
             
             this.model = gltf.scene;
             this.model.position.set(36, -1.3, -1);
-            this.model.scale.set(.7, .7, .7);
+            this.model.scale.set(1,1,1);
             
             // Modeli döndür
             this.model.rotation.x = 0;

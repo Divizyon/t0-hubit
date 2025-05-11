@@ -32,7 +32,7 @@ export default class SectionBasketball {
             
             this.model = gltf.scene;
             this.model.position.set(-27, 14, .4);
-            this.model.scale.set(.12, .12, .12);
+            this.model.scale.set(1,1,1);
 
             this.scene.add(this.model);
 
