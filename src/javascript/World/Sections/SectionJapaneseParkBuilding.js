@@ -31,7 +31,7 @@ export default class SectionJapaneseParkBuilding {
         loader.load('./models/SectionJapaneseParkBuilding/base.glb', (gltf) => {
             
             this.model = gltf.scene;
-            this.model.position.set(-31, -24.25, 1.5);
+            this.model.position.set(-17, -24.25, 1.5);
             this.model.scale.set(1,1,1);
 
             this.scene.add(this.model);

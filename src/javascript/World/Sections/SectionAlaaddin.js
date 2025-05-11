@@ -31,7 +31,7 @@ export default class SectionAlaaddin {
         loader.load('./models/SectionAlaaddin/base.glb', (gltf) => {
             
             this.model = gltf.scene;
-            this.model.position.set(-5, -40, .2);
+            this.model.position.set(5, -40, .2);
             this.model.scale.set(1,1,1);
 
             this.model.rotation.x = -80.1;
