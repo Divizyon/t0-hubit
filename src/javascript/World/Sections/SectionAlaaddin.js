@@ -32,7 +32,7 @@ export default class SectionAlaaddin {
             
             this.model = gltf.scene;
             this.model.position.set(6, -13, .2);
-            this.model.scale.set(1,1,1);
+            this.model.scale.set(0.4,0.4,0.4);
 
             this.model.rotation.x = -80.1;
             this.model.rotation.y = 25;

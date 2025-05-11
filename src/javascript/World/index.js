@@ -528,13 +528,14 @@ export default class World {
 
     setYoungCard() {
         this.sectionYoungCard = new SectionYoungCard({
-            time: this.time,
+            scene:     this.scene,
             resources: this.resources,
-            objects: this.objects,
-            physics: this.physics,
-            debug: this.debugFolder,
-            scene: this.scene
-        })
+            physics:   this.physics,
+            debug:     this.debugFolder,
+            rotateX:   Math.PI,   // 
+            rotateY:   0,
+            rotateZ:   -Math.PI/2   // Y ekseninde 90 derece,
+          });
     }
 
     setRocket() {
@@ -575,7 +576,7 @@ export default class World {
     }
 
     setYoungCenter() {
-        this.division = new SectionYoungCenter({
+        this.sectio = new SectionYoungCenter({
           scene:     this.scene,
           resources: this.resources,
           physics:   this.physics,

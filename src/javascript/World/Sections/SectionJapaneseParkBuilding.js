@@ -32,7 +32,7 @@ export default class SectionJapaneseParkBuilding {
             
             this.model = gltf.scene;
             this.model.position.set(-9, -10, 1.5);
-            this.model.scale.set(1, 1, 1);
+            this.model.scale.set(.5, .5, 0.5);
 
             this.scene.add(this.model);
 
