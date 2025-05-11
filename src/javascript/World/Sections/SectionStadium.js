@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import CANNON from 'cannon';
 
-const DEFAULT_POSITION = new THREE.Vector3(40, 30, 1.9);
+const DEFAULT_POSITION = new THREE.Vector3(40, 30, 3);
 
 export default class SectionStadium {
   constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0 }) {
@@ -57,7 +57,7 @@ export default class SectionStadium {
   
      // Base modelini klonla ve Kapsül modeline ekle
      const baseModel = base.scene.clone(true);
-     baseModel.position.set(40, 30, -1); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
+     baseModel.position.set(40, 30, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
      baseModel.scale.set(3.5, 3, 1.5); // Base modelinin ölçeği
      this.container.add(baseModel);
    
@@ -67,23 +67,23 @@ export default class SectionStadium {
      this.container.add(model);
    
      // Bounding box hesapla
-     baseModel.updateMatrixWorld(true);
-     const bbox = new THREE.Box3().setFromObject(baseModel);
-     var size = bbox.getSize(new THREE.Vector3());
-   
-     // Fizik gövdesi oluştur
-     const halfExtents = new CANNON.Vec3(size.x / 2, size.y / 1.9, size.z / 1.9);
-     const boxShape = new CANNON.Box(halfExtents);
-   
-     const body = new CANNON.Body({
-       mass: 0,
-       position: new CANNON.Vec3(
-         this.position.x ,
-         this.position.y,
-         this.position.z -2
-       ),
-       material: this.physics.materials.items.floor
-     });
+    baseModel.updateMatrixWorld(true);
+    const bbox = new THREE.Box3().setFromObject(baseModel);
+    var size = bbox.getSize(new THREE.Vector3());
+  
+    // Fizik gövdesi oluştur
+    const halfExtents = new CANNON.Vec3(size.x / 2.2, size.y / 1.7, size.z / 1.9);
+    const boxShape = new CANNON.Box(halfExtents);
+  
+    const body = new CANNON.Body({
+      mass: 0,
+      position: new CANNON.Vec3(
+        this.position.x + 1.2,
+        this.position.y - 1,
+        this.position.z -3
+      ),
+      material: this.physics.materials.items.floor
+    });
   
     // Dönüşü quaternion olarak ayarla
     const quat = new CANNON.Quaternion();
