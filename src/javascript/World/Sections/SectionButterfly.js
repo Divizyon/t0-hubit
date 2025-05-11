@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import CANNON from 'cannon';
 
-const DEFAULT_POSITION = new THREE.Vector3(41.5, -15, 3.5);
+const DEFAULT_POSITION = new THREE.Vector3(57.5, -17.5, 3.5);
 
 export default class SectionButterfly {
   constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0 }) {
@@ -57,7 +57,7 @@ export default class SectionButterfly {
   
      // Base modelini klonla ve Kapsül modeline ekle
      const baseModel = base.scene.clone(true);
-     baseModel.position.set(41, -15, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
+     baseModel.position.set(57, -17.5, .5); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
      baseModel.scale.set(2, 2.5, 2); // Base modelinin ölçeği
      this.container.add(baseModel);
    

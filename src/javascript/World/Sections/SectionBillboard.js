@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 import CANNON from 'cannon';
 
-const DEFAULT_POSITION = new THREE.Vector3(36.1, -18, 3.5);
+const DEFAULT_POSITION = new THREE.Vector3(57.5, -17.5, 3.5);
 
-export default class SectionCapsule {
+export default class SectionBillboard {
   constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0 }) {
     this.scene = scene;
     this.resources = resources;
@@ -25,20 +25,20 @@ export default class SectionCapsule {
   
     
   _buildModel() {
-    const gltf = this.resources.items.Capsule;
+    const gltf = this.resources.items.Butterfly;
     const base = this.resources.items.Base;
   
     if (!gltf || !gltf.scene) {
-      console.error('Kapsül modeli bulunamadı');
+      console.error('SectionBillboard bina modeli bulunamadı');
       return;
     }
   
     if (!base || !base.scene) {
-      console.error('Base modeli bulunamadı');n
+      console.error('Base modeli bulunamadı');
       return;
-    } 
+    }
   
-    // Kapsül modelini klonla ve malzemeleri kopyala
+    // Division modelini klonla ve malzemeleri kopyala
     const model = gltf.scene.clone(true);
     model.traverse(child => {
       if (child.isMesh) {
@@ -52,39 +52,38 @@ export default class SectionCapsule {
         child.material = mat;
         child.castShadow = true;
         child.receiveShadow = true;
-        child.scale.set(1, 1, 1); // Kapsül modelinin ölçeği
       }
     });
   
-    // Base modelini klonla ve Kapsül modeline ekle
-    const baseModel = base.scene.clone(true);
-    baseModel.position.set(37, -18, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
-    baseModel.scale.set(1.5, 1.5, 1.5); // Base modelinin ölçeği
-    this.container.add(baseModel);
-  
-    // Kapsül model pozisyonu ve dönüşü
-    model.position.copy(this.position);
-    model.rotation.set(this.rotateX, this.rotateY, this.rotateZ);
-    this.container.add(model);
-  
-    // Bounding box hesapla
-    baseModel.updateMatrixWorld(true);
-    const bbox = new THREE.Box3().setFromObject(baseModel);
-    var size = bbox.getSize(new THREE.Vector3());
-  
-    // Fizik gövdesi oluştur
-    const halfExtents = new CANNON.Vec3(size.x / 2, size.y / 1.9, size.z / 1.9);
-    const boxShape = new CANNON.Box(halfExtents);
-  
-    const body = new CANNON.Body({
-      mass: 0,
-      position: new CANNON.Vec3(
-        this.position.x + 1.5,
-        this.position.y,
-        this.position.z -3
-      ),
-      material: this.physics.materials.items.floor
-    });
+     // Base modelini klonla ve Kapsül modeline ekle
+     const baseModel = base.scene.clone(true);
+     baseModel.position.set(57, -17.5, .5); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
+     baseModel.scale.set(2, 2.5, 2); // Base modelinin ölçeği
+     this.container.add(baseModel);
+   
+     // Kapsül model pozisyonu ve dönüşü
+     model.position.copy(this.position);
+     model.rotation.set(this.rotateX, this.rotateY, this.rotateZ);
+     this.container.add(model);
+   
+     // Bounding box hesapla
+     baseModel.updateMatrixWorld(true);
+     const bbox = new THREE.Box3().setFromObject(baseModel);
+     var size = bbox.getSize(new THREE.Vector3());
+   
+     // Fizik gövdesi oluştur
+     const halfExtents = new CANNON.Vec3(size.x / 2, size.y / 1.9, size.z / 1.9);
+     const boxShape = new CANNON.Box(halfExtents);
+   
+     const body = new CANNON.Body({
+       mass: 0,
+       position: new CANNON.Vec3(
+         this.position.x ,
+         this.position.y,
+         this.position.z -2
+       ),
+       material: this.physics.materials.items.floor
+     });
   
     // Dönüşü quaternion olarak ayarla
     const quat = new CANNON.Quaternion();

@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 import CANNON from 'cannon';
+import { KHR_DF_MODEL_RGBSDA } from 'three/examples/jsm/libs/ktx-parse.module.js';
 
-const DEFAULT_POSITION = new THREE.Vector3(33, 15, -1);
+const DEFAULT_POSITION = new THREE.Vector3(42.8, 12.2, 0);
 
 export default class SectionScienceCenter {
   constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0 }) {
@@ -54,40 +55,40 @@ export default class SectionScienceCenter {
         child.receiveShadow = true;
       }
     });
-  
-    // Base modelini klonla ve Division modeline ekle
+
     const baseModel = base.scene.clone(true);
-    baseModel.position.set(33, 15, -1); // Base modelinin Division altına yerleştirilmesi için pozisyon ayarı
-    baseModel.scale.set(3.2, 1.6, 2,); // Base modelinin ölçeği
+    baseModel.position.set(42.5, 14, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
+    baseModel.scale.set(3, 2.1, 2) // Base modelinin ölçeği
     this.container.add(baseModel);
-    // Division model pozisyonu ve dönüşü
+  
+    // Kapsül model pozisyonu ve dönüşü
     model.position.copy(this.position);
     model.rotation.set(this.rotateX, this.rotateY, this.rotateZ);
     this.container.add(model);
   
     // Bounding box hesapla
-    model.updateMatrixWorld(true);
-    const bbox = new THREE.Box3().setFromObject(model);
-    const size = bbox.getSize(new THREE.Vector3());
-  
+    baseModel.updateMatrixWorld(true);
+    const bbox = new THREE.Box3().setFromObject(this.container);
+    var size = bbox.getSize(new THREE.Vector3());
+
     // Fizik gövdesi oluştur
-    const halfExtents = new CANNON.Vec3(size.x / 3, size.y / 3, size.z / 2);
+    const halfExtents = new CANNON.Vec3(size.x / 1.97, size.y / 1.97, size.z / 2);
     const boxShape = new CANNON.Box(halfExtents);
-  
+
     const body = new CANNON.Body({
       mass: 0,
-      position: new CANNON.Vec3(...this.position.toArray()),
+      position: baseModel.position,
       material: this.physics.materials.items.floor
     });
-  
+
     // Dönüşü quaternion olarak ayarla
     const quat = new CANNON.Quaternion();
     quat.setFromEuler(this.rotateX, this.rotateY, this.rotateZ, 'XYZ');
     body.quaternion.copy(quat);
-  
+
     body.addShape(boxShape);
     this.physics.world.addBody(body);
-  
+    
     // Obje sistemine ekle
     if (this.objects) {
       const children = model.children.slice();

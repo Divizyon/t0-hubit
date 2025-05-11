@@ -34,6 +34,8 @@ import SectionJapaneseParkBuilding from './Sections/SectionJapaneseParkBuilding.
 import SectionRenderRoom from './Sections/SectionRenderRoom.js'
 import SectionConcert from './Sections/SectionConcert.js'
 import SectionBasketball from './Sections/SectionBasketball.js'
+import SectionBillboard from './Sections/SectionBillboard.js'
+import SectionCoWork from './Sections/SectionCoWork.js'
 
 
 export default class World {
@@ -110,6 +112,9 @@ export default class World {
         this.setConcert()
         this.setBasketball()
         this.setButterfly()
+
+        //this.setBillboard()
+        //this.setCoWork()
 
         this.setJapanesePark()
         this.setJapaneseParkBuilding()
@@ -636,6 +641,30 @@ export default class World {
 
     setStadium() {
         this.stadium = new SectionStadium({
+          scene:     this.scene,
+          resources: this.resources,
+          physics:   this.physics,
+          debug:     this.debugFolder,
+          rotateX:   0,   // 
+          rotateY:   0,
+          rotateZ:   Math.PI/2 // Y ekseninde 90 derece,
+        });
+    }
+
+    setBillboard() {
+        this.sectionBillboard = new SectionBillboard({
+          scene:     this.scene,
+          resources: this.resources,
+          physics:   this.physics,
+          debug:     this.debugFolder,
+          rotateX:   0,   // 
+          rotateY:   0,
+          rotateZ:   Math.PI/2 // Y ekseninde 90 derece,
+        });
+    }
+
+    setCoWork() {
+        this.sectionCoWork = new SectionCoWork({
           scene:     this.scene,
           resources: this.resources,
           physics:   this.physics,
