@@ -660,6 +660,7 @@ export default class World {
           rotateY:   0,
           rotateZ:   Math.PI/2 // Y ekseninde 90 derece,
         });
+        this.container.name = 'Billboard'
     }
 
     setCoWork() {

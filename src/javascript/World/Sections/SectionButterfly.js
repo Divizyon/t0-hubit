@@ -63,7 +63,7 @@ export default class SectionButterfly {
 
     // Kapsül model pozisyonu ve dönüşü
     model.position.copy(this.position);
-    model.rotation.set(this.rotateX, this.rotateY, this.rotateZ);
+    model.rotation.set(this.rotateX, this.rotateY, Math.PI / 2);
     this.container.add(model);
 
     // Bounding box hesapla
