@@ -112,14 +112,14 @@ export default class World {
         this.setBasketball()
         this.setButterfly()
 
-        this.setBillboard()
+        //this.setBillboard()
         this.setCoWork()
 
         this.setJapanesePark()
         this.setJapaneseParkBuilding()
         // this.setRocket()
         this.setScienceCenter()
-        // this.setSocialInovation()
+        this.setSocialInovation()
         this.setSoundRoom()
         this.setStadium()
         this.setYoungCard()
@@ -569,13 +569,14 @@ export default class World {
 
     setSocialInovation() {
         this.sectionSocialInovation = new SectionSocialInovation({
-            time: this.time,
+            scene:     this.scene,
             resources: this.resources,
-            objects: this.objects,
-            physics: this.physics,
-            debug: this.debugFolder,
-            scene: this.scene
-        })
+            physics:   this.physics,
+            debug:     this.debugFolder,
+            rotateX:   Math.PI/2,   // 
+            rotateY:   0,
+            rotateZ:   0, // Y ekseninde 90 derece,
+          });
         this.container.add(this.sectionSocialInovation.container)
     }
 
