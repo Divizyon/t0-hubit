@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import CANNON from 'cannon';
 
-const DEFAULT_POSITION = new THREE.Vector3(57.5, -17.5, 3.5);
+const DEFAULT_POSITION = new THREE.Vector3(0, 0, -.5);
 
 export default class SectionBillboard {
   constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0 }) {
@@ -25,7 +25,7 @@ export default class SectionBillboard {
   
     
   _buildModel() {
-    const gltf = this.resources.items.Butterfly;
+    const gltf = this.resources.items.Billboard;
     const base = this.resources.items.Base;
   
     if (!gltf || !gltf.scene) {

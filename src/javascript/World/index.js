@@ -112,7 +112,7 @@ export default class World {
         this.setBasketball()
         this.setButterfly()
 
-        //this.setBillboard()
+        this.setBillboard()
         this.setCoWork()
 
         this.setJapanesePark()

@@ -246,6 +246,8 @@ export default class Resources extends EventEmitter {
             { name: 'Butterfly', source: './models/SectionButterfly/base.glb' },
             { name: 'CoWork', source: './models/SectionCoWork/base.glb' },
             { name: 'Billboard', source: './models/SectionBillboard/base.glb' },
+            { name: 'Basketball', source: './models/SectionBasketball/base.glb' },
+            { name: 'Board', source: './models/SectionBillboard/base.glb' },
         ])
 
         this.loader.on('fileEnd', (_resource, _data) => {
