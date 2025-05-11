@@ -16,6 +16,12 @@
 <body>
 
     <canvas class="canvas js-canvas"></canvas>
+    
+    <!-- FPS gösterici canvas -->
+    <div class="fps-container">
+        <canvas id="fpsCanvas"></canvas>
+        <div class="fps-text" id="fpsCounter">FPS: 0</div>
+    </div>
 
     <div class="welcome-message" id="welcomeMessage">
         <button class="close-btn" onclick="document.getElementById('welcomeMessage').style.display='none'">×</button>
@@ -24,6 +30,7 @@
     </div>
 
     <script type="module" src="./index.js"></script>
+    <script type="module" src="./fps-counter.js"></script>
 
 </body>
 </html>
