@@ -31,7 +31,7 @@ export default class SectionConcert {
         loader.load('./models/SectionConcert/base.glb', (gltf) => {
             
             this.model = gltf.scene;
-            this.model.position.set(-23.5, 15, .5);
+            this.model.position.set(-40, 15, .5);
             this.model.scale.set(1, 1, 1);
 
             this.scene.add(this.model);

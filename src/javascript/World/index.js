@@ -37,7 +37,6 @@ import SectionBasketball from './Sections/SectionBasketball.js'
 import SectionBillboard from './Sections/SectionBillboard.js'
 import SectionCoWork from './Sections/SectionCoWork.js'
 
-
 export default class World {
     constructor(_options) {
         // Options
@@ -114,7 +113,7 @@ export default class World {
         this.setButterfly()
 
         //this.setBillboard()
-        //this.setCoWork()
+        this.setCoWork()
 
         this.setJapanesePark()
         this.setJapaneseParkBuilding()
