@@ -36,7 +36,7 @@ export default class SectionConcert {
 
             this.scene.add(this.model);
 
-            this.model.rotation.x = Math.PI / 2; // Rotate the model to correct orientation
+            this.model.rotation.x = 0; // Rotate the model to correct orientation
             this.model.rotation.y = -.1; // Rotate the model to correct orientation
 
             if (this.physics) {
