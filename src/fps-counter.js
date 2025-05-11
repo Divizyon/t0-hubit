@@ -8,6 +8,13 @@ class FPSCounter {
     // Canvas ve metin öğelerini al
     this.canvas = document.getElementById("fpsCanvas");
     this.fpsText = document.getElementById("fpsCounter");
+
+    // Canvas yoksa erken çık
+    if (!this.canvas || !this.fpsText) {
+      console.error("FPS canvas veya metin öğesi bulunamadı!");
+      return;
+    }
+
     this.ctx = this.canvas.getContext("2d");
 
     // Canvas boyutlarını ayarla
@@ -23,6 +30,9 @@ class FPSCounter {
   }
 
   update(timestamp) {
+    // Canvas yoksa işlem yapma
+    if (!this.canvas || !this.ctx || !this.fpsText) return;
+
     // Geçerli zaman - timestamp parametresi requestAnimationFrame tarafından sağlanır
     const elapsed = timestamp - this.lastTime;
 
@@ -102,4 +112,3 @@ window.addEventListener("beforeunload", () => {
     fpsCounter.destroy();
   }
 });
-// FPS sayacını başlat

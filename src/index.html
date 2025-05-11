@@ -17,10 +17,19 @@
 
     <canvas class="canvas js-canvas"></canvas>
     
-    <!-- FPS gösterici canvas -->
+   <!-- FPS ve performans paneli -->
     <div class="fps-container">
         <canvas id="fpsCanvas"></canvas>
         <div class="fps-text" id="fpsCounter">FPS: 0</div>
+        
+        <!-- Performans bilgileri -->
+        <div class="perf-panel">
+            <div id="perf-triangles">Üçgenler: 0</div>
+            <div id="perf-calls">Çizimler: 0</div>
+            <div id="perf-geometries">Geometri: 0</div>
+            <div id="perf-textures">Dokular: 0</div>
+            <!-- Model yükü bölümü otomatik olarak eklenecek -->
+        </div>
     </div>
 
     <div class="welcome-message" id="welcomeMessage">
@@ -31,6 +40,7 @@
 
     <script type="module" src="./index.js"></script>
     <script type="module" src="./fps-counter.js"></script>
+    <script type="module" src="./perf-monitor.js"></script>
 
 </body>
 </html>

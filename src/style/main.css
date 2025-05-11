@@ -314,8 +314,6 @@ html
     opacity: 0.2;
 }
 
-/* ...existing code... */
-
 /* FPS gösterici stilleri */
 .fps-container {
     position: fixed;
@@ -341,4 +339,78 @@ html
     font-size: 14px;
     font-weight: bold;
     margin-top: 5px;
+    width: 100%;
+    text-align: center;
+}
+
+/* Performans panel stilleri */
+.perf-panel {
+    margin-top: 10px;
+    width: 100%;
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    color: #ffffff;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 8px;
+}
+
+.perf-panel div {
+    margin: 3px 0;
+}
+
+/* Model yükü izleme stilleri */
+.model-load-section {
+    margin-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 10px;
+}
+
+.model-load-section h4 {
+    font-size: 12px;
+    margin: 0 0 5px 0;
+    color: #4CAF50;
+}
+
+.model-load-section h5 {
+    font-size: 11px;
+    margin: 8px 0 3px 0;
+    color: #BBBBBB;
+}
+
+.details-toggle {
+    cursor: pointer;
+    color: #AAAAAA;
+    font-size: 11px;
+    margin-top: 5px;
+    text-align: center;
+    user-select: none;
+}
+
+.details-toggle:hover {
+    color: #FFFFFF;
+}
+
+.model-details {
+    margin-top: 5px;
+    font-size: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.model-details ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.model-details li {
+    margin-bottom: 8px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted rgba(255, 255, 255, 0.1);
+}
+
+.model-details strong {
+    display: block;
+    margin-bottom: 2px;
+    color: #FFA726;
 }
