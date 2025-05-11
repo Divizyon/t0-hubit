@@ -15,6 +15,7 @@ import gsap from 'gsap'
 
 import Ground from './Sections/Ground.js'
 import Road from './Sections/Road.js'
+import RoadSign from './Sections/SectionRoadSign.js'
 
 import SectionAlaaddin from './Sections/SectionAlaaddin.js'
 import SectionAtmosphere from './Sections/SectionAtmosphere.js'
@@ -35,6 +36,7 @@ import SectionConcert from './Sections/SectionConcert.js'
 import SectionBasketball from './Sections/SectionBasketball.js'
 import SectionBillboard from './Sections/SectionBillboard.js'
 import SectionCoWork from './Sections/SectionCoWork.js'
+import SectionRoadSign from './Sections/SectionRoadSign.js'
 
 export default class World {
     constructor(_options) {
@@ -100,6 +102,7 @@ export default class World {
 
         this.setGround()
         //this.setRoad()
+        this.setRoadSign()
 
         this.setAlaaddin()
         this.setAtmosphere()
@@ -115,7 +118,6 @@ export default class World {
         this.setCoWork()
 
         this.setJapanesePark()
-        this.setJapaneseParkBuilding()
         // this.setRocket()
         this.setScienceCenter()
         this.setSocialInovation()
@@ -438,6 +440,18 @@ export default class World {
             scene: this.scene
         })
         this.container.add(this.road.container)
+    }
+
+    setRoadSign() {
+        this.sectionRoadSign = new SectionRoadSign({
+          scene:     this.scene,
+          resources: this.resources,
+          physics:   this.physics,
+          debug:     this.debugFolder,
+          rotateX:   0,   // 
+          rotateY:   0,
+          rotateZ:   Math.PI / 180 // Y ekseninde 90 derece,
+        });
     }
 
     setScienceCenter() {
