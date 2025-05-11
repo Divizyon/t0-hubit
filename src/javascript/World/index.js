@@ -574,7 +574,7 @@ export default class World {
             physics:   this.physics,
             debug:     this.debugFolder,
             rotateX:   Math.PI/2,   // 
-            rotateY:   0,
+            rotateY:   Math.PI,
             rotateZ:   0, // Y ekseninde 90 derece,
           });
         this.container.add(this.sectionSocialInovation.container)
