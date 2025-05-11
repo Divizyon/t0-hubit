@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import CANNON from 'cannon';
 
-const DEFAULT_POSITION = new THREE.Vector3(27.9, -16.1, 3.5);
+const DEFAULT_POSITION = new THREE.Vector3(28.1, -16, 3.5);
 
 export default class SectionCapsule {
   constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0 }) {

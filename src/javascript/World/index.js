@@ -109,6 +109,7 @@ export default class World {
         this.setRenderRoom()
         this.setConcert()
         this.setBasketball()
+        this.setButterfly()
 
         this.setJapanesePark()
         this.setJapaneseParkBuilding()
@@ -516,6 +517,18 @@ export default class World {
 
     setCapsule() {
         this.sectionCapsule = new SectionCapsule({
+            scene:     this.scene,
+            resources: this.resources,
+            physics:   this.physics,
+            debug:     this.debugFolder,
+            rotateX:   0,   // 
+            rotateY:   0,
+            rotateZ:   0 // Y ekseninde 90 derece,
+          });
+    }
+
+    setButterfly() {
+        this.sectionButterfly = new SectionButterfly({
             scene:     this.scene,
             resources: this.resources,
             physics:   this.physics,

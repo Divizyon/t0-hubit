@@ -243,6 +243,7 @@ export default class Resources extends EventEmitter {
             { name: 'Alaaddin', source: './models/SectionAlaaddin/base.glb' },
             { name: 'Atmosphere', source: './models/SectionAtmosphere/base.glb' },
             { name: 'Stadium', source: './models/SectionStadium/base.glb' },
+            { name: 'Butterfly', source: './models/SectionButterfly/base.glb' },
         ])
 
         this.loader.on('fileEnd', (_resource, _data) => {
