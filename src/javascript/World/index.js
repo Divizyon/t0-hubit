@@ -621,14 +621,14 @@ export default class World {
     }
 
     setStadium() {
-        this.sectionStadium = new SectionStadium({
-            time: this.time,
-            resources: this.resources,
-            objects: this.objects,
-            physics: this.physics,
-            debug: this.debugFolder,
-            scene: this.scene
-        })
-        //this.container.add(this.sectionStadium.container)
+        this.stadium = new SectionStadium({
+          scene:     this.scene,
+          resources: this.resources,
+          physics:   this.physics,
+          debug:     this.debugFolder,
+          rotateX:   0,   // 
+          rotateY:   0,
+          rotateZ:   Math.PI / 2 // Y ekseninde 90 derece,
+        });
     }
 }
