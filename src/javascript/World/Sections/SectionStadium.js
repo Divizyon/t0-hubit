@@ -58,7 +58,7 @@ export default class SectionStadium {
      // Base modelini klonla ve Kapsül modeline ekle
      const baseModel = base.scene.clone(true);
      baseModel.position.set(7, -30, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
-     baseModel.scale.set(3, 3, 1.5); // Base modelinin ölçeği
+     baseModel.scale.set(3, 2, 1.5); // Base modelinin ölçeği
      this.container.add(baseModel);
    
      // Kapsül model pozisyonu ve dönüşü
@@ -72,7 +72,7 @@ export default class SectionStadium {
     var size = bbox.getSize(new THREE.Vector3());
   
     // Fizik gövdesi oluştur
-    const halfExtents = new CANNON.Vec3(size.x / 2.1, size.y / 1.6, size.z / 1.9);
+    const halfExtents = new CANNON.Vec3(size.x / 3, size.y / 1.5, size.z / 1.9);
     const boxShape = new CANNON.Box(halfExtents);
   
     const body = new CANNON.Body({
