@@ -229,6 +229,7 @@ export default class Resources extends EventEmitter {
             // { name: 'eggCollision', source: './models/egg/collision.glb' },
             { name: 'Road', source: './models/Road/base.glb' },
 
+            { name: 'Base', source: './models/Base/base.glb' },
             { name: 'ScienceCenter', source: './models/SectionScienceCenter/base.glb' },
             { name: 'GreenScreen', source: './models/SectionGreenScreen/base.glb' },
             { name: 'JapanesePark', source: './models/SectionJapanesePark/base.glb' },

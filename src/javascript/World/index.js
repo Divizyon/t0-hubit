@@ -523,8 +523,7 @@ export default class World {
             rotateY:   0,
             rotateZ:   0 // Y ekseninde 90 derece,
           });
-        }
-        
+    }
 
     setYoungCard() {
         this.sectionYoungCard = new SectionYoungCard({
@@ -608,14 +607,15 @@ export default class World {
     }
 
     setDivision() {
-        this.sectionDivision = new SectionDivision({
-            time: this.time,
-            resources: this.resources,
-            objects: this.objects,
-            physics: this.physics,
-            debug: this.debugFolder,
-            scene: this.scene
-        })
+        this.division = new SectionDivision({
+          scene:     this.scene,
+          resources: this.resources,
+          physics:   this.physics,
+          debug:     this.debugFolder,
+          rotateX:   0,   // 
+          rotateY:   0,
+          rotateZ:   Math.PI / 2 // Y ekseninde 90 derece,
+        });
     }
 
     setStadium() {
