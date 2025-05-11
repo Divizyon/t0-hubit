@@ -23,11 +23,17 @@ import SectionDivision from './Sections/SectionDivision.js'
 import SectionGreenScreen from './Sections/SectionGreenScreen.js'
 import SectionRocket from './Sections/SectionRocket.js'
 import SectionScienceCenter from './Sections/SectionScienceCenter.js'
+import SectionButterfly from './Sections/SectionButterfly.js'
 import SectionSocialInovation from './Sections/SectionSocialInovation.js'
 import SectionSoundRoom from './Sections/SectionSoundRoom.js'
 import SectionStadium from './Sections/SectionStadium.js'
 import SectionYoungCard from './Sections/SectionYoungCard.js'
 import SectionYoungCenter from './Sections/SectionYoungCenter.js'
+import SectionJapanesePark from './Sections/SectionJapanesePark.js'
+import SectionJapaneseParkBuilding from './Sections/SectionJapaneseParkBuilding.js'
+import SectionRenderRoom from './Sections/SectionRenderRoom.js'
+import SectionConcert from './Sections/SectionConcert.js'
+import SectionBasketball from './Sections/SectionBasketball.js'
 
 
 export default class World {
@@ -87,26 +93,33 @@ export default class World {
         this.setPhysics()
         this.setZones()
         this.setObjects()
-        this.setCar()
+        
         this.areas.car = this.car
         this.setTiles()
         this.setWalls()
 
         this.setGround()
-        this.setRoad()
+        //this.setRoad()
 
-        // this.setAlaaddin()
-        // this.setAtmosphere()
-         this.setCapsule()
-        // this.setDivision()
-        // this.setGreenScreen()
+        this.setAlaaddin()
+        this.setAtmosphere()
+        this.setCapsule()
+        this.setDivision()
+        this.setGreenScreen()
+        this.setRenderRoom()
+        this.setConcert()
+        this.setBasketball()
+
+        this.setJapanesePark()
+        this.setJapaneseParkBuilding()
         // this.setRocket()
-        // this.setScienceCenter()
+        this.setScienceCenter()
         // this.setSocialInovation()
-        // this.setSoundRoom()
-         this.setStadium()
-        // this.setYoungCard()
-        // this.setYoungCenter()
+        this.setSoundRoom()
+        this.setStadium()
+        this.setYoungCard()
+        this.setYoungCenter()
+        this.setCar()
     }
 
     setReveal() {
@@ -390,7 +403,8 @@ export default class World {
             renderer: this.renderer,
             camera: this.camera,
             debug: this.debugFolder,
-            config: this.config
+            config: this.config,
+            scene: this.scene
         })
         this.container.add(this.car.container)
     }
@@ -416,7 +430,8 @@ export default class World {
             resources: this.resources,
             objects: this.objects,
             physics: this.physics,
-            debug: this.debugFolder
+            debug: this.debugFolder,
+            scene: this.scene
         })
         this.container.add(this.road.container)
     }
@@ -427,9 +442,9 @@ export default class World {
             resources: this.resources,
             objects: this.objects,
             physics: this.physics,
-            debug: this.debugFolder
+            debug: this.debugFolder,
+            scene: this.scene
         })
-        this.container.add(this.sectionScienceCenter.container)
     }
 
     setGreenScreen() {
@@ -438,9 +453,64 @@ export default class World {
             resources: this.resources,
             objects: this.objects,
             physics: this.physics,
-            debug: this.debugFolder
+            debug: this.debugFolder,
+            scene: this.scene
         })
-        this.container.add(this.sectionGreenScreen.container)
+    }
+
+    setRenderRoom() {
+        this.sectionRenderRoom = new SectionRenderRoom({
+            time: this.time,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            scene: this.scene
+        })
+    }
+
+    setConcert() {
+        this.concert = new SectionConcert({
+            time: this.time,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            scene: this.scene
+        })
+    }
+
+    setBasketball() {
+        this.sectionBasketball = new SectionBasketball({
+            time: this.time,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            scene: this.scene
+        })
+    }
+
+    setJapanesePark() {
+        this.sectionJapanesePark = new SectionJapanesePark({
+            time: this.time,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            scene: this.scene
+        })
+    }
+
+    setJapaneseParkBuilding() {
+        this.sectionJapaneseParkBuilding = new SectionJapaneseParkBuilding({
+            time: this.time,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            scene: this.scene
+        })
     }
 
     setCapsule() {
@@ -460,9 +530,9 @@ export default class World {
             resources: this.resources,
             objects: this.objects,
             physics: this.physics,
-            debug: this.debugFolder
+            debug: this.debugFolder,
+            scene: this.scene
         })
-        this.container.add(this.sectionYoungCard.container)
     }
 
     setRocket() {
@@ -471,7 +541,8 @@ export default class World {
             resources: this.resources,
             objects: this.objects,
             physics: this.physics,
-            debug: this.debugFolder
+            debug: this.debugFolder,
+            scene: this.scene
         })
         this.container.add(this.sectionRocket.container)
     }
@@ -482,7 +553,8 @@ export default class World {
             resources: this.resources,
             objects: this.objects,
             physics: this.physics,
-            debug: this.debugFolder
+            debug: this.debugFolder,
+            scene: this.scene
         })
         this.container.add(this.sectionSocialInovation.container)
     }
@@ -493,9 +565,11 @@ export default class World {
             resources: this.resources,
             objects: this.objects,
             physics: this.physics,
-            debug: this.debugFolder
+            debug: this.debugFolder,
+            scene: this.scene
         })
-        this.container.add(this.sectionSoundRoom.container)
+        this.container.name = 'SoundRoom'
+        this.container.position.set(-27, -1, .5)
     }
 
     setYoungCenter() {
@@ -504,9 +578,9 @@ export default class World {
             resources: this.resources,
             objects: this.objects,
             physics: this.physics,
-            debug: this.debugFolder
+            debug: this.debugFolder,
+            scene: this.scene
         })
-        this.container.add(this.sectionYoungCenter.container)
     }
 
     setAlaaddin() {
@@ -515,9 +589,9 @@ export default class World {
             resources: this.resources,
             objects: this.objects,
             physics: this.physics,
-            debug: this.debugFolder
+            debug: this.debugFolder,
+            scene: this.scene
         })
-        this.container.add(this.sectionAlaaddin.container)
     }
 
     setAtmosphere() {
@@ -526,9 +600,9 @@ export default class World {
             resources: this.resources,
             objects: this.objects,
             physics: this.physics,
-            debug: this.debugFolder
+            debug: this.debugFolder,
+            scene: this.scene
         })
-        this.container.add(this.sectionAtmosphere.container)
     }
 
     setDivision() {
@@ -537,9 +611,9 @@ export default class World {
             resources: this.resources,
             objects: this.objects,
             physics: this.physics,
-            debug: this.debugFolder
+            debug: this.debugFolder,
+            scene: this.scene
         })
-        this.container.add(this.sectionDivision.container)
     }
 
     setStadium() {

@@ -29,7 +29,7 @@ export default class Ground {
             new THREE.MeshBasicMaterial({
                 color: 0xd6c685 ,
                 transparent: true,
-                opacity: 0.5,
+                opacity: 0,
                 depthWrite: false
             })
         )

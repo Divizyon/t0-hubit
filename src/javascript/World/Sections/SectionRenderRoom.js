@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import CANNON from 'cannon'
 
-export default class SectionGreenScreen {
+export default class SectionRenderRoom {
     constructor(_options) {
         this.time = _options.time;
         this.scene = _options.scene;
@@ -17,33 +17,31 @@ export default class SectionGreenScreen {
                 this.tick(this.time.delta * 0.001);
             });
         } else {
-            console.warn('SectionGreenScreen: time parametresi verilmedi, animasyonlar çalışmayacak.');
+            console.warn('SectionRenderRoom: time parametresi verilmedi, animasyonlar çalışmayacak.');
         }
     }
 
     setModel() {
         if (!this.scene) {
-            console.warn('SectionGreenScreen: scene parametresi verilmedi, model sahneye eklenmeyecek.');
+            console.warn('SectionRenderRoom: scene parametresi verilmedi, model sahneye eklenmeyecek.');
             return;
         }
 
         const loader = new GLTFLoader();
-        loader.load('./models/SectionGreenScreen/base.glb', (gltf) => {
+        loader.load('./models/SectionRenderRoom/base.glb', (gltf) => {
             
             this.model = gltf.scene;
-            this.model.position.set(-23, 1.8, -2);
-            this.model.scale.set(.5, .5, .5);
+            this.model.position.set(-24, 7.2, -1);
+            this.model.scale.set(.2, .2, .2);
 
             this.scene.add(this.model);
 
+            this.model.rotation.z = 0;
 
-            this.model.rotation.z = -.2;
-
-          
             if (this.physics) {
                 this.collisionBody = new CANNON.Body({
                     mass: 0,
-                    position: new CANNON.Vec3(-23, 1.8, .5),
+                    position: new CANNON.Vec3(-22, 7, .5),
                     material: this.physics.materials.items.floor
                 });
 

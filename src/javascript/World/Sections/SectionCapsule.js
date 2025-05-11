@@ -31,7 +31,7 @@ export default class SectionCapsule {
         loader.load('./models/SectionCapsule/base.glb', (gltf) => {
             
             this.model = gltf.scene;
-            this.model.position.set(23, 2, 4);
+            this.model.position.set(21, -1.3, 3);
             this.model.scale.set(1.8, 1.8, 1.8);
             
             // Modeli döndür
@@ -43,7 +43,7 @@ export default class SectionCapsule {
             if (this.physics) {
                 this.collisionBody = new CANNON.Body({
                     mass: 0,
-                    position: new CANNON.Vec3(25, 2, 1),
+                    position: new CANNON.Vec3(23, -1.3, 1),
                     material: this.physics.materials.items.floor
                 });
 
@@ -53,7 +53,7 @@ export default class SectionCapsule {
                     5.2, // y boyutu
                     5.2  // z boyutu
                 ));
-                this.collisionBody.addShape(boxShape);
+                // this.collisionBody.addShape(boxShape);
                 
                 this.physics.world.addBody(this.collisionBody);
             }

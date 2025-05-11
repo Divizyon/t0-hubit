@@ -19,6 +19,8 @@ export default class Car
         this.camera = _options.camera
         this.debug = _options.debug
         this.config = _options.config
+        this.scene = _options.scene
+        this.soundRoom = _options.soundRoom
 
         // Set up
         this.container = new THREE.Object3D()
@@ -39,7 +41,7 @@ export default class Car
         this.setTransformControls()
         this.setShootingBall()
         this.setKlaxon()
-        //this.soundController()
+        this.soundController()
     }
 
     setModels()
@@ -341,11 +343,11 @@ export default class Car
 
     findClosestObject() {
 
-        if (this.sceneObject === undefined) {
-            this.sceneObject = this.objects.container.parent.parent
-        }
+        // if (this.sceneObject === undefined) {
+        //     this.sceneObject = this.objects.container.parent.parent
+        // }
         if (this.soundRoom === null) {
-            this.soundRoom = this.sceneObject.children.find((object) => object.name === 'SoundRoom');
+            this.soundRoom = this.scene.children.find((object) => object.name === 'SoundRoom');
         }
         const distance = this.position.distanceTo(this.soundRoom.position);
         return distance;

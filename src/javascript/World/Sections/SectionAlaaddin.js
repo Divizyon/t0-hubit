@@ -7,9 +7,6 @@ export default class SectionAlaaddin {
         this.time = _options.time;
         this.scene = _options.scene;
         this.physics = _options.physics;
-        this.resources = _options.resources;
-        this.objects = _options.objects;
-        this.debug = _options.debug;
         this.mixer = null;
         this.model = null;
         this.collisionBody = null;
@@ -20,28 +17,25 @@ export default class SectionAlaaddin {
                 this.tick(this.time.delta * 0.001);
             });
         } else {
-            console.warn('AlaaddinTepesi: time parametresi verilmedi, animasyonlar çalışmayacak.');
+            console.warn('SectionAlaaddin: time parametresi verilmedi, animasyonlar çalışmayacak.');
         }
     }
 
     setModel() {
-        this.scene = this.resources.items.Alaaddin?.scene;
         if (!this.scene) {
-            console.warn('AlaaddinTepesi: scene parametresi verilmedi, model sahneye eklenmeyecek.');
+            console.warn('SectionAlaaddin: scene parametresi verilmedi, model sahneye eklenmeyecek.');
             return;
         }
 
         const loader = new GLTFLoader();
         loader.load('./models/SectionAlaaddin/base.glb', (gltf) => {
-            console.log('Balık modeli yüklendi:', gltf);
-            console.log('Animasyonlar:', gltf.animations);
             
             this.model = gltf.scene;
-            this.model.position.set(-10, 5, .7);
-            this.model.scale.set(.5, .5, .5);
-            
-            // Modeli döndür
-            this.model.rotation.x = Math.PI / 2;
+            this.model.position.set(6, -13, .2);
+            this.model.scale.set(.45, .45, .45);
+
+            this.model.rotation.x = -80.1;
+            this.model.rotation.y = 25;
             
             this.scene.add(this.model);
 
@@ -49,15 +43,17 @@ export default class SectionAlaaddin {
             if (this.physics) {
                 this.collisionBody = new CANNON.Body({
                     mass: 0,
-                    position: new CANNON.Vec3(1, -39, .7),
+                    position: new CANNON.Vec3(6, -13, 1),
                     material: this.physics.materials.items.floor
                 });
 
-              
-                const radius = 5;
-                const sphereShape = new CANNON.Sphere(radius);
-                this.collisionBody.addShape(sphereShape);
-
+                // Sphere yerine Box collision kullanıyoruz
+                const boxShape = new CANNON.Box(new CANNON.Vec3(
+                    5.2, // x boyutu
+                    5.2, // y boyutu
+                    5.2  // z boyutu
+                ));
+                // this.collisionBody.addShape(boxShape);
                 
                 this.physics.world.addBody(this.collisionBody);
             }
@@ -93,16 +89,16 @@ export default class SectionAlaaddin {
 
             // Animasyonları başlat
             if (gltf.animations && gltf.animations.length > 0) {
-                console.log('Animasyonlar yükleniyor...');
+                // console.log('Animasyonlar yükleniyor...');
                 this.mixer = new THREE.AnimationMixer(this.model);
                 gltf.animations.forEach((clip, index) => {
                     console.log(`Animasyon ${index} yükleniyor:`, clip.name);
                     const action = this.mixer.clipAction(clip);
                     action.reset().play();
                 });
-                console.log('Mixer oluşturuldu:', this.mixer);
+                // console.log('Mixer oluşturuldu:', this.mixer);
             } else {
-                console.warn('Hiç animasyon bulunamadı!');
+                // console.warn('Hiç animasyon bulunamadı!');
             }
         });
     }

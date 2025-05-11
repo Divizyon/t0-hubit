@@ -31,12 +31,12 @@ export default class SectionStadium {
         loader.load('./models/SectionStadium/base.glb', (gltf) => {
             
             this.model = gltf.scene;
-            this.model.position.set(8, -38, 1);
-            this.model.scale.set(.7, .7, .7);
+            this.model.position.set(7, -25, 1);
+            this.model.scale.set(.5, .5, .5);
             
             // Modeli döndür
             this.model.rotation.x = 80.1;
-            this.model.rotation.y = 92.65;
+            this.model.rotation.y = 92.35; //92.65 düz versiyonu
             
             this.scene.add(this.model);
 
@@ -44,7 +44,7 @@ export default class SectionStadium {
             if (this.physics) {
                 this.collisionBody = new CANNON.Body({
                     mass: 0,
-                    position: new CANNON.Vec3(8, -37, 1),
+                    position: new CANNON.Vec3(10, -27, 1),
                     material: this.physics.materials.items.floor
                 });
 
@@ -54,7 +54,7 @@ export default class SectionStadium {
                     5, // y boyutu
                     6.2  // z boyutu
                 ));
-                this.collisionBody.addShape(boxShape);
+                // this.collisionBody.addShape(boxShape);
                 
                 this.physics.world.addBody(this.collisionBody);
             }

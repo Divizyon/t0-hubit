@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import CANNON from 'cannon'
 
-export default class SectionGreenScreen {
+export default class SectionJapaneseParkBuilding {
     constructor(_options) {
         this.time = _options.time;
         this.scene = _options.scene;
@@ -17,41 +17,41 @@ export default class SectionGreenScreen {
                 this.tick(this.time.delta * 0.001);
             });
         } else {
-            console.warn('SectionGreenScreen: time parametresi verilmedi, animasyonlar çalışmayacak.');
+            console.warn('SectionJapaneseParkBuilding: time parametresi verilmedi, animasyonlar çalışmayacak.');
         }
     }
 
     setModel() {
         if (!this.scene) {
-            console.warn('SectionGreenScreen: scene parametresi verilmedi, model sahneye eklenmeyecek.');
+            console.warn('SectionJapaneseParkBuilding: scene parametresi verilmedi, model sahneye eklenmeyecek.');
             return;
         }
 
         const loader = new GLTFLoader();
-        loader.load('./models/SectionGreenScreen/base.glb', (gltf) => {
+        loader.load('./models/SectionJapaneseParkBuilding/base.glb', (gltf) => {
             
             this.model = gltf.scene;
-            this.model.position.set(-23, 1.8, -2);
-            this.model.scale.set(.5, .5, .5);
+            this.model.position.set(-9, -10, 1.5);
+            this.model.scale.set(1, 1, 1);
 
             this.scene.add(this.model);
 
 
-            this.model.rotation.z = -.2;
+            this.model.rotation.z = 1;
 
           
             if (this.physics) {
                 this.collisionBody = new CANNON.Body({
                     mass: 0,
-                    position: new CANNON.Vec3(-23, 1.8, .5),
+                    position: new CANNON.Vec3(-9, -10, 1.5),
                     material: this.physics.materials.items.floor
                 });
 
                 // Sphere yerine Box collision kullanıyoruz
                 const boxShape = new CANNON.Box(new CANNON.Vec3(
-                    1, // x boyutu
-                    1, // y boyutu
-                    1  // z boyutu
+                    5.2, // x boyutu
+                    5.2, // y boyutu
+                    5.2  // z boyutu
                 ));
                 // this.collisionBody.addShape(boxShape);
                 

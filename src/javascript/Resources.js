@@ -231,6 +231,7 @@ export default class Resources extends EventEmitter {
 
             { name: 'ScienceCenter', source: './models/SectionScienceCenter/base.glb' },
             { name: 'GreenScreen', source: './models/SectionGreenScreen/base.glb' },
+            { name: 'JapanesePark', source: './models/SectionJapanesePark/base.glb' },
             { name: 'Capsule', source: './models/SectionCapsule/base.glb' },
             { name: 'YoungCard', source: './models/SectionYoungCard/base.glb' },
             { name: 'Rocket', source: './models/SectionRocket/base.glb' },
