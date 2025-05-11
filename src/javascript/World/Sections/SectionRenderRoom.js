@@ -32,7 +32,7 @@ export default class SectionRenderRoom {
             
             this.model = gltf.scene;
             this.model.position.set(-24, 7.2, -1);
-            this.model.scale.set(.45, .45, .3);
+            this.model.scale.set(1,1,1);
 
             this.scene.add(this.model);
 
