@@ -31,7 +31,7 @@ export default class SectionRenderRoom {
         loader.load('./models/SectionRenderRoom/base.glb', (gltf) => {
             
             this.model = gltf.scene;
-            this.model.position.set(-45, -10, -2);
+            this.model.position.set(-45, -10, 2);
             this.model.scale.set(2,2,2);
 
             this.scene.add(this.model);
