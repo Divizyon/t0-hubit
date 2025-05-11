@@ -19,7 +19,7 @@ export default class Ground {
         this.container.matrixAutoUpdate = false
         this.container.updateMatrix()
 
-        this.setDikes()
+        // this.setDikes()
         this.setFloor()
     }
 

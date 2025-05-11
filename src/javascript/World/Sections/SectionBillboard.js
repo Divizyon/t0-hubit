@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import CANNON from 'cannon';
 
-const DEFAULT_POSITION = new THREE.Vector3(0, 0, -.5);
+const DEFAULT_POSITION = new THREE.Vector3(0, 0, 0  );
 
 export default class SectionBillboard {
   constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0 }) {
