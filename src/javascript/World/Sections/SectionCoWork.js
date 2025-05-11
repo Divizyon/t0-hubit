@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import CANNON from 'cannon';
 
-const DEFAULT_POSITION = new THREE.Vector3(-45, -25, -1);
+const DEFAULT_POSITION = new THREE.Vector3(-45, -25, 1);
 
 export default class SectionCoWork {
   constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0 }) {
