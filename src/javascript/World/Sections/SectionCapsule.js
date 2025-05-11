@@ -2,9 +2,9 @@ import * as THREE from 'three';
 import CANNON from 'cannon';
 
 export default class SectionCapsule {
-  static DEFAULT_POSITION = new THREE.Vector3(0, 0, 0);
+  static DEFAULT_POSITION = new THREE.Vector3(27, -3, 3.7);
 
-  constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0 }) {
+  constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0, scale = 1 }) {
     this.scene = scene;
     this.resources = resources;
     this.objects = objects;
@@ -14,9 +14,11 @@ export default class SectionCapsule {
     this.rotateX = rotateX;
     this.rotateY = rotateY;
     this.rotateZ = rotateZ;
+    this.scale = scale;
 
     this.container = new THREE.Object3D();
     this.position = SectionCapsule.DEFAULT_POSITION.clone();
+
 
     this._buildModel();
     this.scene.add(this.container);
@@ -49,6 +51,7 @@ export default class SectionCapsule {
     // Model pozisyonu ve dönüşü
     model.position.copy(this.position);
     model.rotation.set(this.rotateX, this.rotateY, this.rotateZ);
+    model.scale.set(1.8, 1.8, 1.8);
     this.container.add(model);
 
     // Bounding box hesapla
@@ -57,7 +60,7 @@ export default class SectionCapsule {
     const size = bbox.getSize(new THREE.Vector3());
 
     // Fizik gövdesi oluştur
-    const halfExtents = new CANNON.Vec3(size.x / 2, size.y / 2, size.z / 2);
+    const halfExtents = new CANNON.Vec3(size.x / 1, size.y / 1, size.z / 1);
     const boxShape = new CANNON.Box(halfExtents);
 
     const body = new CANNON.Body({
@@ -81,7 +84,7 @@ export default class SectionCapsule {
         base: { children },
         collision: { children },
         offset: this.position.clone(),
-        mass: 0
+        mass: 0,
       });
       objectEntry.collision = { body };
       if (objectEntry.container) {
