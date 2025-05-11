@@ -31,8 +31,8 @@ export default class SectionAtmosphere {
         loader.load('./models/SectionAtmosphere/base.glb', (gltf) => {
             
             this.model = gltf.scene;
-            this.model.position.set(-25, 8, 0);
-            this.model.scale.set(.9, .9, .9);
+            this.model.position.set(-20, -8, 0);
+            this.model.scale.set(.8, .8, .8);
 
             this.model.rotation.x = -80.1;
             this.model.rotation.y = 25;

@@ -32,7 +32,7 @@ export default class SectionSoundRoom {
             
             this.model = gltf.scene;
             this.model.position.set(-28.2, -1, -1);
-            this.model.scale.set(.5, .5, .5);
+            this.model.scale.set(1, 1, 1);
 
             this.scene.add(this.model);
 
