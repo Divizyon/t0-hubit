@@ -31,8 +31,8 @@ export default class SectionJapanesePark {
         loader.load('./models/SectionJapanesePark/base.glb', (gltf) => {
             
             this.model = gltf.scene;
-            this.model.position.set(-5, -12, -2);
-            this.model.scale.set(.4, .4, .4);
+            this.model.position.set(-24, -28, -1.5);
+            this.model.scale.set(1,1,1);
 
             this.model.rotation.x = -80.1;
             this.model.rotation.y = 1.06;
