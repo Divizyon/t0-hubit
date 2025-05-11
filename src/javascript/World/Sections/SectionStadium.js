@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import CANNON from 'cannon';
 
-const DEFAULT_POSITION = new THREE.Vector3(40, 30, 3);
+const DEFAULT_POSITION = new THREE.Vector3(60, 10, 3);
 
 export default class SectionStadium {
   constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0 }) {
@@ -57,7 +57,7 @@ export default class SectionStadium {
   
      // Base modelini klonla ve Kapsül modeline ekle
      const baseModel = base.scene.clone(true);
-     baseModel.position.set(40, 30, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
+     baseModel.position.set(60, 10, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
      baseModel.scale.set(3.5, 3, 1.5); // Base modelinin ölçeği
      this.container.add(baseModel);
    
@@ -68,20 +68,16 @@ export default class SectionStadium {
    
      // Bounding box hesapla
     baseModel.updateMatrixWorld(true);
-    const bbox = new THREE.Box3().setFromObject(baseModel);
+    const bbox = new THREE.Box3().setFromObject(this.container);
     var size = bbox.getSize(new THREE.Vector3());
   
     // Fizik gövdesi oluştur
-    const halfExtents = new CANNON.Vec3(size.x / 2.2, size.y / 1.7, size.z / 1.9);
+    const halfExtents = new CANNON.Vec3(size.x / 2.1, size.y / 1.6, size.z / 1.9);
     const boxShape = new CANNON.Box(halfExtents);
   
     const body = new CANNON.Body({
       mass: 0,
-      position: new CANNON.Vec3(
-        this.position.x + 1.2,
-        this.position.y - 1,
-        this.position.z -3
-      ),
+      position: baseModel.position,
       material: this.physics.materials.items.floor
     });
   
