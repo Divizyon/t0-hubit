@@ -31,7 +31,7 @@ export default class SectionGreenScreen {
         loader.load('./models/SectionGreenScreen/base.glb', (gltf) => {
             
             this.model = gltf.scene;
-            this.model.position.set(-65,0,0);
+            this.model.position.set(-42, -10, -2);
             this.model.scale.set(1.4,1.4,1.4);
 
             this.scene.add(this.model);
