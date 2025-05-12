@@ -31,7 +31,7 @@ export default class SectionBasketball {
         loader.load('./models/SectionBasketball/base.glb', (gltf) => {
             
             this.model = gltf.scene;
-            this.model.position.set(-50, 14, 0);
+            this.model.position.set(-40, 14, 0);
             this.model.scale.set(.5,.5,.5);
 
             this.scene.add(this.model);

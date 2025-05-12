@@ -31,10 +31,9 @@ export default class SectionSoundRoom {
         loader.load('./models/SectionSoundRoom/base.glb', (gltf) => {
             
             this.model = gltf.scene;
-            this.model.position.set(-60, -25, 0
-            );
+            this.model.position.set(-43, -15, -2);
             this.model.scale.set(1, 1, 1);
-
+            
             this.scene.add(this.model);
 
 
