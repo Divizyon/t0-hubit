@@ -26,7 +26,7 @@ export default class SectionRoadSign {
   
     
   _buildModel() {
-    const gltf = this.resources.items.roadSign ;
+    const gltf = this.resources.items.RoadSign ;
     const base = this.resources.items.Base;
   
     if (!gltf || !gltf.scene) {

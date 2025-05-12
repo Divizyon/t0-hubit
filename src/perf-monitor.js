@@ -1,7 +1,7 @@
 // Three.js model ve dosya yükü monitörü
 class ThreeStatsMonitor {
   constructor() {
-    console.log("Performans monitörü oluşturuluyor...");
+    //console.log("Performans monitörü oluşturuluyor...");
 
     // DOM elementleri
     this.trianglesElement = document.getElementById("perf-triangles");
@@ -34,7 +34,7 @@ class ThreeStatsMonitor {
 
     // Debug modu
     this.debugMode = true;
-    if (this.debugMode) console.log("Performans monitörü debug modu aktif");
+    //if (this.debugMode) console.log("Performans monitörü debug modu aktif");
 
     // Application nesnesi hazır olunca başlat
     this.checkForAppAndInit();
@@ -45,7 +45,7 @@ class ThreeStatsMonitor {
 
   debug(...args) {
     if (this.debugMode) {
-      console.log("[PerfMonitor]", ...args);
+      //console.log("[PerfMonitor]", ...args);
     }
   }
 
@@ -110,11 +110,11 @@ class ThreeStatsMonitor {
         window.application.renderer &&
         window.application.renderer.instance
       ) {
-        this.debug("Application bulundu, performans monitörü başlatılıyor");
+        //this.debug("Application bulundu, performans monitörü başlatılıyor");
         this.init();
       } else {
         // Tekrar dene
-        this.debug("Application bekleniyor...");
+        //this.debug("Application bekleniyor...");
         setTimeout(() => this.checkForAppAndInit(), 500);
       }
     } catch (error) {
@@ -127,7 +127,7 @@ class ThreeStatsMonitor {
   init() {
     try {
       this.renderer = window.application.renderer.instance;
-      console.log("Performance monitor başlatıldı");
+      //console.log("Performance monitor başlatıldı");
 
       // Three.js sürümünü kontrol et ve logla
       if (window.THREE) {
@@ -192,7 +192,7 @@ class ThreeStatsMonitor {
       }
       // 3. Dynamically wait for the loader
       else {
-        this.debug("GLTFLoader henüz bulunamadı, daha sonra tekrar denenecek");
+        //this.debug("GLTFLoader henüz bulunamadı, daha sonra tekrar denenecek");
         setTimeout(() => this.monkeyPatchLoaders(), 1000);
       }
 
@@ -315,7 +315,7 @@ class ThreeStatsMonitor {
 
   patchFetchAPI() {
     try {
-      this.debug("Fetch API patching yapılıyor");
+      //this.debug("Fetch API patching yapılıyor");
 
       const originalFetch = window.fetch;
       window.fetch = async (input, init) => {
@@ -369,7 +369,7 @@ class ThreeStatsMonitor {
         return originalFetch(input, init);
       };
 
-      this.debug("Fetch API patching tamamlandı");
+      // this.debug("Fetch API patching tamamlandı");
     } catch (error) {
       console.error("Fetch API patching yapılırken hata:", error);
     }
@@ -721,7 +721,7 @@ class ThreeStatsMonitor {
 }
 
 // Monitörü başlat
-console.log("Performans monitörü başlatılıyor...");
+//console.log("Performans monitörü başlatılıyor...");
 const statsMonitor = new ThreeStatsMonitor();
 
 // Sayfa kapatıldığında temizlik

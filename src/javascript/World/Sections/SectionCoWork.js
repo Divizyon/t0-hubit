@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import CANNON from 'cannon';
 
-const DEFAULT_POSITION = new THREE.Vector3(-45, -25, 1);
+const DEFAULT_POSITION = new THREE.Vector3(-66.5, -25, 1.7);
 
 export default class SectionCoWork {
   constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0 }) {
@@ -58,9 +58,32 @@ export default class SectionCoWork {
   
     // Base modelini klonla ve Kapsül modeline ekle
     const baseModel = base.scene.clone(true);
-    baseModel.position.set(37, -18, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
-    baseModel.scale.set(1.5, 1.5, 1.5); // Base modelinin ölçeği
-    this.container.add(baseModel);
+     baseModel.position.set(-67, -25, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
+     baseModel.scale.set(1.5, 1.5, .5); // Base modelinin ölçeği
+     baseModel.rotation.set(this.rotateX, this.rotateY, 0);
+     this.container.add(baseModel);
+     baseModel.traverse(child => {
+        if (child.isMesh) {
+           child.material = child.material.clone();
+           child.material.color.r = 2;
+           child.material.color.g = 0;
+           child.material.color.b = 0;
+        }
+     });
+
+     const baseModel2 = base.scene.clone(true);
+     baseModel2.position.set(-67, -25, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
+     baseModel2.scale.set(1.5, 1.5, .5); // Base modelinin ölçeği
+     baseModel2.rotation.set(this.rotateX, this.rotateY, 289.8);
+     this.container.add(baseModel2);
+     baseModel2.traverse(child => {
+        if (child.isMesh) {
+           child.material = child.material.clone();
+           child.material.color.r = 2;
+           child.material.color.g = 0;
+           child.material.color.b = 0;
+    }
+    });
   
     // Kapsül model pozisyonu ve dönüşü
     model.position.copy(this.position);
