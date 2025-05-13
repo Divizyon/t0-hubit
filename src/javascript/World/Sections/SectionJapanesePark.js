@@ -43,17 +43,17 @@ export default class SectionJapanesePark {
             if (this.physics) {
                 this.collisionBody = new CANNON.Body({
                     mass: 0,
-                    position: new CANNON.Vec3(6, -13, 1),
+                    position: new CANNON.Vec3(13.7, -25, 1),
                     material: this.physics.materials.items.floor
                 });
 
                 // Sphere yerine Box collision kullanıyoruz
                 const boxShape = new CANNON.Box(new CANNON.Vec3(
-                    5.2, // x boyutu
-                    5.2, // y boyutu
+                    8.5, // x boyutu
+                    5.7, // y boyutu
                     5.2  // z boyutu
                 ));
-                // this.collisionBody.addShape(boxShape);
+                this.collisionBody.addShape(boxShape);
                 
                 this.physics.world.addBody(this.collisionBody);
             }
