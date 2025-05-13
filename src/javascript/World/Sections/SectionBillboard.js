@@ -4,14 +4,14 @@ import CANNON from 'cannon';
 const DEFAULT_POSITION = new THREE.Vector3(0, 0, 0);
 
 export default class SectionBillboard {
-  constructor({ scene, resources, objects, physics, debug, areas, rotateX = 0, rotateY = 0, rotateZ = 0 }) {
+  constructor({ scene, resources, objects, physics, debug, areas, rotateX = 0, rotateY = 0, rotateZ = 0, camera = 0 }) {
     this.scene = scene;
     this.resources = resources;
     this.objects = objects;
     this.physics = physics;
     this.debug = debug;
     this.areas = areas;
-    
+    this.camera = camera
 
     this.rotateX = rotateX;
     this.rotateY = rotateY;
@@ -21,18 +21,18 @@ export default class SectionBillboard {
     this.position = DEFAULT_POSITION.clone();
     
     this.billboards = [
-      { position: { x: 0, y: 40, z: 0 }, name: "Billboard1" },
-      { position: { x: 10, y: 40, z: 0 }, name: "Billboard2" },
-      { position: { x: 20, y: 40, z: 0 }, name: "Billboard3" },
-      { position: { x: 30, y: 40, z: 0 }, name: "Billboard4" },
-      { position: { x: 40, y: 40, z: 0 }, name: "Billboard5" },
-      { position: { x: 50, y: 40, z: 0 }, name: "Billboard6" }
+      { position: { x: 0, y: 40, z: 0 }, name: "Billboard1", link: "https://www.google.com/" },
+      { position: { x: 10, y: 40, z: 0 }, name: "Billboard2", link: "https://www.google.com/" },
+      { position: { x: 20, y: 40, z: 0 }, name: "Billboard3", link: "https://www.google.com/" },
+      { position: { x: 30, y: 40, z: 0 }, name: "Billboard4", link: "https://www.google.com/" },
+      { position: { x: 40, y: 40, z: 0 }, name: "Billboard5", link: "https://www.google.com/" },
+      { position: { x: 50, y: 40, z: 0 }, name: "Billboard6", link: "https://www.google.com/" }
     ];
 
     // Her bir billboard için model oluştur
     this.billboards.forEach((billboard) => {
       this._buildModel(billboard.position, billboard.name);
-      this.createButton(billboard.position, billboard.name);
+      this.createButton(billboard.position, billboard.link);
     });
 
     this.scene.add(this.container);
@@ -83,20 +83,16 @@ export default class SectionBillboard {
    
     // Bounding box hesapla
     baseModel.updateMatrixWorld(true);
-    const bbox = new THREE.Box3().setFromObject(baseModel);
+    const bbox = new THREE.Box3().setFromObject(model);
     var size = bbox.getSize(new THREE.Vector3());
    
     // Fizik gövdesi oluştur
-    const halfExtents = new CANNON.Vec3(size.x / 3, size.y / 2.3, size.z);
+    const halfExtents = new CANNON.Vec3(size.x / 3, size.y / 3, size.z);
     const boxShape = new CANNON.Box(halfExtents);
    
     const body = new CANNON.Body({
       mass: 0,
-      position: new CANNON.Vec3(
-        position.x,
-        position.y,
-        position.z
-      ),
+      position: model.position,
       material: this.physics.materials.items.floor
     });
   
@@ -124,14 +120,14 @@ export default class SectionBillboard {
     }
   }
 
-  createButton(billboardPosition) {
+  createButton(billboardPosition, billboardLink) {
     // Etkileşimli buton oluştur
     this.button = {}
     
     // Buton konumu - ses odası için uygun konum
     this.button.position = new THREE.Vector3(
-      billboardPosition.x , // Modelin önünde
-      billboardPosition.y - 4, // Modelin önünde
+      billboardPosition.x - 2.5, // Modelin önünde
+      billboardPosition.y - 2, // Modelin önünde
       billboardPosition + 0.25 // Zemin üzerinde, görünür olacak şekilde
     )
     
@@ -148,7 +144,7 @@ export default class SectionBillboard {
     // Canvas ile texture oluştur
     this.button.label.canvas = document.createElement('canvas')
     this.button.label.canvas.width = 512
-    this.button.label.canvas.height = 360
+    this.button.label.canvas.height = 200
     this.button.label.context = this.button.label.canvas.getContext('2d')
 
     // Texture oluştur
@@ -177,19 +173,20 @@ export default class SectionBillboard {
     // Alan tetikleyici oluştur
     this.button.triggerArea = this.areas.add({
         position: new THREE.Vector2(this.button.position.x, this.button.position.y),
-        halfExtents: new THREE.Vector2(2, 1.5),
-        hasKey: false,
+        halfExtents: new THREE.Vector2(1.4, 0.8),
+        hasKey: true,
         testCar: true,
         active: true
     })
     
     // Butona tıklandığında
     this.button.triggerArea.on('interact', () => {
-        console.log('Model inceleniyor!')
-    })
-
-    this.button.triggerArea.on('in', () => {
-      console.log('İçerdeyiz!')
-    })
-}
+      window.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.code === 'Space') {
+            console.log('Enter veya Space tuşuna basıldı!');
+            window.open(billboardLink, '_blank');
+        }
+    });
+    });
+  }
 }

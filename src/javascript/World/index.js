@@ -126,6 +126,7 @@ export default class World {
         this.setYoungCenter()
         this.setCar()
         this.areas.car = this.car
+        this.areas.setCar(this.car)
     }
 
     setReveal() {
@@ -665,7 +666,8 @@ export default class World {
           areas:     this.areas,
           rotateX:   0,   // 
           rotateY:   0,
-          rotateZ:   Math.PI/2 // Y ekseninde 90 derece,
+          rotateZ:   Math.PI/2, // Y ekseninde 90 derece,
+          camera:   this.camera,
         });
         this.container.name = 'Billboard'
     }

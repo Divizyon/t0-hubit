@@ -64,6 +64,7 @@ export default class SectionDivision {
      // Kapsül model pozisyonu ve dönüşü
      model.position.copy(this.position);
      model.rotation.set(this.rotateX, this.rotateY, 290);
+     this.container.add(baseModel);
      this.container.add(model);
    
      // Bounding box hesapla
@@ -72,22 +73,18 @@ export default class SectionDivision {
      var size = bbox.getSize(new THREE.Vector3());
    
      // Fizik gövdesi oluştur
-     const halfExtents = new CANNON.Vec3(size.x / 2, size.y / 1.9, size.z / 1.9);
+     const halfExtents = new CANNON.Vec3(size.x / 2.9, size.y / 2.9, size.z / 2);
      const boxShape = new CANNON.Box(halfExtents);
    
      const body = new CANNON.Body({
        mass: 0,
-       position: new CANNON.Vec3(
-         this.position.x ,
-         this.position.y,
-         this.position.z -2
-       ),
-       material: this.physics.materials.items.floor
+       position: baseModel.position,
+       material: this.physics.materials.items.floor,
      });
   
     // Dönüşü quaternion olarak ayarla
     const quat = new CANNON.Quaternion();
-    quat.setFromEuler(this.rotateX, this.rotateY, this.rotateZ, 'XYZ');
+    quat.setFromEuler(this.rotateX, this.rotateY, baseModel.rotation.z, 'XYZ');
     body.quaternion.copy(quat);
   
     body.addShape(boxShape);

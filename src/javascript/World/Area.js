@@ -23,7 +23,6 @@ export default class Area extends EventEmitter
         this.position = _options.position
         this.halfExtents = _options.halfExtents
         this.hasKey = _options.hasKey
-        this.testCar = _options.testCar
         this.active = _options.active
 
         // Set up
@@ -280,19 +279,18 @@ export default class Area extends EventEmitter
         this.time.on('tick', () =>
         {
             if(this.car)
+            {
+                const isIn = Math.abs(this.car.position.x - this.position.x) < Math.abs(this.halfExtents.x) && Math.abs(this.car.position.y - this.position.y) < Math.abs(this.halfExtents.y)
+                if(isIn !== this.isIn)
                 {
-                    const isIn = Math.abs(this.car.position.x - this.position.x) < Math.abs(this.halfExtents.x) && Math.abs(this.car.position.y - this.position.y) < Math.abs(this.halfExtents.y)
-    
-                    if(isIn !== this.isIn)
+                    if(isIn)
                     {
-                        if(isIn)
-                        {
-                            this.in(!this.config.touch)
-                        }
-                        else
-                        {
-                            this.out()
-                        }
+                        this.in(!this.config.touch)
+                    }
+                    else
+                    {
+                        this.out()
+                    }
                 }
             }
         })
