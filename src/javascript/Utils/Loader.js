@@ -73,11 +73,11 @@ export default class Resources extends EventEmitter
             extensions: ['glb', 'gltf'],
             action: (_resource) =>
             {
-                console.log(`GLB/GLTF model yükleniyor: ${_resource.source}`)
+                //console.log(`GLB/GLTF model yükleniyor: ${_resource.source}`)
                 this.loaders.gltfLoader.load(
                     _resource.source,
                     (_data) => {
-                        console.log(`${_resource.name} modeli başarıyla yüklendi:`, _data)
+                        //console.log(`${_resource.name} modeli başarıyla yüklendi:`, _data)
                         this.fileLoadEnd(_resource, _data)
                     },
                     (_progress) => {},

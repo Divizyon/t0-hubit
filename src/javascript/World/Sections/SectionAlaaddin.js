@@ -70,10 +70,10 @@ export default class SectionAlaaddin {
             // Materyal ve mesh kontrolü
             this.model.traverse((child) => {
                 if (child.isMesh) {
-                    console.log('Mesh bulundu:', child.name);
-                    if (child.isSkinnedMesh) {
-                        console.log('SkinnedMesh bulundu:', child.name);
-                    }
+                    // console.log('Mesh bulundu:', child.name);
+                    // if (child.isSkinnedMesh) {
+                    //     console.log('SkinnedMesh bulundu:', child.name);
+                    // }
                     child.castShadow = true;
                     child.receiveShadow = true;
                     if (!child.material) {
@@ -92,7 +92,7 @@ export default class SectionAlaaddin {
                 console.log('Animasyonlar yükleniyor...');
                 this.mixer = new THREE.AnimationMixer(this.model);
                 gltf.animations.forEach((clip, index) => {
-                    console.log(`Animasyon ${index} yükleniyor:`, clip.name);
+                    //console.log(`Animasyon ${index} yükleniyor:`, clip.name);
                     const action = this.mixer.clipAction(clip);
                     action.reset().play();
                 });

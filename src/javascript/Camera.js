@@ -359,47 +359,45 @@ export default class Camera
             lastLogTime: 0
         }
     
-        console.log('Araba hareketini takip etmek için kamera hazır');
-        
         // Global değişkenden araba referansını almayı dene
-        this.time.on('tick', () => {
-            // Global değişkenden araba referansını almayı dene
-            if(window.application && window.application.world && window.application.world.car) {
-                const car = window.application.world.car;
+        // this.time.on('tick', () => {
+        //     // Global değişkenden araba referansını almayı dene
+        //     if(window.application && window.application.world && window.application.world.car) {
+        //         const car = window.application.world.car;
                 
-                if(car.movement && car.chassis) {
-                    // Araba hareketini kopyala
-                    this.carMovement.speed.copy(car.movement.speed);
-                    this.carMovement.localSpeed.copy(car.movement.localSpeed);
-                    this.carMovement.acceleration.copy(car.movement.acceleration);
-                    this.carMovement.localAcceleration.copy(car.movement.localAcceleration);
-                    this.carMovement.position.copy(car.chassis.object.position);
+        //         if(car.movement && car.chassis) {
+        //             // Araba hareketini kopyala
+        //             this.carMovement.speed.copy(car.movement.speed);
+        //             this.carMovement.localSpeed.copy(car.movement.localSpeed);
+        //             this.carMovement.acceleration.copy(car.movement.acceleration);
+        //             this.carMovement.localAcceleration.copy(car.movement.localAcceleration);
+        //             this.carMovement.position.copy(car.chassis.object.position);
                     
-                    // Belirli aralıklarla konsola yazdır
-                    const speedThreshold = 0.01;
-                    const logInterval = 500; // milisaniye cinsinden log aralığı
+        //             // Belirli aralıklarla konsola yazdır
+        //             const speedThreshold = 0.01;
+        //             const logInterval = 500; // milisaniye cinsinden log aralığı
                     
-                    if (
-                        (Math.abs(this.carMovement.localSpeed.x) > speedThreshold || 
-                         Math.abs(this.carMovement.localSpeed.y) > speedThreshold) && 
-                        (this.time.elapsed - this.carMovement.lastLogTime > logInterval)
-                    ) {
-                        console.log('Araba hareket ediyor:', {
-                            hız_x: this.carMovement.localSpeed.x.toFixed(2),
-                            hız_y: this.carMovement.localSpeed.y.toFixed(2),
-                            ivme_x: this.carMovement.localAcceleration.x.toFixed(2),
-                            ivme_y: this.carMovement.localAcceleration.y.toFixed(2),
-                            pozisyon: {
-                                x: this.carMovement.position.x.toFixed(2),
-                                y: this.carMovement.position.y.toFixed(2),
-                                z: this.carMovement.position.z.toFixed(2)
-                            }
-                        });
-                        this.carMovement.lastLogTime = this.time.elapsed;
-                    }
-                }
-            }
-        });
+        //             if (
+        //                 (Math.abs(this.carMovement.localSpeed.x) > speedThreshold || 
+        //                  Math.abs(this.carMovement.localSpeed.y) > speedThreshold) && 
+        //                 (this.time.elapsed - this.carMovement.lastLogTime > logInterval)
+        //             ) {
+        //                 console.log('Araba hareket ediyor:', {
+        //                     hız_x: this.carMovement.localSpeed.x.toFixed(2),
+        //                     hız_y: this.carMovement.localSpeed.y.toFixed(2),
+        //                     ivme_x: this.carMovement.localAcceleration.x.toFixed(2),
+        //                     ivme_y: this.carMovement.localAcceleration.y.toFixed(2),
+        //                     pozisyon: {
+        //                         x: this.carMovement.position.x.toFixed(2),
+        //                         y: this.carMovement.position.y.toFixed(2),
+        //                         z: this.carMovement.position.z.toFixed(2)
+        //                     }
+        //                 });
+        //                 this.carMovement.lastLogTime = this.time.elapsed;
+        //             }
+        //         }
+        //     }
+        // });
     }
 
     // Araba referansını ayarlamak için yeni bir metot

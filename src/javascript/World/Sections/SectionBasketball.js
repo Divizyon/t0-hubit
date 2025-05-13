@@ -10,7 +10,7 @@ export default class SectionBasketball {
         this.mixer = null;
         this.model = null;
         this.collisionBody = null;
-        this.setModel();
+        //this.setModel();
         
         if (this.time) {
             this.time.on('tick', () => {

@@ -468,24 +468,26 @@ export default class World {
 
     setGreenScreen() {
         this.sectionGreenScreen = new SectionGreenScreen({
-            time: this.time,
+            scene:     this.scene,
             resources: this.resources,
-            objects: this.objects,
-            physics: this.physics,
-            debug: this.debugFolder,
-            scene: this.scene
-        })
+            physics:   this.physics,
+            debug:     this.debugFolder,
+            rotateX:   0,   // 
+            rotateY:   0,
+            rotateZ:   Math.PI / 2 // Y ekseninde 90 derece,
+        });
     }
 
     setRenderRoom() {
         this.sectionRenderRoom = new SectionRenderRoom({
-            time: this.time,
+            scene:     this.scene,
             resources: this.resources,
-            objects: this.objects,
-            physics: this.physics,
-            debug: this.debugFolder,
-            scene: this.scene
-        })
+            physics:   this.physics,
+            debug:     this.debugFolder,
+            rotateX:   0,   // 
+            rotateY:   0,
+            rotateZ:   Math.PI / 2 // Y ekseninde 90 derece,
+        });
     }
 
     setConcert() {
@@ -586,15 +588,16 @@ export default class World {
 
     setSoundRoom() {
         this.sectionSoundRoom = new SectionSoundRoom({
-            time: this.time,
+            scene:     this.scene,
             resources: this.resources,
-            objects: this.objects,
-            physics: this.physics,
-            debug: this.debugFolder,
-            scene: this.scene
-        })
+            physics:   this.physics,
+            debug:     this.debugFolder,
+            rotateX:   0,   // 
+            rotateY:   0,
+            rotateZ:   Math.PI / 2 // Y ekseninde 90 derece,
+        });
         this.container.name = 'SoundRoom'
-        this.container.position.set(-27, -1, .5)
+        this.container.position.set(-58.3, 15.5, .5)
     }
 
     setYoungCenter() {

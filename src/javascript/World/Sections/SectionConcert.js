@@ -10,7 +10,7 @@ export default class SectionConcert {
         this.mixer = null;
         this.model = null;
         this.collisionBody = null;
-        this.setModel();
+        //this.setModel();
         
         if (this.time) {
             this.time.on('tick', () => {
