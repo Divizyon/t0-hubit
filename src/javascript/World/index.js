@@ -662,6 +662,7 @@ export default class World {
           resources: this.resources,
           physics:   this.physics,
           debug:     this.debugFolder,
+          areas:     this.areas,
           rotateX:   0,   // 
           rotateY:   0,
           rotateZ:   Math.PI/2 // Y ekseninde 90 derece,
