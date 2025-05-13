@@ -563,7 +563,7 @@ export default class World {
             physics:   this.physics,
             debug:     this.debugFolder,
             rotateX:   Math.PI,   // 
-            rotateY:   0,
+            rotateY:   Math.PI,
             rotateZ:   -Math.PI/2   // Y ekseninde 90 derece,
           });
     }
