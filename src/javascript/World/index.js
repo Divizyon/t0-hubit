@@ -96,7 +96,6 @@ export default class World {
         this.setZones()
         this.setObjects()
         
-        this.areas.car = this.car
         this.setTiles()
         this.setWalls()
 
@@ -126,6 +125,7 @@ export default class World {
         this.setYoungCard()
         this.setYoungCenter()
         this.setCar()
+        this.areas.car = this.car
     }
 
     setReveal() {
