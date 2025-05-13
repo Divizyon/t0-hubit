@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import CANNON from 'cannon';
 
-const DEFAULT_POSITION = new THREE.Vector3(58, -41, 0.45);
+const DEFAULT_POSITION = new THREE.Vector3(58, -37.7, 0.45);
 
 export default class SectionYoungCenter {
   constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0 }) {
@@ -56,7 +56,7 @@ export default class SectionYoungCenter {
     });
   
     const baseModel = base.scene.clone(true);
-    baseModel.position.set(57, -41, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
+    baseModel.position.set(57, -38, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
     baseModel.scale.set(1.5, 1.5, 1.5) // Base modelinin ölçeği
     this.container.add(baseModel);
   

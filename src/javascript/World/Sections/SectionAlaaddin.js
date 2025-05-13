@@ -33,7 +33,7 @@ export default class SectionAlaaddin {
             console.log('Animasyonlar:', gltf.animations);
             
             this.model = gltf.scene;
-            this.model.position.set(18.5, -52, 0);
+            this.model.position.set(12, -65, 0);
             this.model.scale.set(1,1,1);
             
             // Modeli döndür
