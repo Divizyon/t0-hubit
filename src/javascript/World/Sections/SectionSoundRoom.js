@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import CANNON from 'cannon';
 
-const DEFAULT_POSITION = new THREE.Vector3(-58.3, 15.5, .5);
+const DEFAULT_POSITION = new THREE.Vector3(-56.8, 15, 2.2);
 
 export default class SectionSoundRoom {
   constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0 }) {

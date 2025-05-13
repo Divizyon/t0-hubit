@@ -1,8 +1,7 @@
 import * as THREE from 'three';
 import CANNON from 'cannon';
-import { KHR_DF_MODEL_RGBSDA } from 'three/examples/jsm/libs/ktx-parse.module.js';
 
-const DEFAULT_POSITION = new THREE.Vector3(26,-13.5,0);
+const DEFAULT_POSITION = new THREE.Vector3(26, -13.5, 0);
 
 export default class SectionRoadSign {
   constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0 }) {
@@ -67,17 +66,17 @@ export default class SectionRoadSign {
     this.container.add(model);
   
     // Bounding box hesapla
-    baseModel.updateMatrixWorld(true);
-    const bbox = new THREE.Box3().setFromObject(this.container);
+    model.updateMatrixWorld(true);
+    const bbox = new THREE.Box3().setFromObject(model);
     var size = bbox.getSize(new THREE.Vector3());
 
     // Fizik gövdesi oluştur
-    const halfExtents = new CANNON.Vec3(size.x / 1.97, size.y / 1.97, size.z / 2);
+    const halfExtents = new CANNON.Vec3(size.x / 3, size.y / 3, size.z);
     const boxShape = new CANNON.Box(halfExtents);
 
     const body = new CANNON.Body({
       mass: 0,
-      position: baseModel.position,
+      position: model.position,
       material: this.physics.materials.items.floor
     });
 
