@@ -610,15 +610,13 @@ export default class World {
     }
 
     setAlaaddin() {
-        this.sectionAlaaddin = new SectionAlaaddin({
-            time: this.time,
-            resources: this.resources,
-            objects: this.objects,
-            physics: this.physics,
-            debug: this.debugFolder,
-            scene: this.scene
-        })
-    }
+       
+            this.sectionAlaaddin = new SectionAlaaddin({
+                scene: this.scene,
+                time: this.time,
+                physics: this.physics
+            });
+        }
 
     setAtmosphere() {
         this.sectionAtmosphere = new SectionAtmosphere({

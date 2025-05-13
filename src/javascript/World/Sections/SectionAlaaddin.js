@@ -17,25 +17,27 @@ export default class SectionAlaaddin {
                 this.tick(this.time.delta * 0.001);
             });
         } else {
-            console.warn('SectionAlaaddin: time parametresi verilmedi, animasyonlar çalışmayacak.');
+            console.warn('AlaaddinTepesi: time parametresi verilmedi, animasyonlar çalışmayacak.');
         }
     }
 
     setModel() {
         if (!this.scene) {
-            console.warn('SectionAlaaddin: scene parametresi verilmedi, model sahneye eklenmeyecek.');
+            console.warn('AlaaddinTepesi: scene parametresi verilmedi, model sahneye eklenmeyecek.');
             return;
         }
 
         const loader = new GLTFLoader();
         loader.load('./models/SectionAlaaddin/base.glb', (gltf) => {
+            console.log('Balık modeli yüklendi:', gltf);
+            console.log('Animasyonlar:', gltf.animations);
             
             this.model = gltf.scene;
-            this.model.position.set(18.5, -52, .2);
+            this.model.position.set(18.5, -52, 0);
             this.model.scale.set(1,1,1);
-
-            this.model.rotation.x = -80.1;
-            this.model.rotation.y = 25;
+            
+            // Modeli döndür
+            this.model.rotation.x = Math.PI / 2;
             
             this.scene.add(this.model);
 
@@ -43,17 +45,15 @@ export default class SectionAlaaddin {
             if (this.physics) {
                 this.collisionBody = new CANNON.Body({
                     mass: 0,
-                    position: new CANNON.Vec3(6, -13, 1),
+                    position: new CANNON.Vec3(18.5,-52,0),
                     material: this.physics.materials.items.floor
                 });
 
-                // Sphere yerine Box collision kullanıyoruz
-                const boxShape = new CANNON.Box(new CANNON.Vec3(
-                    5.2, // x boyutu
-                    5.2, // y boyutu
-                    5.2  // z boyutu
-                ));
-                // this.collisionBody.addShape(boxShape);
+              
+                const radius = 12;
+                const sphereShape = new CANNON.Sphere(radius);
+                this.collisionBody.addShape(sphereShape);
+
                 
                 this.physics.world.addBody(this.collisionBody);
             }
@@ -89,16 +89,16 @@ export default class SectionAlaaddin {
 
             // Animasyonları başlat
             if (gltf.animations && gltf.animations.length > 0) {
-                // console.log('Animasyonlar yükleniyor...');
+                console.log('Animasyonlar yükleniyor...');
                 this.mixer = new THREE.AnimationMixer(this.model);
                 gltf.animations.forEach((clip, index) => {
                     console.log(`Animasyon ${index} yükleniyor:`, clip.name);
                     const action = this.mixer.clipAction(clip);
                     action.reset().play();
                 });
-                // console.log('Mixer oluşturuldu:', this.mixer);
+                console.log('Mixer oluşturuldu:', this.mixer);
             } else {
-                // console.warn('Hiç animasyon bulunamadı!');
+                console.warn('Hiç animasyon bulunamadı!');
             }
         });
     }
@@ -109,3 +109,17 @@ export default class SectionAlaaddin {
         }
     }
 }
+
+/* 
+Resource.js   { name: 'aladdinTepesi', source: './models/hubit/aladdinTepesi/base.glb' },
+İndex Js
+    setAladdinTepesi() {
+        this.aladdinTepesi = new AladdinTepesi({
+            scene: this.scene,
+            time: this.time,
+            physics: this.physics
+        });
+    }
+this.setAladdinTepesi()
+import AladdinTepesi from './Hubit/AlaaddinTepesi.js'
+*/
