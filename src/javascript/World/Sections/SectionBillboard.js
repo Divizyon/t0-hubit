@@ -130,8 +130,8 @@ export default class SectionBillboard {
     
     // Buton konumu - ses odası için uygun konum
     this.button.position = new THREE.Vector3(
-      billboardPosition.x - 2.5, // Modelin önünde
-      billboardPosition.y - 2, // Modelin önünde
+      billboardPosition.x , // Modelin önünde
+      billboardPosition.y - 4, // Modelin önünde
       billboardPosition + 0.25 // Zemin üzerinde, görünür olacak şekilde
     )
     
@@ -148,7 +148,7 @@ export default class SectionBillboard {
     // Canvas ile texture oluştur
     this.button.label.canvas = document.createElement('canvas')
     this.button.label.canvas.width = 512
-    this.button.label.canvas.height = 200
+    this.button.label.canvas.height = 360
     this.button.label.context = this.button.label.canvas.getContext('2d')
 
     // Texture oluştur
@@ -177,8 +177,8 @@ export default class SectionBillboard {
     // Alan tetikleyici oluştur
     this.button.triggerArea = this.areas.add({
         position: new THREE.Vector2(this.button.position.x, this.button.position.y),
-        halfExtents: new THREE.Vector2(1.4, 0.8),
-        hasKey: true,
+        halfExtents: new THREE.Vector2(2, 1.5),
+        hasKey: false,
         testCar: true,
         active: true
     })
@@ -186,6 +186,10 @@ export default class SectionBillboard {
     // Butona tıklandığında
     this.button.triggerArea.on('interact', () => {
         console.log('Model inceleniyor!')
+    })
+
+    this.button.triggerArea.on('in', () => {
+      console.log('İçerdeyiz!')
     })
 }
 }
