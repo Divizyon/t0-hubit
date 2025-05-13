@@ -21,7 +21,6 @@ export default class SectionDivision {
     this._buildModel();
     this.scene.add(this.container);
   }
-
   
     
   _buildModel() {
@@ -57,10 +56,10 @@ export default class SectionDivision {
   
      // Base modelini klonla ve Kapsül modeline ekle
      const baseModel = base.scene.clone(true);
+    
      baseModel.position.set(-65, 4, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
      baseModel.scale.set(1.5, 1.5, 1.5); // Base modelinin ölçeği
      baseModel.rotation.set(this.rotateX, this.rotateY, 290);
-     this.container.add(baseModel);
    
      // Kapsül model pozisyonu ve dönüşü
      model.position.copy(this.position);

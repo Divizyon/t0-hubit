@@ -21,7 +21,6 @@ export default class SectionSoundRoom {
     this._buildModel();
     this.scene.add(this.container);
   }
-
   
     
   _buildModel() {

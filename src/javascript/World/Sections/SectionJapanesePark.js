@@ -31,11 +31,11 @@ export default class SectionJapanesePark {
         loader.load('./models/SectionJapanesePark/base.glb', (gltf) => {
             
             this.model = gltf.scene;
-            this.model.position.set(5, -90, 1);
+            this.model.position.set(15, -25, 1);
             this.model.scale.set(1,1,1);
 
             this.model.rotation.x = -80.1;
-            this.model.rotation.y = 25;
+            this.model.rotation.y = -55;
             
             this.scene.add(this.model);
 
@@ -43,17 +43,17 @@ export default class SectionJapanesePark {
             if (this.physics) {
                 this.collisionBody = new CANNON.Body({
                     mass: 0,
-                    position: new CANNON.Vec3(6, -13, 1),
+                    position: new CANNON.Vec3(13.7, -25, 1),
                     material: this.physics.materials.items.floor
                 });
 
                 // Sphere yerine Box collision kullanıyoruz
                 const boxShape = new CANNON.Box(new CANNON.Vec3(
-                    5.2, // x boyutu
-                    5.2, // y boyutu
+                    8.5, // x boyutu
+                    5.7, // y boyutu
                     5.2  // z boyutu
                 ));
-                // this.collisionBody.addShape(boxShape);
+                this.collisionBody.addShape(boxShape);
                 
                 this.physics.world.addBody(this.collisionBody);
             }

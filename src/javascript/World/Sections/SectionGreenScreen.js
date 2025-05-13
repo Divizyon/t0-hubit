@@ -21,7 +21,6 @@ export default class SectionGreenScreen {
     this._buildModel();
     this.scene.add(this.container);
   }
-
   
     
   _buildModel() {

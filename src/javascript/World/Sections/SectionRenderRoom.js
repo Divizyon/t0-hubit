@@ -21,7 +21,6 @@ export default class SectionRenderRoom {
     this._buildModel();
     this.scene.add(this.container);
   }
-
   
     
   _buildModel() {
