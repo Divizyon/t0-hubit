@@ -242,6 +242,7 @@ export default class Resources extends EventEmitter {
             { name: 'SoundRoom', source: './models/SectionSoundRoom/base.glb' },
             { name: 'YoungCenter', source: './models/SectionYoungCenter/base.glb' },
             // { name: 'tramBase', source: './models/tram/base.glb' },
+            { name: 'Newton', source:'./models/SectionNewton/base.glb'},
 
             { name: 'Division', source: './models/SectionDivision/base.glb' },
             { name: 'Alaaddin', source: './models/SectionAlaaddin/base.glb' },

@@ -39,6 +39,7 @@ import SectionBillboard from './Sections/SectionBillboard.js'
 import SectionCoWork from './Sections/SectionCoWork.js'
 import SectionGameMechanic from './Sections/SectionGameMechanic.js'
 import SectionTram from './Sections/SectionTram.js';
+import SectionNewton from './Sections/SectionNewton.js'
 
 export default class World {
     constructor(_options) {
@@ -116,6 +117,7 @@ export default class World {
         this.setConcert()
         this.setBasketball()
         this.setButterfly()
+        this.setNewton()
 
 
         this.setCoWork()
@@ -585,8 +587,21 @@ export default class World {
         })
         this.container.add(this.sectionRocket.container)
     }
-
-
+    setNewton() {
+        this.sectionNewton = new SectionNewton({
+            scene: this.scene,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            areas: this.areas,
+            materials: this.materials,
+            time: this.time,
+            rotateX: Math.PI / 2, // 90 derece X ekseni etrafında döndür
+            rotateY: Math.PI / 8,
+            rotateZ: 0
+        })
+    }
 
 
 
