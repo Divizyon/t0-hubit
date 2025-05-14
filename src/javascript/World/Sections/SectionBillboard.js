@@ -25,12 +25,12 @@ export default class SectionBillboard {
     this.position = DEFAULT_POSITION.clone();
     
     this.billboards = [
-      { position: { x: 0, y: 40, z: 0 }, name: "Billboard1", link: "https://www.google.com/" },
-      { position: { x: 10, y: 40, z: 0 }, name: "Billboard2", link: "https://www.google.com/" },
-      { position: { x: 20, y: 40, z: 0 }, name: "Billboard3", link: "https://www.google.com/" },
-      { position: { x: 30, y: 40, z: 0 }, name: "Billboard4", link: "https://www.google.com/" },
-      { position: { x: 40, y: 40, z: 0 }, name: "Billboard5", link: "https://www.google.com/" },
-      { position: { x: 50, y: 40, z: 0 }, name: "Billboard6", link: "https://www.google.com/" }
+      { position: { x: 3 , y: -8, z: 0 }, name: "Billboard1", link: "https://gokonya.com/en/catalhoyuk" },
+      { position: { x: 14, y: -8, z: 0 }, name: "Billboard2", link: "https://kbbgenclikmeclisi.com/hosgeldin" },
+      { position: { x: 23, y: -7, z: 0 }, name: "Billboard3", link: "https://www.genckultur.com/" },
+      { position: { x: 32, y: -1.5, z: 0 }, name: "Billboard4", link: "https://gokonya.com/tr/karatay-medresesi" },
+      { position: { x: 43, y: 0, z: 0 }, name: "Billboard5", link: "https://gokonya.com/en/mevlana" },
+      { position: { x: 53, y: 1, z: 0 }, name: "Billboard6", link: "https://gokonya.com/en/sille-2" }
     ];
 
     // Her bir billboard için model oluştur
