@@ -196,7 +196,7 @@ export default class Resources extends EventEmitter {
             { name: 'areaQuestionMark', source: './models/area/questionMark.png', type: 'texture' },
 
             // MyCustomModel
-      //      { name: 'myCustomModelBase', source: './models/soundRoom/soundRoom.glb' },
+            //      { name: 'myCustomModelBase', source: './models/soundRoom/soundRoom.glb' },
 
             // Tiles
             { name: 'tilesABase', source: './models/tiles/a/base.glb' },
@@ -237,10 +237,11 @@ export default class Resources extends EventEmitter {
             { name: 'Capsule', source: './models/SectionCapsule/base.glb' },
             { name: 'YoungCard', source: './models/SectionYoungCard/base.glb' },
             { name: 'Rocket', source: './models/SectionRocket/base.glb' },
-            //   { name: 'SocialInovation', source: './models/SectionSocialInovation/base.glb' },
+            //  { name: 'SocialInovation', source: './models/SectionSocialInovation/base.glb' },
             { name: 'RoadSign', source: './models/SectionRoadSign/base.glb' },
             { name: 'SoundRoom', source: './models/SectionSoundRoom/base.glb' },
             { name: 'YoungCenter', source: './models/SectionYoungCenter/base.glb' },
+            // { name: 'tramBase', source: './models/tram/base.glb' },
 
             { name: 'Division', source: './models/SectionDivision/base.glb' },
             { name: 'Alaaddin', source: './models/SectionAlaaddin/base.glb' },

@@ -38,7 +38,6 @@ export default class SectionAlaaddin {
             
             // Modeli döndür
             this.model.rotation.x = 0;
-           
             
             this.scene.add(this.model);
 

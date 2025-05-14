@@ -38,7 +38,7 @@ import SectionBasketball from './Sections/SectionBasketball.js'
 import SectionBillboard from './Sections/SectionBillboard.js'
 import SectionCoWork from './Sections/SectionCoWork.js'
 import SectionGameMechanic from './Sections/SectionGameMechanic.js'
-
+import SectionTram from './Sections/SectionTram.js';
 
 export default class World {
     constructor(_options) {
@@ -90,14 +90,14 @@ export default class World {
         }, 2000)
 
         this.sections = {}
-        
+
         this.setReveal()
         this.setMaterials()
         this.setShadows()
         this.setPhysics()
         this.setZones()
         this.setObjects()
-        
+
         this.setTiles()
         this.setWalls()
 
@@ -106,6 +106,7 @@ export default class World {
         this.setRoadSign()
 
         this.setAlaaddin()
+        //  this.setTram()
         this.setAtmosphere()
         this.setCapsule()
         this.setDivision()
@@ -115,7 +116,7 @@ export default class World {
         this.setBasketball()
         this.setButterfly()
 
-        
+
         this.setCoWork()
 
         this.setJapanesePark()
@@ -451,7 +452,7 @@ export default class World {
     setRoadSign() {
         this.sectionRoadSign = new SectionRoadSign({
             scene: this.scene,
-          resources: this.resources,
+            resources: this.resources,
             physics: this.physics,
             debug: this.debugFolder,
             rotateX: 0,   // 
@@ -463,7 +464,7 @@ export default class World {
     setScienceCenter() {
         this.sectionScienceCenter = new SectionScienceCenter({
             scene: this.scene,
-          resources: this.resources,
+            resources: this.resources,
             physics: this.physics,
             debug: this.debugFolder,
             rotateX: 0,   // 
@@ -538,7 +539,7 @@ export default class World {
             rotateX: 0,   // 
             rotateY: 0,
             rotateZ: 0 // Y ekseninde 90 derece,
-          });
+        });
     }
 
     setButterfly() {
@@ -550,7 +551,7 @@ export default class World {
             rotateX: 0,   // 
             rotateY: 0,
             rotateZ: 0 // Y ekseninde 90 derece,
-          });
+        });
     }
 
     setYoungCard() {
@@ -564,7 +565,7 @@ export default class World {
             rotateX: Math.PI,   // 
             rotateY: Math.PI,
             rotateZ: -Math.PI / 2   // Y ekseninde 90 derece,
-          });
+        });
     }
 
     setRocket() {
@@ -591,11 +592,11 @@ export default class World {
             resources: this.resources,
             physics: this.physics,
             debug: this.debugFolder,
-            rotateX: Math.PI / 2,   // 
-            rotateY: Math.PI,
-            rotateZ: 0, // Y ekseninde 90 derece,
-          });
-        this.container.add(this.sectionSocialInovation.container)
+            rotateX: Math.PI / 2,   // İhtiyaca göre ayarla
+            rotateY: Math.PI,       // İhtiyaca göre ayarla
+            rotateZ: 0,             // İhtiyaca göre ayarla
+        });
+        this.container.add(this.sectionSocialInovation.container);
     }
 
     setSoundRoom() {
@@ -615,7 +616,7 @@ export default class World {
     setYoungCenter() {
         this.sectio = new SectionYoungCenter({
             scene: this.scene,
-          resources: this.resources,
+            resources: this.resources,
             physics: this.physics,
             debug: this.debugFolder,
             rotateX: 0,   // 
@@ -625,14 +626,58 @@ export default class World {
     }
 
     setAlaaddin() {
-       
-            this.sectionAlaaddin = new SectionAlaaddin({
-                scene: this.scene,
-                time: this.time,
-                physics: this.physics
-            });
-        }
 
+        this.sectionAlaaddin = new SectionAlaaddin({
+            scene: this.scene,
+            time: this.time,
+            physics: this.physics
+        });
+    }
+    setTram() {
+        try {
+            console.log('Tram sistemi oluşturuluyor...');
+
+            this.sectionTram = new SectionTram({
+                scene: this.scene,
+                resources: this.resources,
+                physics: this.physics,
+                debug: this.debugFolder,
+                time: this.time
+            });
+
+            // Alaaddin'in pozisyonunu al (-52 yerine -45 kullanarak daha yukarıda konumlandır)
+            const alaaddinPosition = new THREE.Vector3(13, -45, -1);
+
+            // Tramı Alaaddin'in pozisyonuna yerleştir
+            this.sectionTram.container.position.copy(alaaddinPosition);
+
+            // Rayın yarıçapını Alaaddin'e göre ayarla
+            this.sectionTram.railRadius = 12;
+
+            console.log('Tram Alaaddin çevresine yerleştirildi');
+
+            // Etkileşim alanı ekle
+            this.sectionTram.addInteractionArea();
+
+        } catch (error) {
+            console.error('Tram oluşturma hatası:', error);
+        }
+    }
+    adjustTram(heightOffset, radius) {
+        if (this.sectionTram) {
+            if (heightOffset !== undefined) {
+                // Yüksekliği ayarla
+                this.sectionTram.container.position.y = -45 + heightOffset;
+            }
+
+            if (radius !== undefined) {
+                // Ray yarıçapını ayarla
+                this.sectionTram.railRadius = radius;
+            }
+
+            console.log(`Tram ayarlandı: Yükseklik=${this.sectionTram.container.position.y}, Yarıçap=${this.sectionTram.railRadius}`);
+        }
+    }
     setAtmosphere() {
         this.sectionAtmosphere = new SectionAtmosphere({
             time: this.time,
@@ -647,7 +692,7 @@ export default class World {
     setDivision() {
         this.division = new SectionDivision({
             scene: this.scene,
-          resources: this.resources,
+            resources: this.resources,
             physics: this.physics,
             debug: this.debugFolder,
             rotateX: 0,   // 
@@ -659,7 +704,7 @@ export default class World {
     setStadium() {
         this.stadium = new SectionStadium({
             scene: this.scene,
-          resources: this.resources,
+            resources: this.resources,
             physics: this.physics,
             debug: this.debugFolder,
             rotateX: 0,   // 
@@ -671,16 +716,16 @@ export default class World {
     setBillboard() {
         this.sectionBillboard = new SectionBillboard({
             scene: this.scene,
-          resources: this.resources,
-          physics:   this.physics,
-          debug:     this.debugFolder,
-          areas:     this.areas,
-          rotateX:   0,   // 
-          rotateY:   0,
-          rotateZ:   Math.PI/2, // Y ekseninde 90 derece,
-          camera:   this.camera,
-          time: this.time,
-          car: this.car
+            resources: this.resources,
+            physics: this.physics,
+            debug: this.debugFolder,
+            areas: this.areas,
+            rotateX: 0,   // 
+            rotateY: 0,
+            rotateZ: Math.PI / 2, // Y ekseninde 90 derece,
+            camera: this.camera,
+            time: this.time,
+            car: this.car
         });
         this.container.name = 'Billboard'
     }
@@ -688,7 +733,7 @@ export default class World {
     setCoWork() {
         this.sectionCoWork = new SectionCoWork({
             scene: this.scene,
-          resources: this.resources,
+            resources: this.resources,
             physics: this.physics,
             debug: this.debugFolder,
             rotateX: 0,   // 
@@ -698,161 +743,161 @@ export default class World {
     }
     setGameMechanic() {
         try {
-          console.log('setGameMechanic başlatılıyor');
-          
-        this.sectionGameMechanic = new SectionGameMechanic({
-          scene: this.scene,
-            resources: this.resources
-          });
-          
-          // Container'a ekle
-          if (this.sectionGameMechanic && this.sectionGameMechanic.container) {
-            this.container.add(this.sectionGameMechanic.container);
-            
-            // Oyun mantığı
-            const ball = this.sectionGameMechanic.ball;
-            const goal = this.sectionGameMechanic.goal;
-            const field = this.sectionGameMechanic.field;
-            
-            // Oyun değişkenleri
-            let isBallMoving = false;
-            let score = 0;
-            let lastCarPosition = new THREE.Vector3();
-            
-            // Her karede kontrol et
-            this.time.on('tick', () => {
-              try {
-                // Araba pozisyonunu kontrol et
-                if (this.car && this.car.chassis && this.car.chassis.object) {
-                  const carPosition = this.car.chassis.object.position;
-                  
-                  // Top ile araba arasındaki mesafeyi hesapla
-                  const ballDistance = Math.sqrt(
-                    Math.pow(carPosition.x - ball.position.x, 2) +
-                    Math.pow(carPosition.z - ball.position.z, 2)
-                  );
-                  
-                  // Araba topa çarptı mı? (3 birim mesafe kontrol)
-                  if (ballDistance < 3 && !isBallMoving) {
-                    isBallMoving = true;
-                    
-                    // Hareket vektörünü hesapla (arabadan topa doğru)
-                    const moveVector = new THREE.Vector3(
-                      ball.position.x - carPosition.x,
-                      0,
-                      ball.position.z - carPosition.z
-                    ).normalize();
-                    
-                    // Arabanın hızını hesapla
-                    const carVelocity = new THREE.Vector3(
-                      carPosition.x - lastCarPosition.x,
-                      0,
-                      carPosition.z - lastCarPosition.z
-                    );
-                    
-                    const carSpeed = carVelocity.length() * 15; // Etki faktörü
-                    
-                    // Topu hareket ettir
-                    const animateBall = () => {
-                      let moveDistance = carSpeed;
-                      let steps = 0;
-                      
-                      const moveBall = () => {
-                        if (steps < 100 && moveDistance > 0.01) {
-                          // Topu hareket ettir
-                          ball.position.x += moveVector.x * moveDistance;
-                          ball.position.z += moveVector.z * moveDistance;
-                          
-                          // Top dönüşü
-                          ball.rotation.x += moveDistance * 0.5;
-                          ball.rotation.z += moveDistance * 0.3;
-                          
-                          // Sürtünme - yavaşlama
-                          moveDistance *= 0.95;
-                          
-                          // Topun kaleye girip girmediğini kontrol et
-                          const goalDistance = Math.sqrt(
-                            Math.pow(ball.position.x - goal.position.x, 2) +
-                            Math.pow(ball.position.z - goal.position.z, 2)
-                          );
-                          
-                          // Top kaleye yakın mı?
-                          if (goalDistance < 6 && ball.position.z < -9) {
-                            // GOL!
-                            score++;
-                            console.log('GOL! Skor:', score);
-                            
-                            // Topu başlangıç pozisyonuna getir
-                            setTimeout(() => {
-                              ball.position.set(0, 1, 0);
-                              ball.rotation.set(0, 0, 0);
-                            }, 1000);
-                            
-                            // Animasyonu bitir
-                            steps = 100;
-                          }
-                          
-                          // Sahanın sınırlarını kontrol et
-                          const fieldLimits = {
-                            minX: -15,
-                            maxX: 15,
-                            minZ: -15,
-                            maxZ: 15
-                          };
-                          
-                          // Top sınırların dışına çıktı mı?
-                          if (ball.position.x < fieldLimits.minX || 
-                              ball.position.x > fieldLimits.maxX || 
-                              ball.position.z < fieldLimits.minZ || 
-                              ball.position.z > fieldLimits.maxZ) {
-                            
-                            // Topun saha dışına çıkmasını engelle
-                            if (ball.position.x < fieldLimits.minX) {
-                              ball.position.x = fieldLimits.minX;
-                              moveVector.x *= -0.8; // Sekme etkisi
-                            }
-                            if (ball.position.x > fieldLimits.maxX) {
-                              ball.position.x = fieldLimits.maxX;
-                              moveVector.x *= -0.8;
-                            }
-                            if (ball.position.z < fieldLimits.minZ) {
-                              ball.position.z = fieldLimits.minZ;
-                              moveVector.z *= -0.8;
-                            }
-                            if (ball.position.z > fieldLimits.maxZ) {
-                              ball.position.z = fieldLimits.maxZ;
-                              moveVector.z *= -0.8;
-                            }
-                          }
-                          
-                          steps++;
-                          requestAnimationFrame(moveBall);
-                        } else {
-                          // Hareket bitti
-                          isBallMoving = false;
-                        }
-                      };
-                      
-                      // Hareketi başlat
-                      moveBall();
-                    };
-                    
-                    // Top animasyonunu başlat
-                    animateBall();
-                  }
-                  
-                  // Arabanın son pozisyonunu kaydet
-                  lastCarPosition.copy(carPosition);
-                }
-              } catch (e) {
-                // Hataları sessizce ignore et
-              }
+            console.log('setGameMechanic başlatılıyor');
+
+            this.sectionGameMechanic = new SectionGameMechanic({
+                scene: this.scene,
+                resources: this.resources
             });
-            
-            console.log('Futbol oyunu mantığı başlatıldı');
-          }
+
+            // Container'a ekle
+            if (this.sectionGameMechanic && this.sectionGameMechanic.container) {
+                this.container.add(this.sectionGameMechanic.container);
+
+                // Oyun mantığı
+                const ball = this.sectionGameMechanic.ball;
+                const goal = this.sectionGameMechanic.goal;
+                const field = this.sectionGameMechanic.field;
+
+                // Oyun değişkenleri
+                let isBallMoving = false;
+                let score = 0;
+                let lastCarPosition = new THREE.Vector3();
+
+                // Her karede kontrol et
+                this.time.on('tick', () => {
+                    try {
+                        // Araba pozisyonunu kontrol et
+                        if (this.car && this.car.chassis && this.car.chassis.object) {
+                            const carPosition = this.car.chassis.object.position;
+
+                            // Top ile araba arasındaki mesafeyi hesapla
+                            const ballDistance = Math.sqrt(
+                                Math.pow(carPosition.x - ball.position.x, 2) +
+                                Math.pow(carPosition.z - ball.position.z, 2)
+                            );
+
+                            // Araba topa çarptı mı? (3 birim mesafe kontrol)
+                            if (ballDistance < 3 && !isBallMoving) {
+                                isBallMoving = true;
+
+                                // Hareket vektörünü hesapla (arabadan topa doğru)
+                                const moveVector = new THREE.Vector3(
+                                    ball.position.x - carPosition.x,
+                                    0,
+                                    ball.position.z - carPosition.z
+                                ).normalize();
+
+                                // Arabanın hızını hesapla
+                                const carVelocity = new THREE.Vector3(
+                                    carPosition.x - lastCarPosition.x,
+                                    0,
+                                    carPosition.z - lastCarPosition.z
+                                );
+
+                                const carSpeed = carVelocity.length() * 15; // Etki faktörü
+
+                                // Topu hareket ettir
+                                const animateBall = () => {
+                                    let moveDistance = carSpeed;
+                                    let steps = 0;
+
+                                    const moveBall = () => {
+                                        if (steps < 100 && moveDistance > 0.01) {
+                                            // Topu hareket ettir
+                                            ball.position.x += moveVector.x * moveDistance;
+                                            ball.position.z += moveVector.z * moveDistance;
+
+                                            // Top dönüşü
+                                            ball.rotation.x += moveDistance * 0.5;
+                                            ball.rotation.z += moveDistance * 0.3;
+
+                                            // Sürtünme - yavaşlama
+                                            moveDistance *= 0.95;
+
+                                            // Topun kaleye girip girmediğini kontrol et
+                                            const goalDistance = Math.sqrt(
+                                                Math.pow(ball.position.x - goal.position.x, 2) +
+                                                Math.pow(ball.position.z - goal.position.z, 2)
+                                            );
+
+                                            // Top kaleye yakın mı?
+                                            if (goalDistance < 6 && ball.position.z < -9) {
+                                                // GOL!
+                                                score++;
+                                                console.log('GOL! Skor:', score);
+
+                                                // Topu başlangıç pozisyonuna getir
+                                                setTimeout(() => {
+                                                    ball.position.set(0, 1, 0);
+                                                    ball.rotation.set(0, 0, 0);
+                                                }, 1000);
+
+                                                // Animasyonu bitir
+                                                steps = 100;
+                                            }
+
+                                            // Sahanın sınırlarını kontrol et
+                                            const fieldLimits = {
+                                                minX: -15,
+                                                maxX: 15,
+                                                minZ: -15,
+                                                maxZ: 15
+                                            };
+
+                                            // Top sınırların dışına çıktı mı?
+                                            if (ball.position.x < fieldLimits.minX ||
+                                                ball.position.x > fieldLimits.maxX ||
+                                                ball.position.z < fieldLimits.minZ ||
+                                                ball.position.z > fieldLimits.maxZ) {
+
+                                                // Topun saha dışına çıkmasını engelle
+                                                if (ball.position.x < fieldLimits.minX) {
+                                                    ball.position.x = fieldLimits.minX;
+                                                    moveVector.x *= -0.8; // Sekme etkisi
+                                                }
+                                                if (ball.position.x > fieldLimits.maxX) {
+                                                    ball.position.x = fieldLimits.maxX;
+                                                    moveVector.x *= -0.8;
+                                                }
+                                                if (ball.position.z < fieldLimits.minZ) {
+                                                    ball.position.z = fieldLimits.minZ;
+                                                    moveVector.z *= -0.8;
+                                                }
+                                                if (ball.position.z > fieldLimits.maxZ) {
+                                                    ball.position.z = fieldLimits.maxZ;
+                                                    moveVector.z *= -0.8;
+                                                }
+                                            }
+
+                                            steps++;
+                                            requestAnimationFrame(moveBall);
+                                        } else {
+                                            // Hareket bitti
+                                            isBallMoving = false;
+                                        }
+                                    };
+
+                                    // Hareketi başlat
+                                    moveBall();
+                                };
+
+                                // Top animasyonunu başlat
+                                animateBall();
+                            }
+
+                            // Arabanın son pozisyonunu kaydet
+                            lastCarPosition.copy(carPosition);
+                        }
+                    } catch (e) {
+                        // Hataları sessizce ignore et
+                    }
+                });
+
+                console.log('Futbol oyunu mantığı başlatıldı');
+            }
         } catch (error) {
-          console.error('Game mechanic oluşturma hatası:', error.stack);
+            console.error('Game mechanic oluşturma hatası:', error.stack);
         }
-      }
+    }
 }
