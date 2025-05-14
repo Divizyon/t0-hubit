@@ -580,7 +580,8 @@ export default class World {
             debug: this.debugFolder,
             scene: this.scene,
             areas: this.areas, // Bu parametre önemli
-            sounds: this.sounds // Bu parametre önemli
+            sounds: this.sounds, // Bu parametre önemli
+            materials: this.materials,
         })
         this.container.add(this.sectionRocket.container)
     }

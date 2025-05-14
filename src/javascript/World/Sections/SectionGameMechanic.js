@@ -2,8 +2,6 @@ import * as THREE from 'three';
 
 export default class SectionGameMechanic {
   constructor({ scene, resources }) {
-    console.log('SectionGameMechanic başlatılıyor');
-    
     this.scene = scene;
     this.resources = resources;
 
@@ -11,15 +9,14 @@ export default class SectionGameMechanic {
     this.position = new THREE.Vector3(0, 0, 0);
 
     this.container.position.set(80, 30, 0); // Yolun kenarına, zeminde pozisyonlandır
-  this.container.rotation.x = -Math.PI / 1; // Yatay döndür (90 derece)
-  this.container.rotation.z = Math.PI / 2; // Hafif bir açı vererek yola paralel hale getir (15 derece)
+    this.container.rotation.x = -Math.PI / 1; // Yatay döndür (90 derece)
+    this.container.rotation.z = Math.PI / 2; // Hafif bir açı vererek yola paralel hale getir (15 derece)
     
     // Futbol sahası ve öğelerini oluştur
     this._buildFootballField();
     
     if (this.scene) {
       this.scene.add(this.container);
-      console.log('Container sahneye eklendi');
     }
   }
   
