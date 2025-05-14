@@ -90,6 +90,7 @@ export default class World {
         }, 2000)
 
         this.sections = {}
+        this.buildings = {}
 
         this.setReveal()
         this.setMaterials()
@@ -132,6 +133,8 @@ export default class World {
         this.setBillboard()
         this.areas.car = this.car
         this.areas.setCar(this.car)
+
+        this.createBuildingAreas()
     }
 
     setReveal() {
@@ -899,5 +902,69 @@ export default class World {
         } catch (error) {
             console.error('Game mechanic oluşturma hatası:', error.stack);
         }
+    }
+
+    createBuildingAreas() {
+        // Tüm binalar için alanlar oluştur
+        const buildings = [
+            //{ id: 'billboard', name: 'Billboard', position: { x: 0, y: 40 }, size: { x: 10, y: 10 } },
+            //{ id: 'cowork', name: 'Co-Working', position: { x: -20, y: 20 }, size: { x: 10, y: 10 } },
+            { id: 'japanesePark', name: 'Japon Parkı', position: { x: 10, y: -26 }, size: { x: 12, y: 10 } },
+            { id: 'alaaddin', name: 'Alaaddin', position: { x: 8, y: -50 }, size: { x: 12, y: 12 } },
+            //{ id: 'atmosphere', name: 'Atmosphere', position: { x: -15, y: -15 }, size: { x: 10, y: 10 } },
+            { id: 'capsule', name: 'Kapsül', position: { x: 36, y: -17 }, size: { x: 7, y:7 } },
+            //{ id: 'division', name: 'Division', position: { x: 25, y: 0 }, size: { x: 10, y: 10 } },
+            //{ id: 'greenScreen', name: 'Green Screen', position: { x: -25, y: 0 }, size: { x: 10, y: 10 } },
+            //{ id: 'renderRoom', name: 'Render Odası', position: { x: 0, y: -25 }, size: { x: 10, y: 10 } },
+            //{ id: 'concert', name: 'Konser Alanı', position: { x: 30, y: 30 }, size: { x: 10, y: 10 } },
+            //{ id: 'basketball', name: 'Basketbol Sahası', position: { x: -30, y: 30 }, size: { x: 10, y: 10 } },
+            { id: 'butterfly', name: 'Kelebek', position: { x: 55, y: -16 }, size: { x: 11, y: 10 } },
+            //{ id: 'rocket', name: 'Roket', position: { x: -30, y: -30 }, size: { x: 10, y: 10 } },
+            //{ id: 'scienceCenter', name: 'Bilim Merkezi', position: { x: 40, y: 0 }, size: { x: 10, y: 10 } },
+            //{ id: 'socialInovation', name: 'Sosyal İnovasyon', position: { x: 0, y: 40 }, size: { x: 10, y: 10 } },
+            //{ id: 'soundRoom', name: 'Ses Odası', position: { x: -40, y: 0 }, size: { x: 10, y: 10 } },
+            //{ id: 'stadium', name: 'Stadyum', position: { x: 0, y: -40 }, size: { x: 10, y: 10 } },
+            //{ id: 'youngCard', name: 'Genç Kart', position: { x: 40, y: 40 }, size: { x: 10, y: 10 } },
+            //{ id: 'youngCenter', name: 'Genç Merkez', position: { x: -40, y: -40 }, size: { x: 10, y: 10 } }
+        ];
+        
+        // Önceki yaklaşılan binayı takip etmek için değişken
+        this.lastBuilding = null;
+        
+        buildings.forEach(building => {
+            if (this.areas) {
+                const area = this.areas.add({
+                    position: new THREE.Vector2(building.position.x, building.position.y),
+                    halfExtents: new THREE.Vector2(building.size.x, building.size.y),
+                    testCar: true,
+                    active: true,
+                    hasKey: true,
+                    hasMouse: false,
+                    car: this.car,
+                    isBillboard : true,
+                });
+                
+                // Area opacity'sini 0 yap
+                if (area.floorBorder && area.floorBorder.material) {
+                    area.floorBorder.material.uniforms.uAlpha.value = 0.8;
+                }
+                
+                area.on('in', () => {
+                    // Eğer önceki bina farklıysa, yeni binaya yaklaşıldığını yazdır
+                    if (this.lastBuilding !== building.id) {
+                        console.log(`Araba ${building.name} binasına yaklaştı!`);
+                        this.lastBuilding = building.id;
+                    }
+                });
+                
+                area.on('out', () => {
+                    // Eğer bu binadan çıkıldıysa ve son bina buysa, son binayı sıfırla
+                    if (this.lastBuilding === building.id) {
+                        console.log(`Araba ${building.name} binasından uzaklaştı!`);
+                        this.lastBuilding = null;
+                    }
+                });
+            }
+        });
     }
 }
