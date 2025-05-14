@@ -31,7 +31,7 @@ export default class SectionJapanesePark {
         loader.load('./models/SectionJapanesePark/base.glb', (gltf) => {
             
             this.model = gltf.scene;
-            this.model.position.set(15, -25, 1);
+            this.model.position.set(13, -28, 1);
             this.model.scale.set(1,1,1);
 
             this.model.rotation.x = -80.1;
@@ -43,7 +43,7 @@ export default class SectionJapanesePark {
             if (this.physics) {
                 this.collisionBody = new CANNON.Body({
                     mass: 0,
-                    position: new CANNON.Vec3(13.7, -25, 1),
+                    position: new CANNON.Vec3(11.7, -28, 1),
                     material: this.physics.materials.items.floor
                 });
 

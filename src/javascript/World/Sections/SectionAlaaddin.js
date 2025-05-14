@@ -33,7 +33,7 @@ export default class SectionAlaaddin {
             //console.log('Animasyonlar:', gltf.animations);
             
             this.model = gltf.scene;
-            this.model.position.set(18.5, -52, 0);
+            this.model.position.set(13, -52, 0);
             this.model.scale.set(1,1,1);
             
             // Modeli döndür
@@ -45,7 +45,7 @@ export default class SectionAlaaddin {
             if (this.physics) {
                 this.collisionBody = new CANNON.Body({
                     mass: 0,
-                    position: new CANNON.Vec3(18.5,-52,0),
+                    position: new CANNON.Vec3(13, -52, 0),
                     material: this.physics.materials.items.floor
                 });
 
