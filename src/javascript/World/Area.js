@@ -24,6 +24,8 @@ export default class Area extends EventEmitter
         this.halfExtents = _options.halfExtents
         this.hasKey = _options.hasKey
         this.active = _options.active
+        this.billboardLink = _options.billboardLink
+        this.isBillboard = _options.isBillboard
 
         // Set up
         this.container = new THREE.Object3D()
@@ -71,8 +73,9 @@ export default class Area extends EventEmitter
 
         this.floorBorder.geometry = new AreaFloorBorderGeometry(this.halfExtents.x * 2, this.halfExtents.y * 2, 0.25)
         this.floorBorder.material = new AreaFloorBordereMaterial()
-        this.floorBorder.material.uniforms.uColor.value = new THREE.Color(0xffffff)
-        this.floorBorder.material.uniforms.uAlpha.value = 0.5
+        if (this.isBillboard) this.floorBorder.material.uniforms.uColor.value = new THREE.Color(0xffa500)
+        else this.floorBorder.material.uniforms.uColor.value = new THREE.Color(0xFFFFFF)
+        this.floorBorder.material.uniforms.uAlpha.value = 0.8
         this.floorBorder.material.uniforms.uLoadProgress.value = 1
         this.floorBorder.material.uniforms.uProgress.value = 1
         this.floorBorder.mesh = new THREE.Mesh(this.floorBorder.geometry, this.floorBorder.material)
@@ -94,8 +97,8 @@ export default class Area extends EventEmitter
         // Material
         // this.fence.material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, transparent: true, opacity: 0.5 })
         this.fence.material = new AreaFenceMaterial()
-        this.fence.material.uniforms.uBorderAlpha.value = 0.5
-        this.fence.material.uniforms.uStrikeAlpha.value = 0.25
+        this.fence.material.uniforms.uBorderAlpha.value = 1
+        this.fence.material.uniforms.uStrikeAlpha.value = 1
 
         // Mesh
         this.fence.mesh = new THREE.Mesh(this.fence.geometry, this.fence.material)
@@ -157,13 +160,12 @@ export default class Area extends EventEmitter
         this.key.container.add(this.key.icon.mesh)
     }
 
-    interact(_showKey = true)
+    interact(_showKey = true, run = false)
     {
+        if (!run && this.isBillboard) return
+        
         // Not active
-        if(!this.active)
-        {
-            return
-        }
+        if(!this.active) return
 
         // Kill tweens
         gsap.killTweensOf(this.fence.mesh.position)
@@ -196,12 +198,13 @@ export default class Area extends EventEmitter
         this.sounds.play('uiArea')
 
         this.trigger('interact')
+        if (this.billboardLink != undefined) window.open(this.billboardLink, '_blank');
+        
     }
 
     in(_showKey = true)
     {
         this.isIn = true
-
         // Not active
         if(!this.active)
         {
@@ -275,12 +278,11 @@ export default class Area extends EventEmitter
         this.mouseMesh.matrixAutoUpdate = false
         this.mouseMesh.updateMatrix()
         this.container.add(this.mouseMesh)
-
         this.time.on('tick', () =>
         {
-            if(this.car)
+            if (this.car)
             {
-                const isIn = Math.abs(this.car.position.x - this.position.x) < Math.abs(this.halfExtents.x) && Math.abs(this.car.position.y - this.position.y) < Math.abs(this.halfExtents.y)
+                const isIn = Math.abs(this.car.position.x - this.position.x) < 3 && Math.abs(this.car.position.y - this.position.y) < 3
                 if(isIn !== this.isIn)
                 {
                     if(isIn)
@@ -294,13 +296,13 @@ export default class Area extends EventEmitter
                 }
             }
         })
-
         window.addEventListener('keydown', (_event) =>
         {
-            if((_event.key === 'f' || _event.key === 'e' || _event.key === 'Enter') && this.isIn)
+            if((_event.key === 'Enter' || _event.code === 'Space') && this.isIn)
             {
-                this.interact()
+                this.interact(true, true)
             }
         })
     }
+    
 }

@@ -4,7 +4,7 @@ import CANNON from 'cannon';
 const DEFAULT_POSITION = new THREE.Vector3(0, 0, 0);
 
 export default class SectionBillboard {
-  constructor({ scene, resources, objects, physics, debug, areas, rotateX = 0, rotateY = 0, rotateZ = 0, camera = 0 }) {
+  constructor({ scene, resources, objects, physics, debug, areas, rotateX = 0, rotateY = 0, rotateZ = 0, camera = 0, time = 0, car = null }) {
     this.scene = scene;
     this.resources = resources;
     this.objects = objects;
@@ -16,6 +16,10 @@ export default class SectionBillboard {
     this.rotateX = rotateX;
     this.rotateY = rotateY;
     this.rotateZ = rotateZ;
+
+    this.time = time;
+
+    this.car = car;
 
     this.container = new THREE.Object3D();
     this.position = DEFAULT_POSITION.clone();
@@ -158,7 +162,7 @@ export default class SectionBillboard {
         map: this.button.label.texture,
         transparent: true,
         opacity: 1.0,
-        depthWrite: false
+        depthWrite: false,
     })
     
     // Mesh oluştur - Zemine dik konumlandır
@@ -176,17 +180,10 @@ export default class SectionBillboard {
         halfExtents: new THREE.Vector2(2, 1.5),
         hasKey: true,
         testCar: true,
-        active: true
+        active: true,
+        car: this.car,
+        billboardLink: billboardLink,
+        isBillboard : true,
     })
-    
-    // Butona tıklandığında
-    this.button.triggerArea.on('interact', () => {
-      window.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter' || event.code === 'Space') {
-            console.log('Enter veya Space tuşuna basıldı!');
-            window.open(billboardLink, '_blank');
-        }
-    });
-    });
   }
 }

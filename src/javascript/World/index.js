@@ -113,7 +113,7 @@ export default class World {
         this.setBasketball()
         this.setButterfly()
 
-        this.setBillboard()
+        
         this.setCoWork()
 
         this.setJapanesePark()
@@ -125,6 +125,7 @@ export default class World {
         this.setYoungCard()
         this.setYoungCenter()
         this.setCar()
+        this.setBillboard()
         this.areas.car = this.car
         this.areas.setCar(this.car)
     }
@@ -411,7 +412,8 @@ export default class World {
             camera: this.camera,
             debug: this.debugFolder,
             config: this.config,
-            scene: this.scene
+            scene: this.scene,
+            soundRoom: this.sectionSoundRoom
         })
         this.container.add(this.car.container)
     }
@@ -668,6 +670,8 @@ export default class World {
           rotateY:   0,
           rotateZ:   Math.PI/2, // Y ekseninde 90 derece,
           camera:   this.camera,
+          time: this.time,
+          car: this.car
         });
         this.container.name = 'Billboard'
     }
