@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import CANNON from 'cannon';
 
-const DEFAULT_POSITION = new THREE.Vector3(57, -17.5, 1);
+const DEFAULT_POSITION = new THREE.Vector3(57, -17, 1.4);
 
 export default class SectionButterfly {
   constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0 }) {
