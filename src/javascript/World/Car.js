@@ -21,7 +21,6 @@ export default class Car
         this.config = _options.config
         this.scene = _options.scene
         this.soundRoom = _options.soundRoom
-
         // Set up
         this.container = new THREE.Object3D()
         this.position = new THREE.Vector3()
@@ -355,8 +354,6 @@ export default class Car
 
     soundController()
     {
-        this.soundRoom = null;
-
         var sound = new Howl({
             src: ['./sounds/sound-room/sound-room.mp3'],
             loop: true,

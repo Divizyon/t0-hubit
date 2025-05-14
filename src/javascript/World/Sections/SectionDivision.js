@@ -64,6 +64,7 @@ export default class SectionDivision {
      // Kapsül model pozisyonu ve dönüşü
      model.position.copy(this.position);
      model.rotation.set(this.rotateX, this.rotateY, 290);
+     this.container.add(baseModel);
      this.container.add(model);
      this.container.add(baseModel);
    

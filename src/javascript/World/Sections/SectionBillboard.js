@@ -4,32 +4,39 @@ import CANNON from 'cannon';
 const DEFAULT_POSITION = new THREE.Vector3(0, 0, 0);
 
 export default class SectionBillboard {
-  constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0 }) {
+  constructor({ scene, resources, objects, physics, debug, areas, rotateX = 0, rotateY = 0, rotateZ = 0, camera = 0, time = 0, car = null }) {
     this.scene = scene;
     this.resources = resources;
     this.objects = objects;
     this.physics = physics;
     this.debug = debug;
+    this.areas = areas;
+    this.camera = camera
 
     this.rotateX = rotateX;
     this.rotateY = rotateY;
     this.rotateZ = rotateZ;
 
+    this.time = time;
+
+    this.car = car;
+
     this.container = new THREE.Object3D();
     this.position = DEFAULT_POSITION.clone();
     
     this.billboards = [
-      { position: { x: 0, y: 40, z: 0 }, name: "Billboard1" },
-      { position: { x: 10, y: 40, z: 0 }, name: "Billboard2" },
-      { position: { x: 20, y: 40, z: 0 }, name: "Billboard3" },
-      { position: { x: 30, y: 40, z: 0 }, name: "Billboard4" },
-      { position: { x: 40, y: 40, z: 0 }, name: "Billboard5" },
-      { position: { x: 50, y: 40, z: 0 }, name: "Billboard6" }
+      { position: { x: 0, y: 40, z: 0 }, name: "Billboard1", link: "https://www.google.com/" },
+      { position: { x: 10, y: 40, z: 0 }, name: "Billboard2", link: "https://www.google.com/" },
+      { position: { x: 20, y: 40, z: 0 }, name: "Billboard3", link: "https://www.google.com/" },
+      { position: { x: 30, y: 40, z: 0 }, name: "Billboard4", link: "https://www.google.com/" },
+      { position: { x: 40, y: 40, z: 0 }, name: "Billboard5", link: "https://www.google.com/" },
+      { position: { x: 50, y: 40, z: 0 }, name: "Billboard6", link: "https://www.google.com/" }
     ];
 
     // Her bir billboard için model oluştur
     this.billboards.forEach((billboard) => {
       this._buildModel(billboard.position, billboard.name);
+      this.createButton(billboard.position, billboard.link);
     });
 
     this.scene.add(this.container);
@@ -80,20 +87,16 @@ export default class SectionBillboard {
    
     // Bounding box hesapla
     baseModel.updateMatrixWorld(true);
-    const bbox = new THREE.Box3().setFromObject(baseModel);
+    const bbox = new THREE.Box3().setFromObject(model);
     var size = bbox.getSize(new THREE.Vector3());
    
     // Fizik gövdesi oluştur
-    const halfExtents = new CANNON.Vec3(size.x / 3, size.y / 2.3, size.z);
+    const halfExtents = new CANNON.Vec3(size.x / 3, size.y / 3, size.z);
     const boxShape = new CANNON.Box(halfExtents);
    
     const body = new CANNON.Body({
       mass: 0,
-      position: new CANNON.Vec3(
-        position.x,
-        position.y,
-        position.z
-      ),
+      position: model.position,
       material: this.physics.materials.items.floor
     });
   
@@ -119,5 +122,68 @@ export default class SectionBillboard {
         this.container.add(objectEntry.container);
       }
     }
+  }
+
+  createButton(billboardPosition, billboardLink) {
+    // Etkileşimli buton oluştur
+    this.button = {}
+    
+    // Buton konumu - ses odası için uygun konum
+    this.button.position = new THREE.Vector3(
+      billboardPosition.x , // Modelin önünde
+      billboardPosition.y - 4,
+      billboardPosition + 0.25 // Zemin üzerinde, görünür olacak şekilde
+    )
+    
+    // Buton konteyneri
+    this.button.container = new THREE.Object3D()
+    this.button.container.position.copy(this.button.position)
+    this.container.add(this.button.container)
+    
+    // Label
+    this.button.label = {}
+    this.button.label.size = 2
+    this.button.label.geometry = new THREE.PlaneGeometry(this.button.label.size, this.button.label.size / 2.5, 1, 1)
+    
+    // Canvas ile texture oluştur
+    this.button.label.canvas = document.createElement('canvas')
+    this.button.label.canvas.width = 512
+    this.button.label.canvas.height = 360
+    this.button.label.context = this.button.label.canvas.getContext('2d')
+
+    // Texture oluştur
+    this.button.label.texture = new THREE.Texture(this.button.label.canvas)
+    this.button.label.texture.magFilter = THREE.LinearFilter
+    this.button.label.texture.minFilter = THREE.LinearFilter
+    this.button.label.texture.needsUpdate = true
+    
+    // Materyal oluştur
+    this.button.label.material = new THREE.MeshBasicMaterial({ 
+        map: this.button.label.texture,
+        transparent: true,
+        opacity: 1.0,
+        depthWrite: false,
+    })
+    
+    // Mesh oluştur - Zemine dik konumlandır
+    this.button.label.mesh = new THREE.Mesh(this.button.label.geometry, this.button.label.material)
+    this.button.label.mesh.position.z = 0.15
+    this.button.label.mesh.matrixAutoUpdate = false
+    this.button.label.mesh.updateMatrix()
+    
+    // Konteynere ekle
+    this.button.container.add(this.button.label.mesh)
+    
+    // Alan tetikleyici oluştur
+    this.button.triggerArea = this.areas.add({
+        position: new THREE.Vector2(this.button.position.x, this.button.position.y),
+        halfExtents: new THREE.Vector2(2, 1.5),
+        hasKey: true,
+        testCar: true,
+        active: true,
+        car: this.car,
+        billboardLink: billboardLink,
+        isBillboard : true,
+    })
   }
 }

@@ -123,10 +123,17 @@ export default class Areas
             ..._options
         })
 
+        this.area = area
+
         this.container.add(area.container)
 
         this.items.push(area)
 
         return area
+    }
+
+    setCar(_car)
+    {
+        this.area.car = _car
     }
 }

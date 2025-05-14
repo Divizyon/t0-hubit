@@ -29,8 +29,8 @@ export default class SectionAlaaddin {
 
         const loader = new GLTFLoader();
         loader.load('./models/SectionAlaaddin/base.glb', (gltf) => {
-            console.log('Balık modeli yüklendi:', gltf);
-            console.log('Animasyonlar:', gltf.animations);
+            //console.log('Balık modeli yüklendi:', gltf);
+            //console.log('Animasyonlar:', gltf.animations);
             
             this.model = gltf.scene;
             this.model.position.set(13, -52, 0);
@@ -89,14 +89,14 @@ export default class SectionAlaaddin {
 
             // Animasyonları başlat
             if (gltf.animations && gltf.animations.length > 0) {
-                console.log('Animasyonlar yükleniyor...');
+                //console.log('Animasyonlar yükleniyor...');
                 this.mixer = new THREE.AnimationMixer(this.model);
                 gltf.animations.forEach((clip, index) => {
                     //console.log(`Animasyon ${index} yükleniyor:`, clip.name);
                     const action = this.mixer.clipAction(clip);
                     action.reset().play();
                 });
-                console.log('Mixer oluşturuldu:', this.mixer);
+                //console.log('Mixer oluşturuldu:', this.mixer);
             } else {
                 console.warn('Hiç animasyon bulunamadı!');
             }
