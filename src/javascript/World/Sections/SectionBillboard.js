@@ -184,6 +184,7 @@ export default class SectionBillboard {
         car: this.car,
         billboardLink: billboardLink,
         isBillboard : true,
+        areaSize: 3
     })
   }
 }

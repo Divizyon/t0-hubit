@@ -26,6 +26,8 @@ export default class Area extends EventEmitter
         this.active = _options.active
         this.billboardLink = _options.billboardLink
         this.isBillboard = _options.isBillboard
+        this.isBuilding = _options.isBuilding
+        this.areaSize = _options.areaSize
 
         // Set up
         this.container = new THREE.Object3D()
@@ -74,10 +76,19 @@ export default class Area extends EventEmitter
 
         this.floorBorder.geometry = new AreaFloorBorderGeometry(this.halfExtents.x * 2, this.halfExtents.y * 2, 0.25)
         this.floorBorder.material = new AreaFloorBordereMaterial()
-        if (this.isBillboard) this.floorBorder.material.uniforms.uColor.value = new THREE.Color(0xffa500)
-        else this.floorBorder.material.uniforms.uColor.value = new THREE.Color(0xFFFFFF)
-        this.floorBorder.material.uniforms.uAlpha.value = 0.8
-        this.floorBorder.material.uniforms.uLoadProgress.value = 1
+        if (this.isBillboard || this.isBuilding)
+        {
+            this.floorBorder.material.uniforms.uColor.value = new THREE.Color(0xffa500)
+            this.floorBorder.material.uniforms.uAlpha.value = 0
+            this.floorBorder.material.uniforms.uLoadProgress.value = 0
+        }
+        else 
+        {
+            this.floorBorder.material.uniforms.uColor.value = new THREE.Color(0xFFFFFF)
+            this.floorBorder.material.uniforms.uAlpha.value = 0.8
+            this.floorBorder.material.uniforms.uLoadProgress.value = 1
+        }
+        
         this.floorBorder.material.uniforms.uProgress.value = 1
         this.floorBorder.mesh = new THREE.Mesh(this.floorBorder.geometry, this.floorBorder.material)
         this.floorBorder.mesh.matrixAutoUpdate = false
@@ -163,7 +174,7 @@ export default class Area extends EventEmitter
 
     interact(_showKey = true, run = false)
     {
-        if (!run && this.isBillboard) return
+        if (!run && (this.isBillboard || this.isBuilding)) return // Tıklayarak çalışmaması için eklendi
         
         // Not active
         if(!this.active) return
@@ -201,6 +212,10 @@ export default class Area extends EventEmitter
         this.trigger('interact')
         if (this.billboardLink != undefined) window.open(this.billboardLink, '_blank');
         
+        if (this.isBuilding) 
+        {
+            // Burada kodlar olacak
+        }
     }
 
     in(_showKey = true)
@@ -283,7 +298,7 @@ export default class Area extends EventEmitter
         {
             if (this.car)
             {
-                const isIn = Math.abs(this.car.position.x - this.position.x) < 3 && Math.abs(this.car.position.y - this.position.y) < 3
+                const isIn = Math.abs(this.car.position.x - this.position.x) < this.areaSize && Math.abs(this.car.position.y - this.position.y) < this.areaSize
                 if(isIn !== this.isIn)
                 {
                     if(isIn)
