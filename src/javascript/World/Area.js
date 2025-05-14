@@ -192,12 +192,24 @@ export default class Area extends EventEmitter
         }
 
         // Animate
-        gsap.to(this.fence.mesh.position, { z: 0, duration: 0.05, onComplete: () =>
+        if (this.isBillboard || this.isBuilding) 
         {
-            gsap.to(this.fence.mesh.position, { z: 0.5, duration: 0.25, ease: 'back.out(2)' })
-            gsap.fromTo(this.floorBorder.material.uniforms.uAlpha, { value: 1 }, { value: 0.5, duration: 1.5 })
-            gsap.fromTo(this.fence.material.uniforms.uBorderAlpha, { value: 1 }, { value: 0.5, duration: 1.5 })
-        } })
+            gsap.to(this.fence.mesh.position, { z: 0, duration: 0.05, onComplete: () =>
+            {
+                gsap.to(this.fence.mesh.position, { z: 0.5, duration: 0.25, ease: 'back.out(2)' })
+                gsap.fromTo(this.floorBorder.material.uniforms.uAlpha, { value: .5 }, { value: 0, duration: 1.5 })
+                gsap.fromTo(this.fence.material.uniforms.uBorderAlpha, { value: .5 }, { value: 0, duration: 1.5 })
+            } })
+        }
+        else 
+        {
+            gsap.to(this.fence.mesh.position, { z: 0, duration: 0.05, onComplete: () =>
+            {
+                    gsap.to(this.fence.mesh.position, { z: 0.5, duration: 0.25, ease: 'back.out(2)' })
+                    gsap.fromTo(this.floorBorder.material.uniforms.uAlpha, { value: 1 }, { value: 0.5, duration: 1.5 })
+                    gsap.fromTo(this.fence.material.uniforms.uBorderAlpha, { value: 1 }, { value: 0.5, duration: 1.5 })
+            } })
+        }
 
         if(this.hasKey && _showKey)
         {

@@ -7,6 +7,7 @@ export default class SectionYoungCard {
         this.time = _options.time;
         this.scene = _options.scene;
         this.physics = _options.physics;
+        this.resources = _options.resources;
         this.mixer = null;
         this.model = null;
         this.collisionBody = null;
@@ -35,26 +36,35 @@ export default class SectionYoungCard {
             this.model.scale.set(1,1,1);
             this.model.rotation.set(Math.PI,Math.PI,-Math.PI/2)
 
+            const base = this.resources.items.Base;
+            const baseModel = base.scene.clone(true);
+            baseModel.position.set(42.5, -40, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
+            baseModel.scale.set(1.5, 1.5, 1.5); // Base modelinin ölçeği
+
+            baseModel.updateMatrixWorld(true);
+            const bbox = new THREE.Box3().setFromObject(baseModel);
+            var size = bbox.getSize(new THREE.Vector3());
+            
+            // Fizik gövdesi oluştur
+            const halfExtents = new CANNON.Vec3(size.x / 2, size.y / 2, size.z / 2);
+            const boxShape = new CANNON.Box(halfExtents);
+            
+            const body = new CANNON.Body({
+                mass: 0,
+                position: baseModel.position,
+                material: this.physics.materials.items.floor
+            });
+            
+            // Dönüşü quaternion olarak ayarla
+            const quat = new CANNON.Quaternion();
+            quat.setFromEuler(Math.PI, Math.PI, -Math.PI/2);
+            body.quaternion.copy(quat);
+            
+            body.addShape(boxShape);
+            this.physics.world.addBody(body);
+            this.scene.add(baseModel);
+
             this.scene.add(this.model);
-
-          
-            if (this.physics) {
-                this.collisionBody = new CANNON.Body({
-                    mass: 0,
-                    position: new CANNON.Vec3(42.5,-40,0 ),
-                    material: this.physics.materials.items.floor
-                });
-
-                // Sphere yerine Box collision kullanıyoruz
-                const boxShape = new CANNON.Box(new CANNON.Vec3(
-                    3, // x boyutu
-                    1.7, // y boyutu
-                    6// z boyutu
-                ));
-                 this.collisionBody.addShape(boxShape);
-                
-                this.physics.world.addBody(this.collisionBody);
-            }
 
             // Işık ekle (sadece bir kez)
             if (!this.scene.__balikLightAdded) {

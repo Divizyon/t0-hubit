@@ -70,10 +70,6 @@ export default class SectionJapanesePark {
             // Materyal ve mesh kontrolü
             this.model.traverse((child) => {
                 if (child.isMesh) {
-                    //console.log('Mesh bulundu:', child.name);
-                    // if (child.isSkinnedMesh) {
-                    //     console.log('SkinnedMesh bulundu:', child.name);
-                    // }
                     child.castShadow = true;
                     child.receiveShadow = true;
                     if (!child.material) {
