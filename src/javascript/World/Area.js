@@ -28,6 +28,9 @@ export default class Area extends EventEmitter
         this.isBillboard = _options.isBillboard
         this.isBuilding = _options.isBuilding
         this.areaSize = _options.areaSize
+        this.name = _options.name
+        this.link = _options.link
+        this.description = _options.description
 
         // Set up
         this.container = new THREE.Object3D()
@@ -226,7 +229,91 @@ export default class Area extends EventEmitter
         
         if (this.isBuilding) 
         {
-            // Burada kodlar olacak
+            console.log()
+            // Create popup container if it doesn't exist
+            const popupContainer = document.createElement('div');
+            const popupStyles = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background-color: rgba(255, 255, 255, 1);
+                padding: 15px;
+                padding-top: 30px;
+                border-radius: 8px;
+                border: 4px solid rgb(255, 190, 49);
+                color: white;
+                z-index: 1000;
+                max-width: 300px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                font-family: 'Comic Neue', cursive;
+            `;
+            popupContainer.style.cssText = popupStyles;
+
+            // Add building title
+            const title = document.createElement('h6');
+            const titleStyles = `
+                margin: 0;
+                color: rgb(0, 0, 0);
+                font-size: 20px;
+                font-family: "Poppins", sans-serif;
+            `;
+            title.textContent = this.name || 'Building title not available';
+            title.style.cssText = titleStyles;
+            popupContainer.appendChild(title);
+
+            // Add building description
+            const description = document.createElement('p');
+            const descriptionStyles = `
+                margin: 0;
+                color: rgb(0, 0, 0);
+                font-size: 16px;
+                font-family: "Poppins", sans-serif;
+            `;
+            description.textContent = this.description || 'Building description not available';
+            description.style.cssText = descriptionStyles;
+            popupContainer.appendChild(description);
+
+            // Add link if available
+            if (this.link) {
+                const link = document.createElement('a');
+                link.href = this.link;
+                link.textContent = 'Websitesini Ziyaret Et';
+                link.target = '_blank';
+                const linkStyles = `
+                    color: '#4a9eff';
+                    font-size: 14px;
+                    text-decoration: none;
+                    font-family: "Poppins", sans-serif;
+                `;
+                link.style.cssText = linkStyles;
+                popupContainer.appendChild(link);
+            }
+
+            // Add close button
+            const closeButton = document.createElement('button');
+            closeButton.textContent = '×';
+            closeButton.style.position = 'absolute';
+            closeButton.style.top = '5px';
+            closeButton.style.right = '8px';
+            closeButton.style.background = 'none';
+            closeButton.style.border = 'none';
+            closeButton.style.color = 'black';
+            closeButton.style.fontSize = '20px';
+            closeButton.style.cursor = 'pointer';
+            closeButton.onclick = () => document.body.removeChild(popupContainer);
+            popupContainer.appendChild(closeButton);
+
+            // Add popup to body
+            document.body.appendChild(popupContainer);
+
+            // Remove popup after 5 seconds
+            setTimeout(() => {
+                if (document.body.contains(popupContainer)) {
+                    document.body.removeChild(popupContainer);
+                }
+            }, 5000);
         }
     }
 
