@@ -74,10 +74,19 @@ export default class Area extends EventEmitter
 
         this.floorBorder.geometry = new AreaFloorBorderGeometry(this.halfExtents.x * 2, this.halfExtents.y * 2, 0.25)
         this.floorBorder.material = new AreaFloorBordereMaterial()
-        if (this.isBillboard) this.floorBorder.material.uniforms.uColor.value = new THREE.Color(0xffa500)
-        else this.floorBorder.material.uniforms.uColor.value = new THREE.Color(0xFFFFFF)
-        this.floorBorder.material.uniforms.uAlpha.value = 0.8
-        this.floorBorder.material.uniforms.uLoadProgress.value = 1
+        if (this.isBillboard)
+        {
+            this.floorBorder.material.uniforms.uColor.value = new THREE.Color(0xffa500)
+            this.floorBorder.material.uniforms.uAlpha.value = 0
+            this.floorBorder.material.uniforms.uLoadProgress.value = 0
+        }
+        else 
+        {
+            this.floorBorder.material.uniforms.uColor.value = new THREE.Color(0xFFFFFF)
+            this.floorBorder.material.uniforms.uAlpha.value = 0.8
+            this.floorBorder.material.uniforms.uLoadProgress.value = 1
+        }
+        
         this.floorBorder.material.uniforms.uProgress.value = 1
         this.floorBorder.mesh = new THREE.Mesh(this.floorBorder.geometry, this.floorBorder.material)
         this.floorBorder.mesh.matrixAutoUpdate = false
