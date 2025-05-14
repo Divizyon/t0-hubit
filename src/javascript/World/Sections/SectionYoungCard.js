@@ -32,21 +32,21 @@ export default class SectionYoungCard {
         loader.load('./models/SectionYoungCard/base.glb', (gltf) => {
             
             this.model = gltf.scene;
-            this.model.position.set(42.5,-40,.3);
+            this.model.position.set(42.5,-40,1.7);
             this.model.scale.set(1,1,1);
             this.model.rotation.set(Math.PI,Math.PI,-Math.PI/2)
 
             const base = this.resources.items.Base;
             const baseModel = base.scene.clone(true);
             baseModel.position.set(42.5, -40, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
-            baseModel.scale.set(1.5, 1.5, 1.5); // Base modelinin ölçeği
+            baseModel.scale.set(1.5, 1, 1.5); // Base modelinin ölçeği
 
             baseModel.updateMatrixWorld(true);
             const bbox = new THREE.Box3().setFromObject(baseModel);
             var size = bbox.getSize(new THREE.Vector3());
             
             // Fizik gövdesi oluştur
-            const halfExtents = new CANNON.Vec3(size.x / 2, size.y / 2, size.z / 2);
+            const halfExtents = new CANNON.Vec3(size.x / 3, size.y / 1.35, size.z / 2);
             const boxShape = new CANNON.Box(halfExtents);
             
             const body = new CANNON.Body({
