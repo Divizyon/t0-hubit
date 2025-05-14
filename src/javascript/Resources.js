@@ -196,7 +196,7 @@ export default class Resources extends EventEmitter {
             { name: 'areaQuestionMark', source: './models/area/questionMark.png', type: 'texture' },
 
             // MyCustomModel
-      //    { name: 'myCustomModelBase', source: './models/soundRoom/soundRoom.glb' },
+      //      { name: 'myCustomModelBase', source: './models/soundRoom/soundRoom.glb' },
 
             // Tiles
             { name: 'tilesABase', source: './models/tiles/a/base.glb' },
@@ -238,8 +238,8 @@ export default class Resources extends EventEmitter {
             { name: 'YoungCard', source: './models/SectionYoungCard/base.glb' },
             { name: 'Rocket', source: './models/SectionRocket/base.glb' },
             //   { name: 'SocialInovation', source: './models/SectionSocialInovation/base.glb' },
-           { name: 'RoadSign', source: './models/SectionRoadSign/base.glb' },
-           { name: 'SoundRoom', source: './models/SectionSoundRoom/base.glb' },
+            { name: 'RoadSign', source: './models/SectionRoadSign/base.glb' },
+            { name: 'SoundRoom', source: './models/SectionSoundRoom/base.glb' },
             { name: 'YoungCenter', source: './models/SectionYoungCenter/base.glb' },
 
             { name: 'Division', source: './models/SectionDivision/base.glb' },
@@ -248,7 +248,7 @@ export default class Resources extends EventEmitter {
             { name: 'Stadium', source: './models/SectionStadium/base.glb' },
             { name: 'Butterfly', source: './models/SectionButterfly/base.glb' },
             { name: 'CoWork', source: './models/SectionCoWork/base.glb' },
-      
+
             //{ name: 'Billboard', source: './models/SectionBillboard/base.glb' },
             { name: 'Basketball', source: './models/SectionBasketball/base.glb' },
             { name: 'Board', source: './models/SectionBillboard/base.glb' },
