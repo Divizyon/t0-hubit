@@ -33,11 +33,12 @@ export default class SectionAlaaddin {
             console.log('Animasyonlar:', gltf.animations);
             
             this.model = gltf.scene;
-            this.model.position.set(13, -52, 0);
+            this.model.position.set(13, -52, -1);
             this.model.scale.set(1,1,1);
             
             // Modeli döndür
-            this.model.rotation.x = Math.PI / 2;
+            this.model.rotation.x = 0;
+           
             
             this.scene.add(this.model);
 

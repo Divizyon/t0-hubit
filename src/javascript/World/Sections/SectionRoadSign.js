@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import CANNON from 'cannon';
 
-const DEFAULT_POSITION = new THREE.Vector3(26, -13.5, 0);
+const DEFAULT_POSITION = new THREE.Vector3(29, -13, 0);
 
 export default class SectionRoadSign {
   constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0 }) {
@@ -62,7 +62,6 @@ export default class SectionRoadSign {
   
     // Kapsül model pozisyonu ve dönüşü
     model.position.copy(this.position);
-    model.rotation.set(this.rotateX, this.rotateY, this.rotateZ);
     this.container.add(model);
   
     // Bounding box hesapla
