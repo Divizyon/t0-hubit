@@ -939,30 +939,9 @@ export default class World {
                     testCar: true,
                     active: true,
                     hasKey: true,
-                    hasMouse: false,
                     car: this.car,
-                    isBillboard : true,
-                });
-                
-                // Area opacity'sini 0 yap
-                if (area.floorBorder && area.floorBorder.material) {
-                    area.floorBorder.material.uniforms.uAlpha.value = 0.8;
-                }
-                
-                area.on('in', () => {
-                    // Eğer önceki bina farklıysa, yeni binaya yaklaşıldığını yazdır
-                    if (this.lastBuilding !== building.id) {
-                        console.log(`Araba ${building.name} binasına yaklaştı!`);
-                        this.lastBuilding = building.id;
-                    }
-                });
-                
-                area.on('out', () => {
-                    // Eğer bu binadan çıkıldıysa ve son bina buysa, son binayı sıfırla
-                    if (this.lastBuilding === building.id) {
-                        console.log(`Araba ${building.name} binasından uzaklaştı!`);
-                        this.lastBuilding = null;
-                    }
+                    isBuilding : true,
+                    areaSize: building.size.x
                 });
             }
         });
