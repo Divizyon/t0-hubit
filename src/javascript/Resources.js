@@ -28,7 +28,7 @@ export default class Resources extends EventEmitter {
             // { name: 'matcapGold', source: './models/matcaps/gold.png', type: 'texture' },
 
             { name: 'rocketBase', source: './models/rocket/RoketModeli.glb' },
-            
+
             // Intro
             { name: 'introStaticBase', source: './models/intro/static/base.glb' },
             { name: 'introStaticCollision', source: './models/intro/static/collision.glb' },
@@ -196,8 +196,8 @@ export default class Resources extends EventEmitter {
             { name: 'areaQuestionMark', source: './models/area/questionMark.png', type: 'texture' },
 
             // MyCustomModel
-            { name: 'myCustomModelBase', source: './models/soundRoom/soundRoom.glb' },
-            
+      //      { name: 'myCustomModelBase', source: './models/soundRoom/soundRoom.glb' },
+
             // Tiles
             { name: 'tilesABase', source: './models/tiles/a/base.glb' },
             { name: 'tilesACollision', source: './models/tiles/a/collision.glb' },
@@ -237,16 +237,18 @@ export default class Resources extends EventEmitter {
             { name: 'Capsule', source: './models/SectionCapsule/base.glb' },
             { name: 'YoungCard', source: './models/SectionYoungCard/base.glb' },
             { name: 'Rocket', source: './models/SectionRocket/base.glb' },
-            { name: 'SocialInovation', source: './models/SectionSocialInovation/base.glb' },
-            { name: 'RoadSign', source:'./models/SectionRoadSign/base.glb'},
+            //   { name: 'SocialInovation', source: './models/SectionSocialInovation/base.glb' },
+            { name: 'RoadSign', source: './models/SectionRoadSign/base.glb' },
             { name: 'SoundRoom', source: './models/SectionSoundRoom/base.glb' },
             { name: 'YoungCenter', source: './models/SectionYoungCenter/base.glb' },
+
             { name: 'Division', source: './models/SectionDivision/base.glb' },
             { name: 'Alaaddin', source: './models/SectionAlaaddin/base.glb' },
             { name: 'Atmosphere', source: './models/SectionAtmosphere/base.glb' },
             { name: 'Stadium', source: './models/SectionStadium/base.glb' },
             { name: 'Butterfly', source: './models/SectionButterfly/base.glb' },
             { name: 'CoWork', source: './models/SectionCoWork/base.glb' },
+
             //{ name: 'Billboard', source: './models/SectionBillboard/base.glb' },
             { name: 'Basketball', source: './models/SectionBasketball/base.glb' },
             { name: 'Board', source: './models/SectionBillboard/base.glb' },
@@ -257,6 +259,12 @@ export default class Resources extends EventEmitter {
             { name: 'Billboard4', source: './models/SectionBillboard/base4.glb' },
             { name: 'Billboard5', source: './models/SectionBillboard/base5.glb' },
             { name: 'Billboard6', source: './models/SectionBillboard/base6.glb' },
+            // fototball mini game
+            //  { name: 'footballBall', source: './models/football/ball.glb' },
+            //  { name: 'footballGoal', source: './models/football/goal.glb' },
+            // newton mini game
+            //  { name: 'newton', source: './models/newton/base.glb' },
+
         ])
 
         this.loader.on('fileEnd', (_resource, _data) => {

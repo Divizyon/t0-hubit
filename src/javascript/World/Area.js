@@ -45,6 +45,7 @@ export default class Area extends EventEmitter
         {
             this.setKey()
         }
+
     }
 
     activate()

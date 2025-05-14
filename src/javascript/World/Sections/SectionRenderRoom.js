@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import CANNON from 'cannon';
 
-const DEFAULT_POSITION = new THREE.Vector3(-70.25, -8.75, 2.58);
+const DEFAULT_POSITION = new THREE.Vector3(-70.25, -8.75, 4.5);
 
 export default class SectionRenderRoom {
   constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0 }) {
@@ -58,7 +58,7 @@ export default class SectionRenderRoom {
      const baseModel = base.scene.clone(true);
      baseModel.position.set(-70, -9.2, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
      baseModel.scale.set(1.5, 1.5, .5); // Base modelinin ölçeği
-     baseModel.rotation.set(this.rotateX, this.rotateY, 0);
+     model.rotation.set(this.rotateX, this.rotateY, 0);
      this.container.add(baseModel);
      baseModel.traverse(child => {
         if (child.isMesh) {
@@ -88,7 +88,7 @@ export default class SectionRenderRoom {
      this.position.x -= .55;
      model.position.copy(this.position);
      model.rotation.set(this.rotateX, this.rotateY, 0);
-     model.scale.set(3, 2, 2);
+     model.scale.set(-3, 2, 2);
      this.container.add(model);
    
      // Bounding box hesapla
