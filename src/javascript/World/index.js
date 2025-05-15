@@ -40,8 +40,9 @@ import SectionBasketball from './Sections/SectionBasketball.js'
 import SectionBillboard from './Sections/SectionBillboard.js'
 import SectionCoWork from './Sections/SectionCoWork.js'
 import SectionGameMechanic from './Sections/SectionGameMechanic.js'
-import SectionTram from './Sections/SectionTram.js';
+import SectionTram from './Sections/SectionTram.js'
 import SectionNewton from './Sections/SectionNewton.js'
+import SectionStone from './Sections/SectionStone.js'
 
 export default class World {
     constructor(_options) {
@@ -122,7 +123,7 @@ export default class World {
         this.setBasketball()
         this.setButterfly()
         this.setNewton()
-
+        this.setStone()
 
         this.setCoWork()
 
@@ -635,7 +636,152 @@ export default class World {
         })
     }
 
-
+    setStone() {
+        // 9 adet taşı tek bir klasörden yükleyip konumlandır
+        try {
+            console.log('setStone başlatılıyor');
+            
+            // Taşları yukarıda konumlandır ve birbirlerine daha yakın olsunlar
+            const yPosition = 30; // Taşları çok daha yukarı konumlandır
+            
+            // Taş 1
+            this.sectionStone1 = new SectionStone({
+                scene: this.scene,
+                resources: this.resources,
+                objects: this.objects,
+                physics: this.physics,
+                debug: this.debugFolder,
+                rotateX: 0,
+                rotateY: Math.random() * Math.PI,
+                rotateZ: 0,
+                customPosition: { x: 15, y: yPosition, z: 6 }, // Daha yakın konumlandırma
+                index: 1
+            });
+            
+            // Taş 2
+            this.sectionStone2 = new SectionStone({
+                scene: this.scene,
+                resources: this.resources,
+                objects: this.objects,
+                physics: this.physics,
+                debug: this.debugFolder,
+                rotateX: 0,
+                rotateY: Math.random() * Math.PI,
+                rotateZ: 0,
+                customPosition: { x: -10, y: yPosition + 3, z: 12 }, // Her taşa küçük yükseklik farkları
+                index: 2
+            });
+            
+            // Taş 3
+            this.sectionStone3 = new SectionStone({
+                scene: this.scene,
+                resources: this.resources,
+                objects: this.objects,
+                physics: this.physics,
+                debug: this.debugFolder,
+                rotateX: 0,
+                rotateY: Math.random() * Math.PI,
+                rotateZ: 0,
+                customPosition: { x: 5, y: yPosition - 2, z: -8 },
+                index: 3
+            });
+            
+            // Taş 4
+            this.sectionStone4 = new SectionStone({
+                scene: this.scene,
+                resources: this.resources,
+                objects: this.objects,
+                physics: this.physics,
+                debug: this.debugFolder,
+                rotateX: 0,
+                rotateY: Math.random() * Math.PI,
+                rotateZ: 0,
+                customPosition: { x: -12, y: yPosition + 5, z: -5 },
+                index: 4
+            });
+            
+            // Taş 5
+            this.sectionStone5 = new SectionStone({
+                scene: this.scene,
+                resources: this.resources,
+                objects: this.objects,
+                physics: this.physics,
+                debug: this.debugFolder,
+                rotateX: 0,
+                rotateY: Math.random() * Math.PI,
+                rotateZ: 0,
+                customPosition: { x: 12, y: yPosition + 2, z: 14 },
+                index: 5
+            });
+            
+            // Taş 6
+            this.sectionStone6 = new SectionStone({
+                scene: this.scene,
+                resources: this.resources,
+                objects: this.objects,
+                physics: this.physics,
+                debug: this.debugFolder,
+                rotateX: 0,
+                rotateY: Math.random() * Math.PI,
+                rotateZ: 0,
+                customPosition: { x: -6, y: yPosition - 3, z: -15 },
+                index: 6
+            });
+            
+            // Taş 7
+            this.sectionStone7 = new SectionStone({
+                scene: this.scene,
+                resources: this.resources,
+                objects: this.objects,
+                physics: this.physics,
+                debug: this.debugFolder,
+                rotateX: 0,
+                rotateY: Math.random() * Math.PI,
+                rotateZ: 0,
+                customPosition: { x: 8, y: yPosition + 6, z: -7 },
+                index: 7
+            });
+            
+            // Taş 8
+            this.sectionStone8 = new SectionStone({
+                scene: this.scene,
+                resources: this.resources,
+                objects: this.objects,
+                physics: this.physics,
+                debug: this.debugFolder,
+                rotateX: 0,
+                rotateY: Math.random() * Math.PI,
+                rotateZ: 0,
+                customPosition: { x: -14, y: yPosition - 1, z: 8 },
+                index: 8
+            });
+            
+            // Taş 9
+            this.sectionStone9 = new SectionStone({
+                scene: this.scene,
+                resources: this.resources,
+                objects: this.objects,
+                physics: this.physics,
+                debug: this.debugFolder,
+                rotateX: 0,
+                rotateY: Math.random() * Math.PI,
+                rotateZ: 0,
+                customPosition: { x: 0, y: yPosition + 8, z: 16 },
+                index: 9
+            });
+            
+            // Container'a ekle
+            for (let i = 1; i <= 9; i++) {
+                if (this[`sectionStone${i}`] && this[`sectionStone${i}`].container) {
+                    this.container.add(this[`sectionStone${i}`].container);
+                }
+            }
+            
+            console.log('Stone modelleri başarıyla eklendi');
+        } catch (error) {
+            console.error('Stone oluşturma hatası:', error.stack);
+        }
+    }
 
     setSocialInovation() {
         this.sectionSocialInovation = new SectionSocialInovation({

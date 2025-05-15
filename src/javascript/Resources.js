@@ -263,6 +263,17 @@ export default class Resources extends EventEmitter {
             { name: 'Billboard4', source: './models/SectionBillboard/base4.glb' },
             { name: 'Billboard5', source: './models/SectionBillboard/base5.glb' },
             { name: 'Billboard6', source: './models/SectionBillboard/base6.glb' },
+            // Stones
+            { name: 'Stone', source: './models/SectionStone/base.glb' },
+            { name: 'stone1', source: './models/SectionStone/stone1.glb' },
+            { name: 'stone2', source: './models/SectionStone/stone2.glb' },
+            { name: 'stone3', source: './models/SectionStone/stone3.glb' },
+            { name: 'stone4', source: './models/SectionStone/stone4.glb' },
+            { name: 'stone5', source: './models/SectionStone/stone5.glb' },
+            { name: 'stone6', source: './models/SectionStone/stone6.glb' },
+            { name: 'stone7', source: './models/SectionStone/stone7.glb' },
+            { name: 'stone8', source: './models/SectionStone/stone8.glb' },
+            { name: 'stone9', source: './models/SectionStone/stone9.glb' },
             // fototball mini game
             //  { name: 'footballBall', source: './models/football/ball.glb' },
             //  { name: 'footballGoal', source: './models/football/goal.glb' },

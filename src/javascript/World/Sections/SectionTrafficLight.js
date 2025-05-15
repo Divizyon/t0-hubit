@@ -3,7 +3,7 @@ import CANNON from 'cannon';
 
 // Default pozisyonları ayarlayabilirsiniz
 // Yol kenarında ve uygun yükseklikte konumlandırıldı
-const DEFAULT_POSITION = new THREE.Vector3(16, -14, -0.2);
+const DEFAULT_POSITION = new THREE.Vector3(1, -14, -0.2);
 const SECOND_POSITION = new THREE.Vector3(30, -31.9, -0.2);
 
 export default class SectionTrafficLight {
