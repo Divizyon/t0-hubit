@@ -37,7 +37,7 @@ export default class SectionAlaaddin {
             this.model.scale.set(1,1,1);
             
             // Modeli döndür
-            this.model.rotation.x = 0;
+            this.model.rotation.x = Math.PI / 2;
             
             this.scene.add(this.model);
 
@@ -50,7 +50,7 @@ export default class SectionAlaaddin {
                 });
 
               
-                const radius = 12;
+                const radius = 11;
                 const sphereShape = new CANNON.Sphere(radius);
                 this.collisionBody.addShape(sphereShape);
 

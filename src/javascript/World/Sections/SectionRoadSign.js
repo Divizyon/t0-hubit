@@ -70,12 +70,12 @@ export default class SectionRoadSign {
     var size = bbox.getSize(new THREE.Vector3());
 
     // Fizik gövdesi oluştur
-    const halfExtents = new CANNON.Vec3(size.x / 3, size.y / 3, size.z);
+    const halfExtents = new CANNON.Vec3(size.x / 8, size.y / 8, 2);
     const boxShape = new CANNON.Box(halfExtents);
 
     const body = new CANNON.Body({
       mass: 0,
-      position: model.position,
+      position: new CANNON.Vec3(this.position.x - .5, this.position.y , this.position.z),
       material: this.physics.materials.items.floor
     });
 
