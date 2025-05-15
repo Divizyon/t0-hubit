@@ -21,16 +21,16 @@ export default class Ground {
         this.container.updateMatrix()
 
         // this.setDikes()
-        this.setFloor()
+        //this.setFloor()
     }
 
     setFloor() {
         this.floor = new THREE.Mesh(
             new THREE.PlaneGeometry(160, 96),
             new THREE.MeshBasicMaterial({
-                color: 0xd6c685 ,
+                color: 0x808080,
                 transparent: true,
-                opacity: 0,
+                opacity: 1,
                 depthWrite: false
             })
         )
