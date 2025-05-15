@@ -43,6 +43,7 @@ import SectionGameMechanic from './Sections/SectionGameMechanic.js'
 import SectionTram from './Sections/SectionTram.js'
 import SectionNewton from './Sections/SectionNewton.js'
 import SectionStone from './Sections/SectionStone.js'
+import SectionKademe from './Sections/SectionKademe.js'
 
 export default class World {
     constructor(_options) {
@@ -126,7 +127,7 @@ export default class World {
         this.setStone()
 
         this.setCoWork()
-
+        
         this.setJapanesePark()
         this.setRocket()
         this.setScienceCenter()
@@ -138,6 +139,10 @@ export default class World {
         this.setGameMechanic()
         this.setCar()
         this.setBillboard()
+        
+        // Araba hazır olduktan sonra Kademe'yi ayarla
+        this.setKademe()
+        
         this.areas.car = this.car
         this.areas.setCar(this.car)
         this.sectionRocket.setCar(this.car)
@@ -1414,6 +1419,23 @@ export default class World {
         });
     }
 
+    setKademe() {
+        this.sectionKademe = new SectionKademe({
+            scene: this.scene,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            rotateX: 0,
+            rotateY: Math.PI / 6, // 30 derece Y ekseni etrafında dönüş (daha uygun görünüm için)
+            rotateZ: 0,
+            areas: this.areas, // Areas sınıfını ekle
+            car: this.car // Araba referansını ekle
+        });
+        
+        console.log("Kademe modeli başarıyla yüklendi.");
+    }
+
     createBuildingAreas() {
         // Tüm binalar için alanlar oluştur
         const buildings = [
@@ -1432,6 +1454,7 @@ export default class World {
                 description: "Konya Büyükşehir Belediyesi tarafından kurulan Divizyon, yazılım ve dijital sanatlar alanında kolektif üretimi destekleyen açık inovasyon platformudur.",
                 rotation: Math.PI / 90 * 290 // Add rotation in radians (45 degrees)
             },
+            // Kademe girdisini kaldırdık çünkü model kendisi popup özelliğine sahip
             //{ id: 'greenScreen', name: 'Green Screen', position: { x: -25, y: 0 }, size: { x: 10, y: 10 } },
             //{ id: 'renderRoom', name: 'Render Odası', position: { x: 0, y: -25 }, size: { x: 10, y: 10 } },
             //{ id: 'concert', name: 'Konser Alanı', position: { x: 30, y: 30 }, size: { x: 10, y: 10 } },
