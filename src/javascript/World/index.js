@@ -17,6 +17,7 @@ import Ground from './Sections/Ground.js'
 import Road from './Sections/Road.js'
 // import RoadSign from './Sections/SectionRoadSign.js'
 import SectionRoadSign from './Sections/SectionRoadSign.js'
+import SectionTrafficLight from './Sections/SectionTrafficLight.js'
 
 import SectionAlaaddin from './Sections/SectionAlaaddin.js'
 import SectionAtmosphere from './Sections/SectionAtmosphere.js'
@@ -106,6 +107,7 @@ export default class World {
         this.setGround()
         //this.setRoad()
         this.setRoadSign()
+        this.setTrafficLight()
 
         this.setAlaaddin()
         //  this.setTram()
@@ -463,6 +465,34 @@ export default class World {
             rotateX: 0,   // 
             rotateY: 0,
             rotateZ: Math.PI / 180 // Y ekseninde 90 derece,
+        });
+    }
+
+    setTrafficLight() {
+        // Ana trafik ışığı - ana cadde
+        this.sectionTrafficLight = new SectionTrafficLight({
+            scene: this.scene,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            rotateX: Math.PI / 2, // 90 derece X ekseni etrafında döndür - dikey duruş için
+            rotateY: Math.PI / 2, 
+            rotateZ: 0,
+            position: 'default' // veya belirtmeyebilirsiniz, varsayılan değer
+        });
+        
+        // İkinci trafik ışığı - farklı bir kavşak
+        this.sectionTrafficLight2 = new SectionTrafficLight({
+            scene: this.scene,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            rotateX: Math.PI / 2, // 90 derece X ekseni etrafında döndür - dikey duruş için
+            rotateY: Math.PI, // 180 derece Y ekseni etrafında döndür - farklı yöne bakması için
+            rotateZ: 0,
+            position: 'second'
         });
     }
 
@@ -928,7 +958,7 @@ export default class World {
             //{ id: 'japanesePark', name: 'Japon Parkı', position: { x: 10, y: -26 }, size: { x: 12, y: 10 } },
             //{ id: 'alaaddin', name: 'Alaaddin', position: { x: 8, y: -50 }, size: { x: 12, y: 12 } },
             { id: 'atmosphere', name: 'Atmosfer Bosna Gençlik Merkezi', position: { x: -10, y: -9 }, size: { x: 5, y: 5 },link: "https://www.konya.bel.tr/hizmet-binalari-ve-sosyal-tesisler/atmosfer-bosna-genclik-merkezi", description: "Konya Büyükşehir Belediyesi tarafından hayata geçirilen bu merkez, gençlere sosyal, kültürel ve akademik destek sunan çok yönlü bir yaşam alanıdır." },
-            { id: 'capsule', name: 'Kapsül Teknoloji Platformu', position: { x: 37, y: -18 }, size: { x: 7, y:7 },link: "https://www.kapsul.org.tr", description: "Konya Büyükşehir Belediyesi bünyesinde faaliyet gösteren Kapsül, gençleri teknoloji üretimine teşvik ederek Türkiye’nin milli teknoloji hamlesine katkı sağlar." },
+            { id: 'capsule', name: 'Kapsül Teknoloji Platformu', position: { x: 37, y: -18 }, size: { x: 7, y:7 },link: "https://www.kapsul.org.tr", description: "Konya Büyükşehir Belediyesi bünyesinde faaliyet gösteren Kapsül, gençleri teknoloji üretimine teşvik ederek Türkiye'nin milli teknoloji hamlesine katkı sağlar." },
             { 
                 id: 'division', 
                 name: 'Divizyon', 
@@ -944,7 +974,7 @@ export default class World {
             //{ id: 'basketball', name: 'Basketbol Sahası', position: { x: -30, y: 30 }, size: { x: 10, y: 10 } },
             //{ id: 'butterfly', name: 'Kelebek', position: { x: 55, y: -16 }, size: { x: 11, y: 10 } },
             //{ id: 'rocket', name: 'Roket', position: { x: -30, y: -30 }, size: { x: 10, y: 10 } },
-            { id: 'scienceCenter', name: 'Konya Bilim Merkezi', position: { x: 42, y: 14 }, size: { x: 12, y: 9 }, link: "https://www.konyabilimmerkezi.com", description: "Konya Büyükşehir Belediyesi tarafından kurulan Türkiye’nin TÜBİTAK destekli ilk bilim merkezi, bilimi toplumun her kesimine sevdirmeyi ve bilimsel farkındalığı artırmayı amaçlamaktadır." },
+            { id: 'scienceCenter', name: 'Konya Bilim Merkezi', position: { x: 42, y: 14 }, size: { x: 12, y: 9 }, link: "https://www.konyabilimmerkezi.com", description: "Konya Büyükşehir Belediyesi tarafından kurulan Türkiye'nin TÜBİTAK destekli ilk bilim merkezi, bilimi toplumun her kesimine sevdirmeyi ve bilimsel farkındalığı artırmayı amaçlamaktadır." },
             //{ id: 'socialInovation', name: 'Sosyal İnovasyon', position: { x: 75, y: -10 }, size: { x: 10, y: 10 },link: "https://www.sosyalinovasyonajansi.com/", description: "Konya Büyükşehir Belediyesi tarafından hayata geçirilen ajans, kültür endüstrileri, sivil toplum ve etki yönetimi alanlarında yenilikçi çözümler üretir; gençleri Ar-Ge ekosistemine dahil eder." },
             //{ id: 'soundRoom', name: 'Ses Odası', position: { x: -40, y: 0 }, size: { x: 10, y: 10 } },
             //{ id: 'stadium', name: 'Stadyum', position: { x: 0, y: -40 }, size: { x: 10, y: 10 } },
