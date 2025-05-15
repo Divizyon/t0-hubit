@@ -45,12 +45,12 @@ export default class SectionAlaaddin {
             if (this.physics) {
                 this.collisionBody = new CANNON.Body({
                     mass: 0,
-                    position: new CANNON.Vec3(13, -52, 0),
+                    position: new CANNON.Vec3(13, -52, 1),
                     material: this.physics.materials.items.floor
                 });
 
               
-                const radius = 11;
+                const radius = 13;
                 const sphereShape = new CANNON.Sphere(radius);
                 this.collisionBody.addShape(sphereShape);
 

@@ -92,30 +92,50 @@ export default class SectionCoWork {
   
     // Bounding box hesapla
     baseModel.updateMatrixWorld(true);
+    baseModel2.updateMatrixWorld(true);
+
     const bbox = new THREE.Box3().setFromObject(baseModel);
     var size = bbox.getSize(new THREE.Vector3());
   
-    // Fizik gövdesi oluştur
-    const halfExtents = new CANNON.Vec3(size.x / 2, size.y / 1.9, size.z / 1.9);
+    const halfExtents = new CANNON.Vec3(size.x / 2, size.y / 2, 2);
     const boxShape = new CANNON.Box(halfExtents);
   
     const body = new CANNON.Body({
       mass: 0,
-      position: new CANNON.Vec3(
-        this.position.x + 1.5,
-        this.position.y,
-        this.position.z -3
-      ),
+      position: baseModel.position,
       material: this.physics.materials.items.floor
     });
   
     // Dönüşü quaternion olarak ayarla
     const quat = new CANNON.Quaternion();
-    quat.setFromEuler(this.rotateX, this.rotateY, this.rotateZ, 'XYZ');
+    quat.setFromEuler(baseModel.rotation.x, baseModel.rotation.y, baseModel.rotation.z, 'XYZ');
     body.quaternion.copy(quat);
   
     body.addShape(boxShape);
-    // this.physics.world.addBody(body);
+    this.physics.world.addBody(body);
+
+    //Base 2
+
+    const bbox2 = new THREE.Box3().setFromObject(baseModel2);
+    var size2 = bbox2.getSize(new THREE.Vector3());
+  
+    const halfExtents2 = new CANNON.Vec3(size2.x / 2.95, size2.y / 2.95, 2);
+    const boxShape2 = new CANNON.Box(halfExtents2);
+  
+    const body2 = new CANNON.Body({
+      mass: 0,
+      position: baseModel2.position,
+      material: this.physics.materials.items.floor
+    });
+  
+    // Dönüşü quaternion olarak ayarla
+    const quat2 = new CANNON.Quaternion();
+    quat2.setFromEuler(baseModel2.rotation.x, baseModel2.rotation.y, baseModel2.rotation.z, 'XYZ');
+    body2.quaternion.copy(quat2);
+  
+    body2.addShape(boxShape2);
+    this.physics.world.addBody(body2);
+
   
     // Obje sistemine ekle
     if (this.objects) {

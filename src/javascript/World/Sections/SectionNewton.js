@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import CANNON from 'cannon'
 
 export default class SectionNewton {
-  constructor({ scene, resources, objects, rotateX = 0, rotateY = 0, rotateZ = 0, position = null, materials = null, areas = null, time = null }) {
+  constructor({ scene, resources, objects, rotateX = 0, rotateY = 0, rotateZ = 0, position = null, materials = null, areas = null, time = null, physics }) {
     // Özellikleri kaydet
     this.scene = scene
     this.resources = resources
@@ -10,6 +10,7 @@ export default class SectionNewton {
     this.materials = materials
     this.areas = areas
     this.time = time
+    this.physics = physics
     
     // Döndürme değerlerini (radyan) ayarla
     this.rotateX = rotateX
@@ -70,6 +71,23 @@ export default class SectionNewton {
     model.updateMatrixWorld(true)
     const bbox = new THREE.Box3().setFromObject(model)
     const size = bbox.getSize(new THREE.Vector3())
+
+    const halfExtents = new CANNON.Vec3(size.x / 2.175, size.y, 3.6);
+    const boxShape = new CANNON.Box(halfExtents);
+
+    const body = new CANNON.Body({
+      mass: 0,
+      position: new CANNON.Vec3(this.position.x + .75, this.position.y - 1.5, this.position.z),
+      material: this.physics.materials.items.floor
+    });
+
+    // Dönüşü quaternion olarak ayarla
+    const quat = new CANNON.Quaternion();
+    quat.setFromEuler(this.rotateX, this.rotateY, this.rotateZ, 'XYZ');
+    body.quaternion.copy(quat);
+
+    body.addShape(boxShape);
+    this.physics.world.addBody(body);
     
     // Bu modeli animasyon için kullan
     this.model = model

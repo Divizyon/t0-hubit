@@ -141,13 +141,14 @@ export default class SectionRocket {
     }
 
     // Klavye kontrolü ekleme
-    setupKeyboardControls() {
+    setupKeyboardControls() 
+    {
         // Enter tuşu için event listener ekle
         window.addEventListener('keydown', (event) => {
             // Enter tuşuna basıldıysa (keyCode: 13)
-            if (event.keyCode === 13 || event.key === 'Enter') {
-                // Hemen fırlat
-                this.launchRocket();
+            if (event.keyCode === 13 || event.key === 'Enter') 
+            {
+                if (Math.abs(this.car.position.x - this.model.base.position.x) < 2 && Math.abs(this.car.position.x - this.model.base.position.x) < 2)  this.launchRocket();
             }
         });
     }
@@ -801,5 +802,10 @@ export default class SectionRocket {
         this.rocketLaunched = false;
         
         console.log('Roket sıfırlandı');
+    }
+
+    setCar(_car)
+    {
+        this.car = _car
     }
 }

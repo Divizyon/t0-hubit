@@ -140,7 +140,7 @@ export default class World {
         this.setBillboard()
         this.areas.car = this.car
         this.areas.setCar(this.car)
-
+        this.sectionRocket.setCar(this.car)
         this.createBuildingAreas()
     }
 
@@ -472,18 +472,18 @@ export default class World {
     }
 
     setTrafficLight() {
-        // Ana trafik ışığı - ana cadde
         this.sectionTrafficLight = new SectionTrafficLight({
             scene: this.scene,
             resources: this.resources,
             objects: this.objects,
             physics: this.physics,
             debug: this.debugFolder,
-            rotateX: Math.PI / 2, // 90 derece X ekseni etrafında döndür - dikey duruş için
-            rotateY: Math.PI / 2, 
-            rotateZ: 0,
-            position: 'default' // veya belirtmeyebilirsiniz, varsayılan değer
+            rotateX: 0, // 90 derece X ekseni etrafında döndür - dikey duruş için
+            rotateY: 0, 
+            rotateZ: 0, // Y ekseninde 90 derece,
+            position: new THREE.Vector3(16, -14, -0.2), // Ana cadde üzerindeki trafik ışığı
         });
+    
         
         // İkinci trafik ışığı - farklı bir kavşak
         this.sectionTrafficLight2 = new SectionTrafficLight({
@@ -492,11 +492,12 @@ export default class World {
             objects: this.objects,
             physics: this.physics,
             debug: this.debugFolder,
-            rotateX: Math.PI / 2, // 90 derece X ekseni etrafında döndür - dikey duruş için
-            rotateY: Math.PI, // 180 derece Y ekseni etrafında döndür - farklı yöne bakması için
-            rotateZ: 0,
-            position: 'second'
+            rotateX: 0, // 90 derece X ekseni etrafında döndür - dikey duruş için
+            rotateY: 0, // 180 derece Y ekseni etrafında döndür - farklı yöne bakması için
+            rotateZ: Math.PI / 2, // Y ekseninde 90 derece,
+            position: new THREE.Vector3(30, -31.9, -0.2), // Farklı bir kavşaktaki trafik ışığı
         });
+
     }
 
     setScienceCenter() {
