@@ -18,6 +18,7 @@ import Road from './Sections/Road.js'
 // import RoadSign from './Sections/SectionRoadSign.js'
 import SectionRoadSign from './Sections/SectionRoadSign.js'
 import SectionTrafficLight from './Sections/SectionTrafficLight.js'
+import SectionLego from './Sections/SectionLego.js'
 
 import SectionAlaaddin from './Sections/SectionAlaaddin.js'
 import SectionAtmosphere from './Sections/SectionAtmosphere.js'
@@ -108,6 +109,7 @@ export default class World {
         //this.setRoad()
         this.setRoadSign()
         this.setTrafficLight()
+        this.setLego()
 
         this.setAlaaddin()
         //  this.setTram()
@@ -659,7 +661,6 @@ export default class World {
             rotateZ: Math.PI / 2 // Y ekseninde 90 derece,
         });
         this.container.name = 'SoundRoom'
-        this.container.position.set(-58.3, 15.5, .5)
     }
 
     setYoungCenter() {
@@ -948,6 +949,322 @@ export default class World {
         } catch (error) {
             console.error('Game mechanic oluşturma hatası:', error.stack);
         }
+    }
+
+    setLego() {
+        // Toplam 12 Lego parçası - 6 kırmızı, 6 sarı
+        
+        // İLK SET - İlk bölgedeki Lego parçaları
+        
+        // Birinci Lego modeli (kırmızı)
+        this.sectionLego = new SectionLego({
+            scene: this.scene,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0, // Düz
+            position: 'default',
+            color: 0xff0000 // Kırmızı
+        });
+        
+        // İkinci Lego modeli (sarı)
+        this.sectionLego2 = new SectionLego({
+            scene: this.scene,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0, // Düz
+            position: 'second',
+            color: 0xffcc00 // Sarı
+        });
+        
+        // Üçüncü Lego modeli (kırmızı)
+        this.sectionLego3 = new SectionLego({
+            scene: this.scene,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0, // Düz
+            position: 'third',
+            color: 0xff0000 // Kırmızı
+        });
+        
+        // Dördüncü Lego modeli (sarı)
+        this.sectionLego4 = new SectionLego({
+            scene: this.scene,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0, // Düz
+            position: 'fourth',
+            color: 0xffcc00 // Sarı
+        });
+        
+        // Beşinci Lego modeli (kırmızı)
+        this.sectionLego5 = new SectionLego({
+            scene: this.scene,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0, // Düz
+            position: 'fifth',
+            color: 0xff0000 // Kırmızı
+        });
+        
+        // Altıncı Lego modeli (kırmızı)
+        this.sectionLego6 = new SectionLego({
+            scene: this.scene,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0, // Düz
+            position: 'sixth',
+            color: 0xff0000 // Kırmızı
+        });
+        
+        // Yedinci Lego modeli (kırmızı)
+        this.sectionLego7 = new SectionLego({
+            scene: this.scene,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0, // Düz
+            position: 'seventh',
+            color: 0xff0000 // Kırmızı
+        });
+        
+        // Sekizinci Lego modeli (sarı)
+        this.sectionLego8 = new SectionLego({
+            scene: this.scene,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0, // Düz
+            position: 'eighth',
+            color: 0xffcc00 // Sarı
+        });
+        
+        // Dokuzuncu Lego modeli (sarı)
+        this.sectionLego9 = new SectionLego({
+            scene: this.scene,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0, // Düz
+            position: 'ninth',
+            color: 0xffcc00 // Sarı
+        });
+        
+        // Onuncu Lego modeli (kırmızı)
+        this.sectionLego10 = new SectionLego({
+            scene: this.scene,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0, // Düz
+            position: 'tenth',
+            color: 0xff0000 // Kırmızı
+        });
+        
+        // On birinci Lego modeli (kırmızı - 6. kırmızı parçanın üstünde)
+        this.sectionLego11 = new SectionLego({
+            scene: this.scene,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0, // Düz
+            position: 'eleventh',
+            color: 0xff0000 // Kırmızı
+        });
+        
+        // On ikinci Lego modeli (kırmızı - 7. kırmızı parçanın üstünde)
+        this.sectionLego12 = new SectionLego({
+            scene: this.scene,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0, // Düz
+            position: 'twelfth',
+            color: 0xff0000 // Kırmızı
+        });
+        
+        // ÜÇÜNCÜ SET - Sol taraftaki Lego parçaları (ilk settin kopyası)
+        
+        // Üçüncü set birinci Lego modeli (kırmızı)
+        this.sectionLego23 = new SectionLego({
+            scene: this.scene,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0, // Düz
+            position: 'left_default',
+            color: 0xff0000 // Kırmızı
+        });
+        
+        // Üçüncü set ikinci Lego modeli (sarı)
+        this.sectionLego24 = new SectionLego({
+            scene: this.scene,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0, // Düz
+            position: 'left_second',
+            color: 0xffcc00 // Sarı
+        });
+        
+        // Üçüncü set üçüncü Lego modeli (kırmızı)
+        this.sectionLego25 = new SectionLego({
+            scene: this.scene,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0, // Düz
+            position: 'left_third',
+            color: 0xff0000 // Kırmızı
+        });
+        
+        // Üçüncü set dördüncü Lego modeli (sarı)
+        this.sectionLego26 = new SectionLego({
+            scene: this.scene,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0, // Düz
+            position: 'left_fourth',
+            color: 0xffcc00 // Sarı
+        });
+        
+        // Üçüncü set beşinci Lego modeli (kırmızı)
+        this.sectionLego27 = new SectionLego({
+            scene: this.scene,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0, // Düz
+            position: 'left_fifth',
+            color: 0xff0000 // Kırmızı
+        });
+        
+        // Üçüncü set altıncı Lego modeli (kırmızı)
+        this.sectionLego28 = new SectionLego({
+            scene: this.scene,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0, // Düz
+            position: 'left_sixth',
+            color: 0xff0000 // Kırmızı
+        });
+        
+        // Üçüncü set yedinci Lego modeli (kırmızı)
+        this.sectionLego29 = new SectionLego({
+            scene: this.scene,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0, // Düz
+            position: 'left_seventh',
+            color: 0xff0000 // Kırmızı
+        });
+        
+        // Üçüncü set sekizinci Lego modeli (sarı)
+        this.sectionLego30 = new SectionLego({
+            scene: this.scene,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0, // Düz
+            position: 'left_eighth',
+            color: 0xffcc00 // Sarı
+        });
+        
+        // Üçüncü set dokuzuncu Lego modeli (sarı)
+        this.sectionLego31 = new SectionLego({
+            scene: this.scene,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0, // Düz
+            position: 'left_ninth',
+            color: 0xffcc00 // Sarı
+        });
+        
+        // Üçüncü set onuncu Lego modeli (kırmızı)
+        this.sectionLego32 = new SectionLego({
+            scene: this.scene,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0, // Düz
+            position: 'left_tenth',
+            color: 0xff0000 // Kırmızı
+        });
     }
 
     createBuildingAreas() {
