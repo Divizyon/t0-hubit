@@ -42,30 +42,6 @@ export default class Resources extends EventEmitter {
             { name: 'introArrowKeyBase', source: './models/intro/arrowKey/base.glb' },
             { name: 'introArrowKeyCollision', source: './models/intro/arrowKey/collision.glb' },
 
-            { name: 'introBBase', source: './models/intro/b/base.glb' },
-            { name: 'introBCollision', source: './models/intro/b/collision.glb' },
-
-            { name: 'introRBase', source: './models/intro/r/base.glb' },
-            { name: 'introRCollision', source: './models/intro/r/collision.glb' },
-
-            { name: 'introUBase', source: './models/intro/u/base.glb' },
-            { name: 'introUCollision', source: './models/intro/u/collision.glb' },
-
-            { name: 'introNBase', source: './models/intro/n/base.glb' },
-            { name: 'introNCollision', source: './models/intro/n/collision.glb' },
-
-            { name: 'introOBase', source: './models/intro/o/base.glb' },
-            { name: 'introOCollision', source: './models/intro/o/collision.glb' },
-
-            { name: 'introSBase', source: './models/intro/s/base.glb' },
-            { name: 'introSCollision', source: './models/intro/s/collision.glb' },
-
-            { name: 'introIBase', source: './models/intro/i/base.glb' },
-            { name: 'introICollision', source: './models/intro/i/collision.glb' },
-
-            { name: 'introMBase', source: './models/intro/m/base.glb' },
-            { name: 'introMCollision', source: './models/intro/m/collision.glb' },
-
             { name: 'introCreativeBase', source: './models/intro/creative/base.glb' },
             { name: 'introCreativeCollision', source: './models/intro/creative/collision.glb' },
 
@@ -93,49 +69,6 @@ export default class Resources extends EventEmitter {
             { name: 'carCyberTruckBackLightsReverse', source: './models/car/cyberTruck/backLightsReverse.glb' },
             { name: 'carCyberTruckAntena', source: './models/car/cyberTruck/antena.glb' },
 
-
-
-            // Project
-            { name: 'projectsBoardStructure', source: './models/projects/board/structure.glb' },
-            { name: 'projectsBoardCollision', source: './models/projects/board/collision.glb' },
-            { name: 'projectsBoardStructureFloorShadow', source: './models/projects/board/floorShadow.png', type: 'texture' },
-            { name: 'projectsBoardPlane', source: './models/projects/board/plane.glb' },
-
-            { name: 'projectsDistinctionsAwwwardsBase', source: './models/projects/distinctions/awwwards/base.glb' },
-            { name: 'projectsDistinctionsAwwwardsCollision', source: './models/projects/distinctions/awwwards/collision.glb' },
-            { name: 'projectsDistinctionsFWABase', source: './models/projects/distinctions/fwa/base.glb' },
-            { name: 'projectsDistinctionsFWACollision', source: './models/projects/distinctions/fwa/collision.glb' },
-            { name: 'projectsDistinctionsCSSDABase', source: './models/projects/distinctions/cssda/base.glb' },
-            { name: 'projectsDistinctionsCSSDACollision', source: './models/projects/distinctions/cssda/collision.glb' },
-
-            { name: 'projectsLuniFloor', source: './models/projects/luni/floorTexture.webp', type: 'texture' },
-            { name: 'projectsBonhomme10ansFloor', source: './models/projects/bonhomme10ans/floorTexture.webp', type: 'texture' },
-            { name: 'projectsThreejsJourneyFloor', source: './models/projects/threejsJourney/floorTexture.webp', type: 'texture' },
-            { name: 'projectsMadboxFloor', source: './models/projects/madbox/floorTexture.png', type: 'texture' },
-            { name: 'projectsScoutFloor', source: './models/projects/scout/floorTexture.png', type: 'texture' },
-            { name: 'projectsChartogneFloor', source: './models/projects/chartogne/floorTexture.png', type: 'texture' },
-            // { name: 'projectsZenlyFloor', source: './models/projects/zenly/floorTexture.png', type: 'texture' },
-            { name: 'projectsCitrixRedbullFloor', source: './models/projects/citrixRedbull/floorTexture.png', type: 'texture' },
-            { name: 'projectsPriorHoldingsFloor', source: './models/projects/priorHoldings/floorTexture.png', type: 'texture' },
-            { name: 'projectsOranoFloor', source: './models/projects/orano/floorTexture.png', type: 'texture' },
-            // { name: 'projectsGleecChatFloor', source: './models/projects/gleecChat/floorTexture.png', type: 'texture' },
-            // { name: 'projectsKepplerFloor', source: './models/projects/keppler/floorTexture.png', type: 'texture' },
-
-            // Information
-            { name: 'informationStaticBase', source: './models/information/static/base.glb' },
-            { name: 'informationStaticCollision', source: './models/information/static/collision.glb' },
-            { name: 'informationStaticFloorShadow', source: './models/information/static/floorShadow.png', type: 'texture' },
-
-            { name: 'informationBaguetteBase', source: './models/information/baguette/base.glb' },
-            { name: 'informationBaguetteCollision', source: './models/information/baguette/collision.glb' },
-
-            { name: 'informationContactTwitterLabel', source: './models/information/static/contactTwitterLabel.png', type: 'texture' },
-            { name: 'informationContactGithubLabel', source: './models/information/static/contactGithubLabel.png', type: 'texture' },
-            { name: 'informationContactLinkedinLabel', source: './models/information/static/contactLinkedinLabel.png', type: 'texture' },
-            { name: 'informationContactMailLabel', source: './models/information/static/contactMailLabel.png', type: 'texture' },
-
-            { name: 'informationActivities', source: './models/information/static/activities.png', type: 'texture' },
-
             // Playground
             { name: 'playgroundStaticBase', source: './models/playground/static/base.glb' },
             { name: 'playgroundStaticCollision', source: './models/playground/static/collision.glb' },
@@ -149,44 +82,9 @@ export default class Resources extends EventEmitter {
             { name: 'hornBase', source: './models/horn/base.glb' },
             { name: 'hornCollision', source: './models/horn/collision.glb' },
 
-            // // Distinction A
-            // { name: 'distinctionAStaticBase', source: './models/distinctionA/static/base.glb' },
-            // { name: 'distinctionAStaticCollision', source: './models/distinctionA/static/collision.glb' },
-            // { name: 'distinctionAStaticFloorShadow', source: './models/distinctionA/static/floorShadow.png', type: 'texture' },
-
-            // // Distinction B
-            // { name: 'distinctionBStaticBase', source: './models/distinctionB/static/base.glb' },
-            // { name: 'distinctionBStaticCollision', source: './models/distinctionB/static/collision.glb' },
-            // { name: 'distinctionBStaticFloorShadow', source: './models/distinctionB/static/floorShadow.png', type: 'texture' },
-
-            // // Distinction C
-            // { name: 'distinctionCStaticBase', source: './models/distinctionC/static/base.glb' },
-            // { name: 'distinctionCStaticCollision', source: './models/distinctionC/static/collision.glb' },
-            // { name: 'distinctionCStaticFloorShadow', source: './models/distinctionC/static/floorShadow.png', type: 'texture' },
-
-            // // Cone
-            // { name: 'coneBase', source: './models/cone/base.glb' },
-            // { name: 'coneCollision', source: './models/cone/collision.glb' },
-
-            // // Awwwards trophy
-            // { name: 'awwwardsTrophyBase', source: './models/awwwardsTrophy/base.glb' },
-            // { name: 'awwwardsTrophyCollision', source: './models/awwwardsTrophy/collision.glb' },
-
             // Webby trophy
             { name: 'webbyTrophyBase', source: './models/webbyTrophy/base.glb' },
             { name: 'webbyTrophyCollision', source: './models/webbyTrophy/collision.glb' },
-
-            // Lemon
-            { name: 'lemonBase', source: './models/lemon/base.glb' },
-            { name: 'lemonCollision', source: './models/lemon/collision.glb' },
-
-            // Bownling ball
-            { name: 'bowlingBallBase', source: './models/bowlingBall/base.glb' },
-            { name: 'bowlingBallCollision', source: './models/bowlingBall/collision.glb' },
-
-            // Bownling ball
-            { name: 'bowlingPinBase', source: './models/bowlingPin/base.glb' },
-            { name: 'bowlingPinCollision', source: './models/bowlingPin/collision.glb' },
 
             // Areas
             { name: 'areaKeyEnter', source: './models/area/keyEnter.png', type: 'texture' },
@@ -194,9 +92,6 @@ export default class Resources extends EventEmitter {
             { name: 'areaOpen', source: './models/area/open.png', type: 'texture' },
             { name: 'areaReset', source: './models/area/reset.png', type: 'texture' },
             { name: 'areaQuestionMark', source: './models/area/questionMark.png', type: 'texture' },
-
-            // MyCustomModel
-            //      { name: 'myCustomModelBase', source: './models/soundRoom/soundRoom.glb' },
 
             // Tiles
             { name: 'tilesABase', source: './models/tiles/a/base.glb' },
@@ -214,19 +109,6 @@ export default class Resources extends EventEmitter {
             { name: 'tilesEBase', source: './models/tiles/e/base.glb' },
             { name: 'tilesECollision', source: './models/tiles/e/collision.glb' },
 
-            // Konami
-            { name: 'konamiLabel', source: './models/konami/label.png', type: 'texture' },
-            { name: 'konamiLabelTouch', source: './models/konami/label-touch.png', type: 'texture' },
-
-            // Wigs
-            { name: 'wig1', source: './models/wigs/wig1.glb' },
-            { name: 'wig2', source: './models/wigs/wig2.glb' },
-            { name: 'wig3', source: './models/wigs/wig3.glb' },
-            { name: 'wig4', source: './models/wigs/wig4.glb' },
-
-            // // Egg
-            // { name: 'eggBase', source: './models/egg/base.glb' },
-            // { name: 'eggCollision', source: './models/egg/collision.glb' },
             { name: 'Road', source: './models/Road/base.glb' },
 
             { name: 'Base', source: './models/Base/base.glb' },
@@ -245,7 +127,6 @@ export default class Resources extends EventEmitter {
             { name: 'YoungCenter', source: './models/SectionYoungCenter/base.glb' },
             // { name: 'tramBase', source: './models/tram/base.glb' },
             { name: 'Newton', source:'./models/SectionNewton/base.glb'},
-            { name: 'Kademe', source:'./models/SectionKademe/base.glb'},
 
             { name: 'Division', source: './models/SectionDivision/base.glb' },
             { name: 'Alaaddin', source: './models/SectionAlaaddin/base.glb' },
@@ -264,17 +145,9 @@ export default class Resources extends EventEmitter {
             { name: 'Billboard4', source: './models/SectionBillboard/base4.glb' },
             { name: 'Billboard5', source: './models/SectionBillboard/base5.glb' },
             { name: 'Billboard6', source: './models/SectionBillboard/base6.glb' },
-            // Stones
-            { name: 'Stone', source: './models/SectionStone/base.glb' },
-            { name: 'stone1', source: './models/SectionStone/stone1.glb' },
-            { name: 'stone2', source: './models/SectionStone/stone2.glb' },
-            { name: 'stone3', source: './models/SectionStone/stone3.glb' },
-            { name: 'stone4', source: './models/SectionStone/stone4.glb' },
-            { name: 'stone5', source: './models/SectionStone/stone5.glb' },
-            { name: 'stone6', source: './models/SectionStone/stone6.glb' },
-            { name: 'stone7', source: './models/SectionStone/stone7.glb' },
-            { name: 'stone8', source: './models/SectionStone/stone8.glb' },
-            { name: 'stone9', source: './models/SectionStone/stone9.glb' },
+
+            { name: 'Kademe', source:'./models/SectionKademe/base.glb'},
+
             // fototball mini game
             //  { name: 'footballBall', source: './models/football/ball.glb' },
             //  { name: 'footballGoal', source: './models/football/goal.glb' },

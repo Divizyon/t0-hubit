@@ -1,173 +1,117 @@
 import * as THREE from 'three';
+import CANNON from 'cannon';
+
+const DEFAULT_POSITION = new THREE.Vector3(0, 0, 0);
 
 export default class SectionStone {
-    constructor(_options) {
-        // Options
-        this.scene = _options.scene;
-        this.resources = _options.resources;
-        this.objects = _options.objects;
-        this.physics = _options.physics;
-        this.debug = _options.debug;
-        this.position = _options.position || 'default';
-        this.index = _options.index || 1; // Stone index (1-9)
-        this.customPosition = _options.customPosition; // Manuel pozisyon verisi
-        
-        // Setup
-        this.container = new THREE.Object3D();
-        this.container.name = `stone${this.index}`;
-        
-        // Set position and rotation based on the provided options or defaults
-        if (_options.rotateX || _options.rotateY || _options.rotateZ) {
-            this.container.rotation.x = _options.rotateX || 0;
-            this.container.rotation.y = _options.rotateY || 0;
-            this.container.rotation.z = _options.rotateZ || 0;
-        }
-        
-        this.setPositions();
-        this.setModel();
-        
-        // Add to scene
-        if (this.scene) {
-            this.scene.add(this.container);
-        }
-    }
+  constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0 }) {
+    this.scene = scene;
+    this.resources = resources;
+    this.objects = objects;
+    this.physics = physics;
+    this.debug = debug;
+
+    this.rotateX = rotateX;
+    this.rotateY = rotateY;
+    this.rotateZ = rotateZ;
+
+    this.container = new THREE.Object3D();
+    this.position = DEFAULT_POSITION.clone();
+
+    this._buildModel(new THREE.Vector3(-69.98, -15.74, 0));
+    this._buildModel(new THREE.Vector3(-64.8, -17.03, 0));
+    this._buildModel(new THREE.Vector3(-63.43, -19.59, 0));
+    this._buildModel(new THREE.Vector3(-66.846, -17.896, 0));
+    this._buildModel(new THREE.Vector3(-67.08, -15.288, 0));
+
+    this._buildModel(new THREE.Vector3(-65.508, -4.0425, 0));
+    this._buildModel(new THREE.Vector3(-69.13, -2.448, 0));
+    this._buildModel(new THREE.Vector3(-71.75, 0.918, 0));
+    this._buildModel(new THREE.Vector3(-67.572, -0.534, 0));
+
+    this._buildModel(new THREE.Vector3(-59.376, 6.63637, 0));
+    this._buildModel(new THREE.Vector3(-62.935, 10.116, 0));   
+    this._buildModel(new THREE.Vector3(-57.8, 7.8, 0));   
+    this._buildModel(new THREE.Vector3(-60.676, 10.3376, 0));   
+
+    this._buildModel(new THREE.Vector3(-48.65, 12.635, 0));   
+    this._buildModel(new THREE.Vector3(-51, 15.32, 0));   
+    this._buildModel(new THREE.Vector3(-50.74, 19.713, 0));   
+    this._buildModel(new THREE.Vector3(-54.4, 19.68, 0));   
+    this._buildModel(new THREE.Vector3(-51.97, 17.424, 0));   
+    this._buildModel(new THREE.Vector3(-52.363, 12.63, 0));   
+    this.scene.add(this.container);
+  }
+  
     
-    setPositions() {
-        // Eğer özel pozisyon verilmişse, onu kullan
-        if (this.customPosition) {
-            this.container.position.set(
-                this.customPosition.x || 0,
-                this.customPosition.y || 0,
-                this.customPosition.z || 0
-            );
-            return;
-        }
-        
-        // Define different position options for stones
-        const positions = {
-            'default': { x: 0, y: 0, z: 0 },  // Center position
-            'circle': [  // Positions in a circle
-                { x: 10, y: 0, z: 0 },
-                { x: 7.07, y: 0, z: 7.07 },
-                { x: 0, y: 0, z: 10 },
-                { x: -7.07, y: 0, z: 7.07 },
-                { x: -10, y: 0, z: 0 },
-                { x: -7.07, y: 0, z: -7.07 },
-                { x: 0, y: 0, z: -10 },
-                { x: 7.07, y: 0, z: -7.07 },
-                { x: 0, y: 0, z: 0 }   // Center stone
-            ],
-            'grid': [  // Positions in a 3x3 grid
-                { x: -10, y: 0, z: -10 },  // Top-left
-                { x: 0, y: 0, z: -10 },    // Top-center
-                { x: 10, y: 0, z: -10 },   // Top-right
-                { x: -10, y: 0, z: 0 },    // Mid-left
-                { x: 0, y: 0, z: 0 },      // Center
-                { x: 10, y: 0, z: 0 },     // Mid-right
-                { x: -10, y: 0, z: 10 },   // Bottom-left
-                { x: 0, y: 0, z: 10 },     // Bottom-center
-                { x: 10, y: 0, z: 10 }     // Bottom-right
-            ],
-            'random': [  // Random positions
-                { x: 5, y: 0, z: -8 },
-                { x: -7, y: 0, z: 3 },
-                { x: 12, y: 0, z: 6 },
-                { x: -3, y: 0, z: -5 },
-                { x: 9, y: 0, z: -2 },
-                { x: -11, y: 0, z: -7 },
-                { x: 2, y: 0, z: 9 },
-                { x: -8, y: 0, z: 7 },
-                { x: 0, y: 0, z: 0 }
-            ],
-            // Manuel pozisyonlar - ihtiyaca göre düzenleyebilirsiniz
-            'manuel': [
-                { x: 20, y: 0, z: 0 },    // Stone 1
-                { x: -15, y: 0, z: 0 },   // Stone 2
-                { x: 5, y: 0, z: 0 },    // Stone 3
-                { x: -25, y: 0, z: 0 },  // Stone 4
-                { x: 30, y: 0, z: 0 },     // Stone 5
-                { x: -20, y: 0, z: 0 },   // Stone 6
-                { x: 10, y: 0, z: 0 },    // Stone 7
-                { x: -5, y: 0, z: 0 },   // Stone 8
-                { x: 0, y: 0, z: 0 }       // Stone 9
-            ]
-        };
-        
-        // Set the position based on the type and index
-        if (this.position === 'default') {
-            this.container.position.set(
-                positions.default.x,
-                positions.default.y,
-                positions.default.z
-            );
-        } else if (this.position === 'circle' && this.index <= 9) {
-            const pos = positions.circle[this.index - 1];
-            this.container.position.set(pos.x, pos.y, pos.z);
-        } else if (this.position === 'grid' && this.index <= 9) {
-            const pos = positions.grid[this.index - 1];
-            this.container.position.set(pos.x, pos.y, pos.z);
-        } else if (this.position === 'random' && this.index <= 9) {
-            const pos = positions.random[this.index - 1];
-            this.container.position.set(pos.x, pos.y, pos.z);
-        } else if (this.position === 'manuel' && this.index <= 9) {
-            const pos = positions.manuel[this.index - 1];
-            this.container.position.set(pos.x, pos.y, pos.z);
-        } else {
-            // Custom position
-            this.container.position.set(
-                this.position.x || 0,
-                this.position.y || 0,
-                this.position.z || 0
-            );
-        }
+  _buildModel(positionn) {
+    // A D
+    const gltf = this.resources.items.tilesABase;
+  
+    if (!gltf || !gltf.scene) {
+      console.error('SectionStone bina modeli bulunamadı');
+      return;
     }
-    
-    setModel() {
-        try {
-            // Get the correct stone model based on index
-            const resourceName = `stone${this.index}`;
-            
-            if (this.resources.items[resourceName]) {
-                // If we have a specific model for this stone index
-                const model = this.resources.items[resourceName].scene.clone();
-                
-                // Add the model to the container
-                this.container.add(model);
-                
-                // Add physics if needed
-                if (this.physics && this.resources.items[`${resourceName}Collision`]) {
-                    // Create physics body
-                    const collision = this.resources.items[`${resourceName}Collision`].scene;
-                    
-                    // Add to physics world
-                    this.objects.add({
-                        base: model,
-                        collision: collision,
-                        offsetPosition: new THREE.Vector3(0, 0, 0),
-                        offsetRotation: new THREE.Euler(0, 0, 0),
-                        mass: 10,
-                        sleep: true
-                    });
-                }
-                
-                console.log(`Stone ${this.index} loaded successfully`);
-            } else {
-                // Fallback to a default stone model if specific one not found
-                console.warn(`Stone model ${resourceName} not found, using default stone`);
-                
-                // Create a simple stone mesh as fallback
-                const geometry = new THREE.DodecahedronGeometry(2, 0);
-                const material = new THREE.MeshStandardMaterial({
-                    color: 0x888888,
-                    roughness: 0.8,
-                    metalness: 0.2
-                });
-                
-                const stoneMesh = new THREE.Mesh(geometry, material);
-                this.container.add(stoneMesh);
-            }
-        } catch (error) {
-            console.error(`Error loading stone ${this.index}:`, error);
-        }
+  
+    const model = gltf.scene.clone(true);
+    model.traverse(child => {
+      if (child.isMesh) {
+        const origMat = child.material;
+        const mat = origMat.clone();
+        if (origMat.map) mat.map = origMat.map;
+        if (origMat.normalMap) mat.normalMap = origMat.normalMap;
+        if (origMat.roughnessMap) mat.roughnessMap = origMat.roughnessMap;
+        if (origMat.metalnessMap) mat.metalnessMap = origMat.metalnessMap;
+        mat.needsUpdate = true;
+        child.material = mat;
+        child.castShadow = true;
+        child.receiveShadow = true;
+      }
+    });
+  
+    // Base modelini klonla ve Kapsül modeline ekle
+
+    model.position.copy(positionn);
+    model.rotation.set(this.rotateX, this.rotateY, this.rotateZ);
+    this.container.add(model);
+   
+    model.updateMatrixWorld(true);
+    const bbox = new THREE.Box3().setFromObject(model);
+    var size = bbox.getSize(new THREE.Vector3());
+   
+    const halfExtents = new CANNON.Vec3(size.x - .2, size.y - .2, size.z);
+    const boxShape = new CANNON.Box(halfExtents);
+   
+    const body = new CANNON.Body({
+        mass: 0,
+        position: new CANNON.Vec3(positionn.x, positionn.y, positionn.z - .025),
+        material: this.physics.materials.items.floor
+    });
+
+    model.children[0].material.color.b = 0;
+    model.children[0].material.color.g = 0;
+    model.children[0].material.color.r = 1;
+  
+    const quat = new CANNON.Quaternion();
+    quat.setFromEuler(this.rotateX, this.rotateY, this.rotateZ, 'XYZ');
+    body.quaternion.copy(quat);
+  
+    body.addShape(boxShape);
+    this.physics.world.addBody(body);
+  
+    // Obje sistemine ekle
+    if (this.objects) {
+      const children = model.children.slice();
+      const objectEntry = this.objects.add({
+        base: { children },
+        collision: { children },
+        offset: this.position.clone(),
+        mass: 0
+      });
+      objectEntry.collision = { body };
+      if (objectEntry.container) {
+        this.container.add(objectEntry.container);
+      }
     }
-} 
+  }
+}

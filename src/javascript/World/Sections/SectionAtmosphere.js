@@ -11,14 +11,6 @@ export default class SectionAtmosphere {
         this.model = null;
         this.collisionBody = null;
         this.setModel();
-        
-        if (this.time) {
-            this.time.on('tick', () => {
-                this.tick(this.time.delta * 0.001);
-            });
-        } else {
-            console.warn('SectionAtmosphere: time parametresi verilmedi, animasyonlar çalışmayacak.');
-        }
     }
 
     setModel() {
@@ -31,7 +23,7 @@ export default class SectionAtmosphere {
         loader.load('./models/SectionAtmosphere/base.glb', (gltf) => {
             
             this.model = gltf.scene;
-            this.model.position.set(-20, -8, 0);
+            this.model.position.set(-20, -8, 0); //.5
             this.model.scale.set(1, 1, 1);
 
             this.model.rotation.x = -80.1;
@@ -88,18 +80,18 @@ export default class SectionAtmosphere {
             });
 
             // Animasyonları başlat
-            if (gltf.animations && gltf.animations.length > 0) {
-                // console.log('Animasyonlar yükleniyor...');
-                this.mixer = new THREE.AnimationMixer(this.model);
-                gltf.animations.forEach((clip, index) => {
-                    console.log(`Animasyon ${index} yükleniyor:`, clip.name);
-                    const action = this.mixer.clipAction(clip);
-                    action.reset().play();
-                });
-                // console.log('Mixer oluşturuldu:', this.mixer);
-            } else {
-                // console.warn('Hiç animasyon bulunamadı!');
-            }
+            // if (gltf.animations && gltf.animations.length > 0) {
+            //     // console.log('Animasyonlar yükleniyor...');
+            //     this.mixer = new THREE.AnimationMixer(this.model);
+            //     gltf.animations.forEach((clip, index) => {
+            //         console.log(`Animasyon ${index} yükleniyor:`, clip.name);
+            //         const action = this.mixer.clipAction(clip);
+            //         action.reset().play();
+            //     });
+            //     // console.log('Mixer oluşturuldu:', this.mixer);
+            // } else {
+            //     // console.warn('Hiç animasyon bulunamadı!');
+            // }
         });
     }
 

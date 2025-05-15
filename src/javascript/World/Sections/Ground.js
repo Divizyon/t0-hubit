@@ -11,6 +11,7 @@ export default class Ground {
         this.walls = _options.walls
         this.tiles = _options.tiles
         this.debug = _options.debug
+        this.scene = _options.scene
         this.x = _options.x
         this.y = _options.y
 
