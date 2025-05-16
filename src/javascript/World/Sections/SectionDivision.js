@@ -59,11 +59,11 @@ export default class SectionDivision {
     
      baseModel.position.set(-65, 4, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
      baseModel.scale.set(1.5, 1.5, 1.5); // Base modelinin ölçeği
-     baseModel.rotation.set(this.rotateX, this.rotateY, 290);
+     baseModel.rotation.set(this.rotateX, this.rotateY, 290.2);
    
      // Kapsül model pozisyonu ve dönüşü
      model.position.copy(this.position);
-     model.rotation.set(this.rotateX, this.rotateY, 290);
+     model.rotation.set(this.rotateX, this.rotateY, 290.2);
      this.container.add(baseModel);
      this.container.add(model);
      this.container.add(baseModel);

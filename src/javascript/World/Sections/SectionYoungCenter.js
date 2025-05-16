@@ -80,6 +80,15 @@ export default class SectionYoungCenter {
       material: this.physics.materials.items.floor
     });
 
+    baseModel.traverse(child => {
+      if (child.isMesh) {
+          child.material = child.material.clone();
+          child.material.color.r = .2;
+          child.material.color.g = 0;
+          child.material.color.b = .6;
+      }
+    });
+
     // Dönüşü quaternion olarak ayarla
     const quat = new CANNON.Quaternion();
     quat.setFromEuler(this.rotateX, this.rotateY, this.rotateZ, 'XYZ');

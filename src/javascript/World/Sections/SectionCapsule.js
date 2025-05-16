@@ -86,9 +86,18 @@ export default class SectionCapsule {
       material: this.physics.materials.items.floor
     });
 
-    baseModel.children[0].material.color.r = .2;
-    baseModel.children[0].material.color.g = 1;
-    baseModel.children[0].material.color.b = .2;
+    baseModel.traverse(child => {
+      if (child.isMesh) {
+          child.material = child.material.clone();
+          child.material.color.r = .2;
+          child.material.color.g = 0;
+          child.material.color.b = .6;
+      }
+    });
+
+    // baseModel.children[0].material.color.r = .2;
+    // baseModel.children[0].material.color.g = 1;
+    // baseModel.children[0].material.color.b = .2;
   
     // Dönüşü quaternion olarak ayarla
     const quat = new CANNON.Quaternion();

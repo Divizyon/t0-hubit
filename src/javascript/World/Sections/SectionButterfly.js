@@ -56,7 +56,7 @@ export default class SectionButterfly {
     });
   
      // Base modelini klonla ve Kapsül modeline ekle
-     const baseModel = base.scene.clone(true);
+    const baseModel = base.scene.clone(true);
     baseModel.position.set(55, -17.5, .0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
     baseModel.scale.set(3, 2.3, 2) // Base modelinin ölçeği
     this.container.add(baseModel);
@@ -79,6 +79,15 @@ export default class SectionButterfly {
     mass: 0,
     position: baseModel.position,
     material: this.physics.materials.items.floor
+    });
+
+    baseModel.traverse(child => {
+      if (child.isMesh) {
+          child.material = child.material.clone();
+          child.material.color.r = .2;
+          child.material.color.g = 0;
+          child.material.color.b = .6;
+      }
     });
 
     // Dönüşü quaternion olarak ayarla

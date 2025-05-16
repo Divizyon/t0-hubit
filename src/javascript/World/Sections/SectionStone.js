@@ -34,12 +34,18 @@ export default class SectionStone {
     this._buildModel(new THREE.Vector3(-57.8, 7.8, 0));   
     this._buildModel(new THREE.Vector3(-60.676, 10.3376, 0));   
 
-    this._buildModel(new THREE.Vector3(-48.65, 12.635, 0));   
-    this._buildModel(new THREE.Vector3(-51, 15.32, 0));   
-    this._buildModel(new THREE.Vector3(-50.74, 19.713, 0));   
-    this._buildModel(new THREE.Vector3(-54.4, 19.68, 0));   
-    this._buildModel(new THREE.Vector3(-51.97, 17.424, 0));   
-    this._buildModel(new THREE.Vector3(-52.363, 12.63, 0));   
+    this._buildModel(new THREE.Vector3(-52.63, 21.52, 0));   
+    this._buildModel(new THREE.Vector3(-55.93, 23.54, 0));   
+    this._buildModel(new THREE.Vector3(-59.34, 22.31, 0));   
+    this._buildModel(new THREE.Vector3(-52.42, 17.11, 0));   
+    this._buildModel(new THREE.Vector3(-57.35, 21.5, 0));   
+    this._buildModel(new THREE.Vector3(-54.22, 19.53, 0));   
+    this._buildModel(new THREE.Vector3(-58.7, 24.92, 0));   
+    // this._buildModel(new THREE.Vector3(-58.75, 25.95, 0));   
+    // this._buildModel(new THREE.Vector3(-50.74, 19.713, 0));   
+    // this._buildModel(new THREE.Vector3(-54.4, 19.68, 0));   
+    // this._buildModel(new THREE.Vector3(-51.97, 17.424, 0));   
+    // this._buildModel(new THREE.Vector3(-52.363, 12.63, 0));   
     this.scene.add(this.container);
   }
   

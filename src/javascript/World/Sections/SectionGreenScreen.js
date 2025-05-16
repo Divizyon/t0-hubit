@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import CANNON from 'cannon';
 
-const DEFAULT_POSITION = new THREE.Vector3(-44.8, 15.4, 1.1);
+const DEFAULT_POSITION = new THREE.Vector3(-54.8, 28.4, 1.1);
 
 export default class SectionGreenScreen {
   constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0 }) {
@@ -60,7 +60,7 @@ export default class SectionGreenScreen {
      this.container.add(model);
    
      const baseModel = base.scene.clone(true);
-     baseModel.position.set(-44.65, 17.2, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
+     baseModel.position.set(-54.65, 30.2, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
      baseModel.scale.set(1.4, 1.3, .5); // Base modelinin ölçeği
      baseModel.rotation.set(this.rotateX, this.rotateY, 290 -.6);
      this.container.add(baseModel);
@@ -74,7 +74,7 @@ export default class SectionGreenScreen {
      });
 
      const baseModel2 = base.scene.clone(true);
-     baseModel2.position.set(-44.65, 17.2, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
+     baseModel2.position.set(-54.65, 30.2, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
      baseModel2.scale.set(1.4, 1.3, .5); // Base modelinin ölçeği
      baseModel2.rotation.set(this.rotateX, this.rotateY, 201.23 - .6);
      this.container.add(baseModel2);

@@ -32,14 +32,15 @@ export default class SectionYoungCard {
         loader.load('./models/SectionYoungCard/base.glb', (gltf) => {
             
             this.model = gltf.scene;
-            this.model.position.set(42.5,-40,1.7);
+            this.model.position.set(42.5,-38,1.7);
             this.model.scale.set(1,1,1);
-            this.model.rotation.set(Math.PI,Math.PI,-Math.PI/2)
+            this.model.rotation.set(Math.PI,Math.PI,0)
 
             const base = this.resources.items.Base;
             const baseModel = base.scene.clone(true);
-            baseModel.position.set(42.5, -40, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
+            baseModel.position.set(42.5, -38, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
             baseModel.scale.set(1.5, 1, 1.5); // Base modelinin ölçeği
+            baseModel.rotation.set(Math.PI,Math.PI,Math.PI/2)
 
             baseModel.updateMatrixWorld(true);
             const bbox = new THREE.Box3().setFromObject(baseModel);
@@ -54,10 +55,20 @@ export default class SectionYoungCard {
                 position: baseModel.position,
                 material: this.physics.materials.items.floor
             });
+
+            baseModel.traverse(child => {
+                if (child.isMesh) {
+                    child.material = child.material.clone();
+                    child.material.color.r = .2;
+                    child.material.color.g = 0;
+                    child.material.color.b = .6;
+                }
+              });
+            
             
             // Dönüşü quaternion olarak ayarla
             const quat = new CANNON.Quaternion();
-            quat.setFromEuler(Math.PI, Math.PI, -Math.PI/2);
+            quat.setFromEuler(Math.PI, Math.PI, 0);
             body.quaternion.copy(quat);
             
             body.addShape(boxShape);

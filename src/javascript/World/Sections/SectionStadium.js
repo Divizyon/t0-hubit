@@ -57,8 +57,8 @@ export default class SectionStadium {
   
      // Base modelini klonla ve Kapsül modeline ekle
      const baseModel = base.scene.clone(true);
-     baseModel.position.set(42.5, -62, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
-     baseModel.scale.set(1.5, 2.5, 1.5); // Base modelinin ölçeği
+     baseModel.position.set(42, -61.25, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
+     baseModel.scale.set(2.6, 3, 1.5); // Base modelinin ölçeği
      baseModel.rotation.set(this.rotateX, this.rotateY, this.rotateZ);
      this.container.add(baseModel);
    
@@ -80,6 +80,15 @@ export default class SectionStadium {
       mass: 0,
       position: baseModel.position,
       material: this.physics.materials.items.floor
+    });
+
+    baseModel.traverse(child => {
+      if (child.isMesh) {
+          child.material = child.material.clone();
+          child.material.color.r = .2;
+          child.material.color.g = .6;
+          child.material.color.b = 0;
+      }
     });
   
     // Dönüşü quaternion olarak ayarla
