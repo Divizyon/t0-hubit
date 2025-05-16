@@ -43,6 +43,7 @@ import SectionTram from './Sections/SectionTram.js'
 import SectionNewton from './Sections/SectionNewton.js'
 import SectionStone from './Sections/SectionStone.js'
 import SectionKademe from './Sections/SectionKademe.js'
+import SectionBasketballCourt from './Sections/SectionBasketballCourt.js'
 
 export default class World {
     constructor(_options) {
@@ -120,7 +121,8 @@ export default class World {
         this.setGreenScreen()
         this.setRenderRoom()
         this.setConcert()
-        this.setBasketball()
+   //     this.setBasketball()
+        this.setBasketballCourt()
         this.setButterfly()
         this.setNewton()
         this.setStone()
@@ -135,7 +137,7 @@ export default class World {
         this.setStadium()
         this.setYoungCard()
         this.setYoungCenter()
-        this.setGameMechanic()
+    //  this.setGameMechanic()
 
         this.setCar()
         this.setBillboard()
@@ -571,15 +573,15 @@ export default class World {
     }
 
     setBasketball() {
-        this.sectionBasketball = new SectionBasketball({
-            scene: this.scene,
-            resources: this.resources,
-            physics: this.physics,
-            debug: this.debugFolder,
-            rotateX: 0,   // 
-            rotateY: 0,
-            rotateZ: 0 // Y ekseninde 90 derece,
-        })
+    //    this.sectionBasketball = new SectionBasketball({
+      //      scene: this.scene,
+      //      resources: this.resources,
+     //       physics: this.physics,
+      //      debug: this.debugFolder,
+      //      rotateX: 0,   // 
+      //      rotateY: 0,
+      //      rotateZ: 0 // Y ekseninde 90 derece,
+      //  })
     }
 
     setJapanesePark() {
@@ -829,6 +831,7 @@ export default class World {
         });
     }
     setGameMechanic() {
+        /* 
         try {
             console.log('setGameMechanic başlatılıyor');
 
@@ -986,6 +989,10 @@ export default class World {
         } catch (error) {
             console.error('Game mechanic oluşturma hatası:', error.stack);
         }
+        */
+        
+        // Fonksiyon içeriği devre dışı bırakıldı
+        console.log('Futbol sahası devre dışı bırakıldı - setGameMechanic() yorum satırına alındı');
     }
 
     setLego() {
@@ -1012,6 +1019,21 @@ export default class World {
             rotateZ: 0,
             areas: this.areas, // Areas sınıfını ekle
             car: this.car // Araba referansını ekle
+        });
+    }
+
+    setBasketballCourt() {
+        this.sectionBasketballCourt = new SectionBasketballCourt({
+            scene: this.scene,
+            resources: this.resources,
+            objects: this.objects,
+            physics: this.physics,
+            debug: this.debugFolder,
+            areas: this.areas,
+            car: this.car,
+            rotateX: Math.PI / 2,                
+            rotateY: Math.PI / 180,     
+            rotateZ: 0                // Z ekseninde dönüş yok
         });
     }
 

@@ -147,6 +147,7 @@ export default class Resources extends EventEmitter {
             { name: 'Billboard6', source: './models/SectionBillboard/base6.glb' },
 
             { name: 'Kademe', source:'./models/SectionKademe/base.glb'},
+            { name: 'BasketballCourt', source:'./models/SectionBasketballCourt/base.glb'},
 
             // fototball mini game
             //  { name: 'footballBall', source: './models/football/ball.glb' },

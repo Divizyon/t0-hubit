@@ -19,9 +19,7 @@ export default class SectionLego {
     this.position = DEFAULT_POSITION.clone();
 
     // Yellow legos
-
-    this._buildModel(new THREE.Vector3(-37.78, 12.50, 0), 1, 0.87, 0, 1.4, 1);
-    this._buildModel(new THREE.Vector3(-45.15, 9.31, 0), 1, 0.87, 0, 1, 1);
+    // Basketbol sahasının bulunduğu yerden (-30, 20, 0) civarındaki lego'ları kaldırdık
     this._buildModel(new THREE.Vector3(-65.7, -16, 0), 1, 0.87, 0, 1, 2);
     this._buildModel(new THREE.Vector3(-56.90, -9.05, 0), 1, 0.87, 0, 1.3, 1);
     this._buildModel(new THREE.Vector3(-56.249, 9.35, 0), 1, 0.87, 0, 1, 1);
@@ -29,16 +27,13 @@ export default class SectionLego {
     this._buildModel(new THREE.Vector3(-60, -27.4, 0), 1, 0.87, 0, 1.2, 1);
 
     // Red logos
-
     this._buildModel(new THREE.Vector3(-56.04, -1.203, 0), .55, 0, 0, 1, 1);
     this._buildModel(new THREE.Vector3(-50.36, 10.1, 0), .55, 0, 0, 1.6, 1);
     this._buildModel(new THREE.Vector3(-60.7, -17.65, 0), .55, 0, 0, 1, 2);
     this._buildModel(new THREE.Vector3(-57, 6.34, 0), .55, 0, 0, 1, 1.2);
 
     // Blue legos
-
     this._buildModel(new THREE.Vector3(-52.65, .88, 0), 0, 0.55, 1, 1.2, 1);
-    this._buildModel(new THREE.Vector3(-38.78, 19.98, 0), 0, 0.55, 1, 1.2, 1);
     this._buildModel(new THREE.Vector3(-51.5, 3.16, 0), 0, 0.55, 1, 1.2, 1);
     this._buildModel(new THREE.Vector3(-60.81, 7.9, 0), 0, 0.55, 1, 1.2, 1);
     this._buildModel(new THREE.Vector3(-63.764, -4.15, 0), 0, 0.55, 1, 1.2, 1);
