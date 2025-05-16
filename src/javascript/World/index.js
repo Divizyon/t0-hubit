@@ -135,7 +135,7 @@ export default class World {
         this.setStadium()
         this.setYoungCard()
         this.setYoungCenter()
-        this.setGameMechanic()
+        // this.setGameMechanic()
 
         this.setCar()
         this.setBillboard()
@@ -810,6 +810,8 @@ export default class World {
         });
     }
     setGameMechanic() {
+        // Futbol sahası devre dışı bırakıldı
+        /*
         try {
             console.log('setGameMechanic başlatılıyor');
 
@@ -967,6 +969,7 @@ export default class World {
         } catch (error) {
             console.error('Game mechanic oluşturma hatası:', error.stack);
         }
+        */
     }
 
     setLego() {
