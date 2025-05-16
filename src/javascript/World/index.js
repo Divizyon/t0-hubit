@@ -135,7 +135,7 @@ export default class World {
         this.setStadium()
         this.setYoungCard()
         this.setYoungCenter()
-        // this.setGameMechanic()
+        this.setGameMechanic()
 
         this.setCar()
         this.setBillboard()
@@ -146,6 +146,15 @@ export default class World {
         this.createBuildingAreas()
 
         this.setKademe()
+
+        window.setTimeout(() => {
+            const loadingScreen = document.getElementById('loadingScreen');
+            loadingScreen.style.opacity = '0';
+
+            loadingScreen.addEventListener('transitionend', () => {
+                loadingScreen.style.display = 'none';
+            });
+        }, 3200)
     }
 
     setReveal() {
@@ -170,7 +179,7 @@ export default class World {
 
             // Car
             this.physics.car.chassis.body.sleep()
-            this.physics.car.chassis.body.position.set(0, 0, 12)
+            this.physics.car.chassis.body.position.set(19.913, -12.908, 1)
 
             window.setTimeout(() => {
                 this.physics.car.chassis.body.wakeUp()
@@ -281,21 +290,29 @@ export default class World {
                 gsap.to(this.startingScreen.loadingLabel.material, { opacity: 0, duration: 0.3 })
                 gsap.to(this.startingScreen.startLabel.material, { opacity: 1, duration: 0.3, delay: 0.3 })
             })
-        })
 
-        // On interact, reveal
-        this.startingScreen.area.on('interact', () => {
+            this.start()
             this.startingScreen.area.deactivate()
             gsap.to(this.startingScreen.area.floorBorder.material.uniforms.uProgress, { value: 0, duration: 0.3, delay: 0.4 })
 
             gsap.to(this.startingScreen.startLabel.material, { opacity: 0, duration: 0.3, delay: 0.4 })
 
-            this.start()
-
             window.setTimeout(() => {
                 this.reveal.go()
             }, 600)
         })
+
+        // // On interact, reveal
+        // this.startingScreen.area.on('interact', () => {
+        //     this.startingScreen.area.deactivate()
+        //     gsap.to(this.startingScreen.area.floorBorder.material.uniforms.uProgress, { value: 0, duration: 0.3, delay: 0.4 })
+
+        //     gsap.to(this.startingScreen.startLabel.material, { opacity: 0, duration: 0.3, delay: 0.4 })
+
+        //     window.setTimeout(() => {
+        //         this.reveal.go()
+        //     }, 600)
+        // })
     }
 
     setSounds() {
@@ -555,12 +572,13 @@ export default class World {
 
     setBasketball() {
         this.sectionBasketball = new SectionBasketball({
-            time: this.time,
+            scene: this.scene,
             resources: this.resources,
-            objects: this.objects,
             physics: this.physics,
             debug: this.debugFolder,
-            scene: this.scene
+            rotateX: 0,   // 
+            rotateY: 0,
+            rotateZ: 0 // Y ekseninde 90 derece,
         })
     }
 
@@ -694,11 +712,12 @@ export default class World {
     }
 
     setAlaaddin() {
-
         this.sectionAlaaddin = new SectionAlaaddin({
             scene: this.scene,
             time: this.time,
-            physics: this.physics
+            physics: this.physics,
+            resources: this.resources,
+            objects: this.objects,
         });
     }
     setTram() {
@@ -810,8 +829,6 @@ export default class World {
         });
     }
     setGameMechanic() {
-        // Futbol sahası devre dışı bırakıldı
-        /*
         try {
             console.log('setGameMechanic başlatılıyor');
 
@@ -969,7 +986,6 @@ export default class World {
         } catch (error) {
             console.error('Game mechanic oluşturma hatası:', error.stack);
         }
-        */
     }
 
     setLego() {
