@@ -149,7 +149,6 @@ export default class Resources extends EventEmitter {
             { name: 'Kademe', source:'./models/SectionKademe/base.glb'},
             { name: 'BasketballCourt', source:'./models/SectionBasketballCourt/base.glb'},
             { name: 'Concert', source:'./models/SectionConcert/base.glb'},
-            { name: 'Soccer', source:'./models/SectionSoccer/base.glb'},
 
             // [GS] Green Screen
 
@@ -157,9 +156,11 @@ export default class Resources extends EventEmitter {
             { name: 'UVIceland', source: './uv/Iceland.webp', type: 'texture' },
             { name: 'UVDesert', source: './uv/Desert.webp', type: 'texture' },
 
-            // fototball mini game
-            //  { name: 'footballBall', source: './models/football/ball.glb' },
-            //  { name: 'footballGoal', source: './models/football/goal.glb' },
+            // Football mini game
+            { name: 'footballBall', source: './models/SectionSoccer/top.glb' },
+            { name: 'footballTower', source: './models/SectionSoccer/kale.glb' },
+            { name: 'footballTexture', source: './models/SectionSoccer/saha-bg.jpg' },
+
             // newton mini game
             //  { name: 'newton', source: './models/newton/base.glb' },
 
