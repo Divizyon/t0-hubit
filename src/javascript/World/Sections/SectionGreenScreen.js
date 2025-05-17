@@ -1,15 +1,20 @@
 import * as THREE from 'three';
 import CANNON from 'cannon';
+import gsap from 'gsap'
+
 
 const DEFAULT_POSITION = new THREE.Vector3(-54.8, 28.4, 1.1);
 
 export default class SectionGreenScreen {
-  constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0, car, time, areas }) {
+  constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0, car, time, areas,passes,camera,zones }) {
     this.scene = scene;
     this.resources = resources;
     this.objects = objects;
     this.physics = physics;
     this.debug = debug;
+    this.passes = passes;
+    this.camera = camera;
+    this.zones = zones;
 
     this.areas = areas;
 
@@ -34,6 +39,7 @@ export default class SectionGreenScreen {
     this.scene.add(this.container);
 
     this._createPopup();
+    this.setZone()
   }
   
     
@@ -109,7 +115,7 @@ export default class SectionGreenScreen {
     const bbox = new THREE.Box3().setFromObject(baseModel);
     var size = bbox.getSize(new THREE.Vector3());
   
-    const halfExtents = new CANNON.Vec3(size.x / 2.8, size.y / 2.8, 2);
+    const halfExtents = new CANNON.Vec3(size.x / 2.8, size.y / 2.8, 1);
     const boxShape = new CANNON.Box(halfExtents);
   
     const body = new CANNON.Body({
@@ -129,7 +135,7 @@ export default class SectionGreenScreen {
     const bbox2 = new THREE.Box3().setFromObject(baseModel2);
     var size2 = bbox2.getSize(new THREE.Vector3());
   
-    const halfExtents2 = new CANNON.Vec3(size2.x / 2.7, size2.y / 2.7, 2);
+    const halfExtents2 = new CANNON.Vec3(size2.x / 2.7, size2.y / 2.7, 1);
     const boxShape2 = new CANNON.Box(halfExtents2);
   
     const body2 = new CANNON.Body({
@@ -167,19 +173,20 @@ export default class SectionGreenScreen {
     popup.style.bottom = '20px';
     popup.style.left = '50%';
     popup.style.transform = 'translateX(-50%)';
-    popup.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+    popup.style.backgroundColor = 'rgba(26, 26, 26, 0.8)';
     popup.style.padding = '10px';
     popup.style.borderRadius = '5px';
     popup.style.display = 'none';
+    popup.style.borderRadius = '10px';
     popup.style.zIndex = '1000';
-
+    
     this.greenScreenImagePaths.forEach((imagePath, index) => {
       const img = document.createElement('img');
       img.src = imagePath;
-      img.style.width = '100px';
-      img.style.height = '100px';
+      img.style.width = '150px';
       img.style.margin = '5px';
       img.style.cursor = 'pointer';
+      img.style.borderRadius = '10px';
 
       img.addEventListener('click', () => {
         this.changeGreenscreenTexture(index);
@@ -246,8 +253,8 @@ export default class SectionGreenScreen {
         }
       );
 
-      this.areas.car.physics.car.chassis.body.position.copy(new CANNON.Vec3(-52.56, 27.93, 2.2));
-      this.physics.car.chassis.body.quaternion.copy(new CANNON.Quaternion(0, 0, - Math.PI / 4, 1));
+      this.areas.car.physics.car.chassis.body.position.copy(new CANNON.Vec3(-54.2, 30.5, 1));
+      this.physics.car.chassis.body.quaternion.copy(new CANNON.Quaternion(0, 0, - Math.PI / 3, 1));
 
       this.areas.car.physics.car.chassis.body.velocity.set(0, 0, 0);
       this.areas.car.physics.car.chassis.body.angularVelocity.set(0, 0, 0);
@@ -258,5 +265,25 @@ export default class SectionGreenScreen {
     } catch (error) {
       console.error('Error changing greenscreen texture:', error);
     }
+  }
+
+  setZone() {
+      const zone = this.zones.add({
+        position: { x: this.position.x + 1, y: this.position.y + 2 },
+        halfExtents: { x: 2.6, y: 2 },
+        data: { cameraAngle: 'greenScreenCam' }
+    })
+
+    zone.on('in', (_data) => {
+      this.camera.angle.set(_data.cameraAngle)
+      gsap.to(this.passes.horizontalBlurPass.material.uniforms.uStrength.value, { x: 0, duration: 2 })
+      gsap.to(this.passes.verticalBlurPass.material.uniforms.uStrength.value, { y: 0, duration: 2 })
+    })
+
+    zone.on('out', () => {
+      this.camera.angle.set('default')
+      gsap.to(this.passes.horizontalBlurPass.material.uniforms.uStrength.value, { x: this.passes.horizontalBlurPass.strength, duration: 2 })
+      gsap.to(this.passes.verticalBlurPass.material.uniforms.uStrength.value, { y: this.passes.verticalBlurPass.strength, duration: 2 })
+    })
   }
 }
