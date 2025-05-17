@@ -7,6 +7,7 @@ export default class SectionJapanesePark {
         this.time = _options.time;
         this.scene = _options.scene;
         this.physics = _options.physics;
+        this.position = new THREE.Vector3(13, -28, 1.5);
         this.mixer = null;
         this.model = null;
         this.collisionBody = null;

@@ -455,7 +455,12 @@ export default class World {
             debug: this.debugFolder,
             config: this.config,
             scene: this.scene,
-            soundRoom: this.sectionSoundRoom
+            sectionSoundRoom: this.sectionSoundRoom,
+            sectionJapanesePark: this.sectionJapanesePark,
+            sectionNewton: this.sectionNewton,
+            sectionConcert: this.sectionConcert,
+            sectionButterfly: this.sectionButterfly,
+            sectionAlaaddin: this.sectionAlaaddin,
         })
         this.container.add(this.car.container)
     }
@@ -573,7 +578,7 @@ export default class World {
     }
 
     setConcert() {
-        this.concert = new SectionConcert({
+        this.sectionConcert = new SectionConcert({
             time: this.time,
             resources: this.resources,
             objects: this.objects,

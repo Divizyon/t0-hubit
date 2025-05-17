@@ -20,7 +20,23 @@ export default class Car
         this.debug = _options.debug
         this.config = _options.config
         this.scene = _options.scene
-        this.soundRoom = _options.soundRoom
+
+        this.sectionSoundRoom = _options.sectionSoundRoom
+        this.sectionJapanesePark = _options.sectionJapanesePark
+        this.sectionNewton = _options.sectionNewton
+        this.sectionConcert = _options.sectionConcert
+        this.sectionButterfly = _options.sectionButterfly
+        this.sectionAlaaddin = _options.sectionAlaaddin
+
+        this.sections = [
+            this.sectionSoundRoom,
+            this.sectionJapanesePark,
+            this.sectionNewton,
+            this.sectionConcert,
+            this.sectionButterfly,
+            this.sectionAlaaddin
+        ];
+
         // Set up
         this.container = new THREE.Object3D()
         this.position = new THREE.Vector3()
@@ -341,33 +357,83 @@ export default class Car
     }
 
     findClosestObject() {
-
-        // if (this.sceneObject === undefined) {
-        //     this.sceneObject = this.objects.container.parent.parent
-        // }
-        if (this.soundRoom === null) {
-            this.soundRoom = this.scene.children.find((object) => object.name === 'SoundRoom');
+        let closestRoom = null;
+        let closestDistance = Infinity;
+        var i = 0;
+        var index = 0;
+        for (i = 0; i < this.sections.length; i++) 
+        {
+            const distance = this.position.distanceTo(this.sections[i].position);
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closestRoom = this.sections[i];
+                index = i;
+            }
         }
-        const distance = this.position.distanceTo(this.soundRoom.position);
-        return distance;
+        return [closestDistance, index];
     }
 
     soundController()
     {
-        var sound = new Howl({
-            src: ['./sounds/sound-room/sound-room.mp3'],
+        this.sectionSoundRoomSound = new Howl({
+            src: ['./sounds/SectionSoundRoom/sound.mp3'],
             loop: true,
             volume: 0,
-        })
+        }); this.sectionSoundRoomSound.play();
 
-        sound.play();
+        this.sectionJapaneseParkSound = new Howl({
+            src: ['./sounds/SectionJapanesePark/sound.mp3'],
+            loop: true,
+            volume: 0,
+        }); this.sectionJapaneseParkSound.play();
 
-        // Howler.pos(this.position.x, this.position.y, this.position.z);
+        this.sectionNewtonSound = new Howl({
+            src: ['./sounds/SectionNewton/sound.mp3'],
+            loop: true,
+            volume: 0,
+            rate: 0.45, // Hızı düşürmek için rate özelliği eklendi
+        }); this.sectionNewtonSound.play();
 
+        this.sectionConcertSound = new Howl({
+            src: ['./sounds/SectionConcert/sound.mp3'],
+            loop: true,
+            volume: 0,
+        }); this.sectionConcertSound.play();
+
+        this.sectionButterflySound = new Howl({
+            src: ['./sounds/SectionButterfly/sound.mp3'],
+            loop: true,
+            volume: 0,
+        }); this.sectionButterflySound.play();
+        
+        this.sectionAlaaddinSound = new Howl({
+            src: ['./sounds/SectionAlaaddin/sound.mp3'],
+            loop: true,
+            volume: 0,
+        }); this.sectionAlaaddinSound.play();
         this.time.on('tick', () => {
-            const distance = this.findClosestObject();
-            const volume = Math.max(0, 1 - (distance / 20));
-            sound.volume(volume);
+            var output = this.findClosestObject();
+            const volume = Math.max(0, 1 - (output[0] / 20));
+            this.runSound(volume, output[1]);
         });
+    }
+
+    runSound(volume, index)
+    {
+        this.sectionSoundRoomSound.volume(0);
+        this.sectionJapaneseParkSound.volume(0);
+        this.sectionNewtonSound.volume(0);
+        this.sectionConcertSound.volume(0);
+        this.sectionButterflySound.volume(0);
+        this.sectionAlaaddinSound.volume(0);
+        switch (index)
+        {
+            case 0: this.sectionSoundRoomSound.volume(volume); break;
+            case 1: this.sectionJapaneseParkSound.volume(volume); break;
+            case 2: this.sectionNewtonSound.volume(volume); break;
+            case 3: this.sectionConcertSound.volume(volume); break;
+            case 4: this.sectionButterflySound.volume(volume); break;
+            case 5: this.sectionAlaaddinSound.volume(volume); break;
+        }
     }
 }
