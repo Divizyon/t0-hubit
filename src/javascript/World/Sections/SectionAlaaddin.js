@@ -10,6 +10,7 @@ export default class SectionAlaaddin {
         this.mixer = null;
         this.model = null;
         this.collisionBody = null;
+        this.position = new THREE.Vector3(9.3, -52.5, 1);
         this.setModel();
         
         if (this.time) {

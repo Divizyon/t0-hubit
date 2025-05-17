@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import CANNON from 'cannon';
 
-const DEFAULT_POSITION = new THREE.Vector3(-40, 15, 0);
+const DEFAULT_POSITION = new THREE.Vector3(-40, 15, -.5);
 
 export default class SectionBasketballCourt {
   constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0 }) {
@@ -87,11 +87,11 @@ export default class SectionBasketballCourt {
       
         // Dönüşü quaternion olarak ayarla
         const quat = new CANNON.Quaternion();
-        quat.setFromEuler(Math.PI / 2, this.rotateY, this.rotateZ, 'XYZ');
+        quat.setFromEuler(Math.PI / 2, Math.PI / 5, this.rotateZ, 'XYZ');
         body.quaternion.copy(quat);
       
         body.addShape(boxShape);
-        //this.physics.world.addBody(body);
+        // this.physics.world.addBody(body);
       
         // Obje sistemine ekle
         if (this.objects) {
