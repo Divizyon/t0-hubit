@@ -148,6 +148,14 @@ export default class Resources extends EventEmitter {
 
             { name: 'Kademe', source:'./models/SectionKademe/base.glb'},
             { name: 'BasketballCourt', source:'./models/SectionBasketballCourt/base.glb'},
+            { name: 'Concert', source:'./models/SectionConcert/base.glb'},
+            { name: 'Soccer', source:'./models/SectionSoccer/base.glb'},
+
+            // [GS] Green Screen
+
+            { name: 'UVLake', source: './uv/Lake.webp', type: 'texture' },
+            { name: 'UVIceland', source: './uv/Iceland.webp', type: 'texture' },
+            { name: 'UVDesert', source: './uv/Desert.webp', type: 'texture' },
 
             // fototball mini game
             //  { name: 'footballBall', source: './models/football/ball.glb' },
