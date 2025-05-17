@@ -47,7 +47,7 @@ export default class SectionYoungCard {
             var size = bbox.getSize(new THREE.Vector3());
             
             // Fizik gövdesi oluştur
-            const halfExtents = new CANNON.Vec3(size.x / 3, size.y / 1.35, size.z / 2);
+            const halfExtents = new CANNON.Vec3(size.x / 2, size.y / 2, size.z / 2);
             const boxShape = new CANNON.Box(halfExtents);
             
             const body = new CANNON.Body({
