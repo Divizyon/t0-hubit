@@ -554,6 +554,9 @@ export default class World {
             rotateZ: Math.PI / 4, // Y ekseninde 90 derece,
             car: this.car,
             areas: this.areas,
+            zones: this.zones,
+            camera : this.camera,
+            passes: this.passes
         });
     }
 

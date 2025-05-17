@@ -45,7 +45,8 @@ export default class Camera
         // Items
         this.angle.items = {
             default: new THREE.Vector3(1.135, - 1.45, 1.15),
-            projects: new THREE.Vector3(0.38, - 1.4, 1.63)
+            projects: new THREE.Vector3(0.38, - 1.4, 1.63),
+            greenScreenCam: new THREE.Vector3(.5, - 2, 0.7)
         }
 
         // Value
@@ -58,6 +59,19 @@ export default class Camera
             const angle = this.angle.items[_name]
             if(typeof angle !== 'undefined')
             {
+
+                if (_name == "greenScreenCam") {
+                    this.zoom.targetValue = 0.5
+                    this.pan.targetValue = {x : -.8, y: 3}
+                    this.pan.disable()
+                    this.pan.preventReset = true
+                }else{
+                    this.zoom.targetValue = 1
+                    this.pan.targetValue = {x : 0, y: 0}
+                    this.pan.enabled = true
+                    this.pan.preventReset = false
+                }
+
                 gsap.to(this.angle.value, { ...angle, duration: 2, ease: 'power1.inOut' })
             }
         }
@@ -115,9 +129,9 @@ export default class Camera
         // Set up
         this.zoom = {}
         this.zoom.easing = 0.1
-        this.zoom.minDistance = 14 // 14 orjinal ayar en son eski haline getir 
+        this.zoom.minDistance = 1
         this.zoom.amplitude = 15
-        this.zoom.value = this.config.cyberTruck ? 0.3 : 0.5
+        this.zoom.value = 1
         this.zoom.targetValue = this.zoom.value
         this.zoom.distance = this.zoom.minDistance + this.zoom.amplitude * this.zoom.value
 
@@ -170,6 +184,7 @@ export default class Camera
         this.pan = {}
         this.pan.enabled = false
         this.pan.active = false
+        this.pan.preventReset = false
         this.pan.easing = 0.1
         this.pan.start = {}
         this.pan.start.x = 0
@@ -191,8 +206,10 @@ export default class Camera
 
         this.pan.reset = () =>
         {
-            this.pan.targetValue.x = 0
-            this.pan.targetValue.y = 0
+            if (!this.pan.preventReset) {   
+                this.pan.targetValue.x = 0
+                this.pan.targetValue.y = 0
+            }
         }
 
         this.pan.enable = () =>
