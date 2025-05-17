@@ -579,14 +579,15 @@ export default class World {
 
     setConcert() {
         this.sectionConcert = new SectionConcert({
-            time: this.time,
-            resources: this.resources,
-            objects: this.objects,
-            physics: this.physics,
-            debug: this.debugFolder,
-            scene: this.scene
-        })
-    }
+          scene:     this.scene,
+          resources: this.resources,
+          physics:   this.physics,
+          debug:     this.debugFolder,
+          rotateX:   0,   // 
+          rotateY:   0,
+          rotateZ:   0 // Y ekseninde 90 derece,
+        });
+      }
 
     setBasketball() {
     //    this.sectionBasketball = new SectionBasketball({
