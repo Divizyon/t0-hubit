@@ -119,7 +119,7 @@ export default class Resources extends EventEmitter {
             { name: 'Capsule', source: './models/SectionCapsule/base.glb' },
             { name: 'YoungCard', source: './models/SectionYoungCard/base.glb' },
             { name: 'Rocket', source: './models/SectionRocket/base.glb' },
-            //  { name: 'SocialInovation', source: './models/SectionSocialInovation/base.glb' },
+            { name: 'SocialInovation', source: './models/SectionSocialInovation/base.glb' },
             { name: 'RoadSign', source: './models/SectionRoadSign/base.glb' },
             { name: 'TrafficLight', source: './models/SectionTrafficLight/base.glb' },
             { name: 'Lego', source: './models/SectionLego/base.glb' },
