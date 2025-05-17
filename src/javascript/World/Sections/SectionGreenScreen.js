@@ -4,22 +4,36 @@ import CANNON from 'cannon';
 const DEFAULT_POSITION = new THREE.Vector3(-54.8, 28.4, 1.1);
 
 export default class SectionGreenScreen {
-  constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0 }) {
+  constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0, car, time, areas }) {
     this.scene = scene;
     this.resources = resources;
     this.objects = objects;
     this.physics = physics;
     this.debug = debug;
 
+    this.areas = areas;
+
     this.rotateX = rotateX;
     this.rotateY = rotateY;
     this.rotateZ = rotateZ;
 
+    this.car = car;
+    this.time = time;
+
     this.container = new THREE.Object3D();
     this.position = DEFAULT_POSITION.clone();
+    console.log(this.resources.items.UVDesert)
+    this.greenScreenMesh = null;
+    this.greenScreenImagePaths = [
+      './uv/Desert.webp',
+      './uv/Lake.webp',
+      './uv/Iceland.webp',
+    ];
 
     this._buildModel();
     this.scene.add(this.container);
+
+    this._createPopup();
   }
   
     
@@ -37,7 +51,6 @@ export default class SectionGreenScreen {
       return;
     }
   
-    // Division modelini klonla ve malzemeleri kopyala
     const model = gltf.scene.clone(true);
     model.traverse(child => {
       if (child.isMesh) {
@@ -52,16 +65,19 @@ export default class SectionGreenScreen {
         child.castShadow = true;
         child.receiveShadow = true;
       }
+      if(child instanceof THREE.Mesh && 
+        (child.name === 'pureUc' || child.name === 'Cube.002')) {
+          this.greenScreenMesh = child;
+      }
     });
-  
-     // Kapsül model pozisyonu ve dönüşü
+    
      model.position.copy(this.position);
      model.rotation.set(this.rotateX, this.rotateY, -.45);
      this.container.add(model);
    
      const baseModel = base.scene.clone(true);
-     baseModel.position.set(-54.65, 30.2, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
-     baseModel.scale.set(1.4, 1.3, .5); // Base modelinin ölçeği
+     baseModel.position.set(-54.65, 30.2, 0);
+     baseModel.scale.set(1.4, 1.3, .5);
      baseModel.rotation.set(this.rotateX, this.rotateY, 290 -.6);
      this.container.add(baseModel);
      baseModel.traverse(child => {
@@ -74,8 +90,8 @@ export default class SectionGreenScreen {
      });
 
      const baseModel2 = base.scene.clone(true);
-     baseModel2.position.set(-54.65, 30.2, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
-     baseModel2.scale.set(1.4, 1.3, .5); // Base modelinin ölçeği
+     baseModel2.position.set(-54.65, 30.2, 0);
+     baseModel2.scale.set(1.4, 1.3, .5);
      baseModel2.rotation.set(this.rotateX, this.rotateY, 201.23 - .6);
      this.container.add(baseModel2);
      baseModel2.traverse(child => {
@@ -87,7 +103,6 @@ export default class SectionGreenScreen {
     }
     });
   
-    // Bounding box hesapla
     baseModel.updateMatrixWorld(true);
     baseModel2.updateMatrixWorld(true);
 
@@ -103,7 +118,6 @@ export default class SectionGreenScreen {
       material: this.physics.materials.items.floor
     });
   
-    // Dönüşü quaternion olarak ayarla
     const quat = new CANNON.Quaternion();
     quat.setFromEuler(baseModel.rotation.x, baseModel.rotation.y, baseModel.rotation.z, 'XYZ');
     body.quaternion.copy(quat);
@@ -111,7 +125,6 @@ export default class SectionGreenScreen {
     body.addShape(boxShape);
     this.physics.world.addBody(body);
 
-    //Base 2
 
     const bbox2 = new THREE.Box3().setFromObject(baseModel2);
     var size2 = bbox2.getSize(new THREE.Vector3());
@@ -125,7 +138,6 @@ export default class SectionGreenScreen {
       material: this.physics.materials.items.floor
     });
   
-    // Dönüşü quaternion olarak ayarla
     const quat2 = new CANNON.Quaternion();
     quat2.setFromEuler(baseModel2.rotation.x, baseModel2.rotation.y, baseModel2.rotation.z, 'XYZ');
     body2.quaternion.copy(quat2);
@@ -133,7 +145,6 @@ export default class SectionGreenScreen {
     body2.addShape(boxShape2);
     this.physics.world.addBody(body2);
   
-    // Obje sistemine ekle
     if (this.objects) {
       const children = model.children.slice();
       const objectEntry = this.objects.add({
@@ -146,6 +157,106 @@ export default class SectionGreenScreen {
       if (objectEntry.container) {
         this.container.add(objectEntry.container);
       }
+    }
+  }
+
+  _createPopup() {
+    const popup = document.createElement('div');
+    popup.id = 'greenscreen-popup';
+    popup.style.position = 'absolute';
+    popup.style.bottom = '20px';
+    popup.style.left = '50%';
+    popup.style.transform = 'translateX(-50%)';
+    popup.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+    popup.style.padding = '10px';
+    popup.style.borderRadius = '5px';
+    popup.style.display = 'none';
+    popup.style.zIndex = '1000';
+
+    this.greenScreenImagePaths.forEach((imagePath, index) => {
+      const img = document.createElement('img');
+      img.src = imagePath;
+      img.style.width = '100px';
+      img.style.height = '100px';
+      img.style.margin = '5px';
+      img.style.cursor = 'pointer';
+
+      img.addEventListener('click', () => {
+        this.changeGreenscreenTexture(index);
+        popup.style.display = 'none';
+      });
+
+      popup.appendChild(img);
+    });
+
+    document.body.appendChild(popup);
+
+    this.time.on('tick', () => {
+      const playerPosition = this.car.position;
+      const distance = playerPosition.distanceTo(this.position);
+
+      if (distance < 10) {
+        popup.style.display = 'block';
+      } else {
+        popup.style.display = 'none';
+      }
+    });
+  }
+
+  changeGreenscreenTexture(imageIndex) {
+    try {
+      this.currentImageIndex = imageIndex;
+
+      const imagePath = this.greenScreenImagePaths[imageIndex];
+
+      const textureLoader = new THREE.TextureLoader();
+
+      const box = new THREE.Box3().setFromObject(this.greenScreenMesh);
+      const size = new THREE.Vector3();
+      box.getSize(size);
+
+      textureLoader.load(
+        imagePath,
+        (texture) => {
+          texture.colorSpace = THREE.SRGBColorSpace;
+          texture.minFilter = THREE.LinearFilter;
+          texture.magFilter = THREE.LinearFilter;
+          texture.wrapS = THREE.RepeatWrapping;
+          texture.wrapT = THREE.RepeatWrapping;
+
+          texture.repeat.set(-1, 1);
+          texture.offset.set(0, 0.5 - texture.repeat.y / 2); // Ortalamak için offset
+          texture.rotation = Math.PI; // Gerekirse döndürme
+          texture.center.set(0.5, 0.5); // Merkezden döndürme
+ 
+          const material = new THREE.MeshStandardMaterial({
+            map: texture,
+            side: THREE.DoubleSide,
+            color: 0xffffff,
+            emissive: 0xFFFFFF,
+            emissiveIntensity: .05,
+          });
+
+          this.greenScreenMesh.material = material;
+          this.greenScreenMesh.material.needsUpdate = true;
+        },
+        undefined,
+        (error) => {
+          console.error(`Error loading texture:`, error);
+        }
+      );
+
+      this.areas.car.physics.car.chassis.body.position.copy(new CANNON.Vec3(-52.56, 27.93, 2.2));
+      this.physics.car.chassis.body.quaternion.copy(new CANNON.Quaternion(0, 0, - Math.PI / 4, 1));
+
+      this.areas.car.physics.car.chassis.body.velocity.set(0, 0, 0);
+      this.areas.car.physics.car.chassis.body.angularVelocity.set(0, 0, 0);
+
+      this.areas.car.physics.car.chassis.body.wakeUp();
+      
+
+    } catch (error) {
+      console.error('Error changing greenscreen texture:', error);
     }
   }
 }

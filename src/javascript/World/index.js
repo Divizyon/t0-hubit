@@ -35,7 +35,6 @@ import SectionYoungCenter from './Sections/SectionYoungCenter.js'
 import SectionJapanesePark from './Sections/SectionJapanesePark.js'
 import SectionRenderRoom from './Sections/SectionRenderRoom.js'
 import SectionConcert from './Sections/SectionConcert.js'
-import SectionBasketball from './Sections/SectionBasketball.js'
 import SectionBillboard from './Sections/SectionBillboard.js'
 import SectionCoWork from './Sections/SectionCoWork.js'
 import SectionGameMechanic from './Sections/SectionGameMechanic.js'
@@ -44,6 +43,7 @@ import SectionNewton from './Sections/SectionNewton.js'
 import SectionStone from './Sections/SectionStone.js'
 import SectionKademe from './Sections/SectionKademe.js'
 import SectionBasketballCourt from './Sections/SectionBasketballCourt.js'
+import SectionSoccer from './Sections/SectionSoccer.js'
 
 export default class World {
     constructor(_options) {
@@ -118,7 +118,7 @@ export default class World {
         this.setAtmosphere()
         this.setCapsule()
         this.setDivision()
-        this.setGreenScreen()
+        
         this.setRenderRoom()
         this.setConcert()
    //     this.setBasketball()
@@ -138,16 +138,21 @@ export default class World {
         this.setYoungCard()
         this.setYoungCenter()
     //  this.setGameMechanic()
+        this.setKademe()
+        this.setSoccer()
+        this.createBuildingAreas()
 
         this.setCar()
+
+        this.setGreenScreen()
+
         this.setBillboard()
 
         this.areas.car = this.car
         this.areas.setCar(this.car)
         this.sectionRocket.setCar(this.car)
-        this.createBuildingAreas()
+        
 
-        this.setKademe()
 
         window.setTimeout(() => {
             const loadingScreen = document.getElementById('loadingScreen');
@@ -539,13 +544,16 @@ export default class World {
 
     setGreenScreen() {
         this.sectionGreenScreen = new SectionGreenScreen({
+            time: this.time,
             scene: this.scene,
             resources: this.resources,
             physics: this.physics,
             debug: this.debugFolder,
             rotateX: 0,   // 
             rotateY: 0,
-            rotateZ: Math.PI / 4 // Y ekseninde 90 derece,
+            rotateZ: Math.PI / 4, // Y ekseninde 90 derece,
+            car: this.car,
+            areas: this.areas,
         });
     }
 
@@ -1007,6 +1015,18 @@ export default class World {
         });
     }
 
+    setSoccer() {
+        this.sectionSoccer = new SectionSoccer({
+            scene: this.scene,
+            resources: this.resources,
+            physics: this.physics,
+            debug: this.debugFolder,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0,
+        });
+    }
+
     setKademe() {
         this.sectionKademe = new SectionKademe({
             scene: this.scene,
@@ -1026,14 +1046,11 @@ export default class World {
         this.sectionBasketballCourt = new SectionBasketballCourt({
             scene: this.scene,
             resources: this.resources,
-            objects: this.objects,
             physics: this.physics,
             debug: this.debugFolder,
-            areas: this.areas,
-            car: this.car,
-            rotateX: Math.PI / 2,                
-            rotateY: Math.PI / 180,     
-            rotateZ: 0                // Z ekseninde dönüş yok
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0
         });
     }
 
