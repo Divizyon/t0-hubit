@@ -1027,6 +1027,7 @@ export default class World {
             rotateX: 0,
             rotateY: 0,
             rotateZ: 0,
+            scale: 0.5
         });
     }
 
