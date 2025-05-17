@@ -125,7 +125,7 @@ export default class Resources extends EventEmitter {
             { name: 'Lego', source: './models/SectionLego/base.glb' },
             { name: 'SoundRoom', source: './models/SectionSoundRoom/base.glb' },
             { name: 'YoungCenter', source: './models/SectionYoungCenter/base.glb' },
-            // { name: 'tramBase', source: './models/tram/base.glb' },
+
             { name: 'Newton', source:'./models/SectionNewton/base.glb'},
 
             { name: 'Division', source: './models/SectionDivision/base.glb' },
@@ -135,10 +135,10 @@ export default class Resources extends EventEmitter {
             { name: 'Butterfly', source: './models/SectionButterfly/base.glb' },
             { name: 'CoWork', source: './models/SectionCoWork/base.glb' },
 
-            //{ name: 'Billboard', source: './models/SectionBillboard/base.glb' },
-            { name: 'Basketball', source: './models/SectionBasketball/base.glb' },
             { name: 'Board', source: './models/SectionBillboard/base.glb' },
-            //Billboards
+
+            // Billboards
+
             { name: 'Billboard1', source: './models/SectionBillboard/base1.glb' },
             { name: 'Billboard2', source: './models/SectionBillboard/base2.glb' },
             { name: 'Billboard3', source: './models/SectionBillboard/base3.glb' },
@@ -157,13 +157,8 @@ export default class Resources extends EventEmitter {
             { name: 'UVDesert', source: './uv/Desert.webp', type: 'texture' },
 
             // Football mini game
-            { name: 'footballBall', source: './models/SectionSoccer/top.glb' },
-            { name: 'footballTower', source: './models/SectionSoccer/kale.glb' },
-            { name: 'footballTexture', source: './models/SectionSoccer/saha-bg.jpg' },
-
-            // newton mini game
-            //  { name: 'newton', source: './models/newton/base.glb' },
-
+            { name: 'SectionSoccerGoal', source: './models/SectionSoccer/goal.glb' },
+            { name: 'SectionSoccerBall', source: './models/SectionSoccer/ball.glb' },
         ])
 
         this.loader.on('fileEnd', (_resource, _data) => {
