@@ -61,12 +61,12 @@ export default class Camera
             {
 
                 if (_name == "greenScreenCam") {
-                    this.zoom.targetValue = 0.5
+                    this.zoom.targetValue = 0.15
                     this.pan.targetValue = {x : -.8, y: 3}
                     this.pan.disable()
                     this.pan.preventReset = true
                 }else{
-                    this.zoom.targetValue = 1
+                    this.zoom.targetValue = 0.5
                     this.pan.targetValue = {x : 0, y: 0}
                     this.pan.enabled = true
                     this.pan.preventReset = false
@@ -129,9 +129,9 @@ export default class Camera
         // Set up
         this.zoom = {}
         this.zoom.easing = 0.1
-        this.zoom.minDistance = 1
-        this.zoom.amplitude = 15
-        this.zoom.value = 1
+        this.zoom.minDistance = 5
+        this.zoom.amplitude = 25
+        this.zoom.value = 0.5
         this.zoom.targetValue = this.zoom.value
         this.zoom.distance = this.zoom.minDistance + this.zoom.amplitude * this.zoom.value
 
