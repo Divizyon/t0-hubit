@@ -1071,27 +1071,23 @@ export default class World {
             //{ id: 'cowork', name: 'Co-Working', position: { x: -20, y: 20 }, size: { x: 10, y: 10 } },
             //{ id: 'japanesePark', name: 'Japon Parkı', position: { x: 10, y: -26 }, size: { x: 12, y: 10 } },
             //{ id: 'alaaddin', name: 'Alaaddin', position: { x: 8, y: -50 }, size: { x: 12, y: 12 } },
-            { id: 'atmosphere', name: 'Atmosfer Bosna Gençlik Merkezi', position: { x: -10, y: -9 }, size: { x: 5, y: 5 },link: "https://www.konya.bel.tr/hizmet-binalari-ve-sosyal-tesisler/atmosfer-bosna-genclik-merkezi", description: "Konya Büyükşehir Belediyesi tarafından hayata geçirilen bu merkez, gençlere sosyal, kültürel ve akademik destek sunan çok yönlü bir yaşam alanıdır." },
-            { id: 'capsule', name: 'Kapsül Teknoloji Platformu', position: { x: 37, y: -18 }, size: { x: 7, y:7 },link: "https://www.kapsul.org.tr", description: "Konya Büyükşehir Belediyesi bünyesinde faaliyet gösteren Kapsül, gençleri teknoloji üretimine teşvik ederek Türkiye'nin milli teknoloji hamlesine katkı sağlar." },
-            { 
-                id: 'division', 
-                name: 'Divizyon', 
-                position: { x: -65, y: 4 }, 
-                size: { x: 8, y: 8 },
-                link: "https://www.divizyon.org/", 
-                description: "Konya Büyükşehir Belediyesi tarafından kurulan Divizyon, yazılım ve dijital sanatlar alanında kolektif üretimi destekleyen açık inovasyon platformudur.",
-                rotation: Math.PI / 90 * 290 // Add rotation in radians (45 degrees)
-            },
+            
             //{ id: 'greenScreen', name: 'Green Screen', position: { x: -25, y: 0 }, size: { x: 10, y: 10 } },
             //{ id: 'renderRoom', name: 'Render Odası', position: { x: 0, y: -25 }, size: { x: 10, y: 10 } },
-            //{ id: 'concert', name: 'Konser Alanı', position: { x: 30, y: 30 }, size: { x: 10, y: 10 } },
+            
             //{ id: 'basketball', name: 'Basketbol Sahası', position: { x: -30, y: 30 }, size: { x: 10, y: 10 } },
             //{ id: 'butterfly', name: 'Kelebek', position: { x: 55, y: -16 }, size: { x: 11, y: 10 } },
             //{ id: 'rocket', name: 'Roket', position: { x: -30, y: -30 }, size: { x: 10, y: 10 } },
-            { id: 'scienceCenter', name: 'Konya Bilim Merkezi', position: { x: 42, y: 14 }, size: { x: 12, y: 9 }, link: "https://www.konyabilimmerkezi.com", description: "Konya Büyükşehir Belediyesi tarafından kurulan Türkiye'nin TÜBİTAK destekli ilk bilim merkezi, bilimi toplumun her kesimine sevdirmeyi ve bilimsel farkındalığı artırmayı amaçlamaktadır." },
+            
             //{ id: 'socialInovation', name: 'Sosyal İnovasyon', position: { x: 75, y: -10 }, size: { x: 10, y: 10 },link: "https://www.sosyalinovasyonajansi.com/", description: "Konya Büyükşehir Belediyesi tarafından hayata geçirilen ajans, kültür endüstrileri, sivil toplum ve etki yönetimi alanlarında yenilikçi çözümler üretir; gençleri Ar-Ge ekosistemine dahil eder." },
             //{ id: 'soundRoom', name: 'Ses Odası', position: { x: -40, y: 0 }, size: { x: 10, y: 10 } },
             //{ id: 'stadium', name: 'Stadyum', position: { x: 0, y: -40 }, size: { x: 10, y: 10 } },
+            
+            { id: 'atmosphere', name: 'Atmosfer Bosna Gençlik Merkezi', position: { x: -10, y: -9 }, size: { x: 5, y: 5 },link: "https://www.konya.bel.tr/hizmet-binalari-ve-sosyal-tesisler/atmosfer-bosna-genclik-merkezi", description: "Konya Büyükşehir Belediyesi tarafından hayata geçirilen bu merkez, gençlere sosyal, kültürel ve akademik destek sunan çok yönlü bir yaşam alanıdır." },
+            { id: 'capsule', name: 'Kapsül Teknoloji Platformu', position: { x: 37, y: -18 }, size: { x: 7, y:7 },link: "https://www.kapsul.org.tr", description: "Konya Büyükşehir Belediyesi bünyesinde faaliyet gösteren Kapsül, gençleri teknoloji üretimine teşvik ederek Türkiye'nin milli teknoloji hamlesine katkı sağlar." },
+            { id: 'division', name: 'Divizyon', position: { x: -65, y: 4 }, size: { x: 8, y: 8 }, link: "https://www.divizyon.org/", description: "Konya Büyükşehir Belediyesi tarafından kurulan Divizyon, yazılım ve dijital sanatlar alanında kolektif üretimi destekleyen açık inovasyon platformudur.", rotation: Math.PI / 90 * 290  },
+            { id: 'concert', name: 'Konser Alanı', position: { x: -33, y: 22 }, size: { x: 5, y: 5 } },
+            { id: 'scienceCenter', name: 'Konya Bilim Merkezi', position: { x: 42, y: 14 }, size: { x: 12, y: 9 }, link: "https://www.konyabilimmerkezi.com", description: "Konya Büyükşehir Belediyesi tarafından kurulan Türkiye'nin TÜBİTAK destekli ilk bilim merkezi, bilimi toplumun her kesimine sevdirmeyi ve bilimsel farkındalığı artırmayı amaçlamaktadır." },
             { id: 'youngCard', name: 'Genç Kültür Kart', position: { x: 42, y: -40 }, size: { x: 7, y: 7 },link: "https://genckulturkart.konya.bel.tr/", description: "Konya Büyükşehir Belediyesi tarafından hayata geçirilen bu program, üniversite öğrencilerinin sosyal, kültürel ve sportif etkinliklere aktif katılımını teşvik eder." },
             { id: 'youngCenter', name: 'Çalışan Gençlik', position: { x: 57, y: -38 }, size: { x: 6, y: 6 },link: "https://www.calisangenclik.com", description: "Konya Büyükşehir Belediyesi tarafından hayata geçirilen merkez, gençlerin ahilik kültürünü benimseyerek iş ve yaşam alanlarında gelişimini desteklemeyi amaçlar." }
         ];
@@ -1113,11 +1109,19 @@ export default class World {
                     areaSize: building.size.x,
                     name: building.name,
                     link: building.link,
-                    description: building.description
+                    description: building.description,
+                    physics: this.physics,
+                    areas: this.areas,
                 });
 
                 if (building.id === 'division' && area.container) {
                     area.container.rotation.z = building.rotation;
+                }
+
+                else if (building.id === 'concert') {
+                    area.isBuilding = false;
+                    area.isCustom = true;
+                    area.id = building.id;
                 }
             }
         });

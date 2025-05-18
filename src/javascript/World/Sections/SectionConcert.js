@@ -21,10 +21,6 @@ export default class SectionConcert {
     this._buildModel();
     this.scene.add(this.container);
   }
-  
-
-
-  
 
   _buildModel() {
     const gltf = this.resources.items.Concert;
@@ -55,18 +51,17 @@ export default class SectionConcert {
     model.rotation.set(this.rotateX, this.rotateY, this.rotateZ);
     this.container.add(model);
 
-    // Bounding box hesapla
     model.updateMatrixWorld(true);
     const bbox = new THREE.Box3().setFromObject(model);
     const size = bbox.getSize(new THREE.Vector3());
 
     // Fizik gövdesi oluştur
-    const halfExtents = new CANNON.Vec3(size.x / 3, size.y / 3, size.z / 2);
+    const halfExtents = new CANNON.Vec3(size.x / 2.5, size.y / 2.5, 2); // Modelin boyutlarına göre dikdörtgen collision
     const boxShape = new CANNON.Box(halfExtents);
 
     const body = new CANNON.Body({
       mass: 0,
-      position: new CANNON.Vec3(...this.position.toArray()),
+      position: new CANNON.Vec3(this.position.x, this.position.y, 0),
       material: this.physics.materials.items.floor
     });
 
@@ -94,26 +89,3 @@ export default class SectionConcert {
     }
   }
 }
-
-/* 
-
-İndex.js dosyasında Divizyon'u oluşturmak için:
-import Divizyon from './Divizyon';
-
-this.setDivizyon()
-
-  setDivizyon() {
-  this.divizyon = new Divizyon({
-    scene:     this.scene,
-    resources: this.resources,
-    physics:   this.physics,
-    debug:     this.debugFolder,
-    rotateX:   0,   // 
-    rotateY:   0,
-    rotateZ:   Math.PI / 2 // Y ekseninde 90 derece,
-  });
-}
-
-
-
-*/

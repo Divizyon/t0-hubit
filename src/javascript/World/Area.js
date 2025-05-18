@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import gsap from 'gsap'
+import CANNON from 'cannon';
 
 import EventEmitter from '../Utils/EventEmitter.js'
 import AreaFloorBorderGeometry from '../Geometries/AreaFloorBorderGeometry.js'
@@ -31,6 +32,10 @@ export default class Area extends EventEmitter
         this.name = _options.name
         this.link = _options.link
         this.description = _options.description
+        this.isCustom = _options.isCustom
+        this.id = _options.id
+        this.physics = _options.physics
+        this.areas = _options.areas
 
         // Set up
         this.container = new THREE.Object3D()
@@ -229,8 +234,6 @@ export default class Area extends EventEmitter
         
         if (this.isBuilding) 
         {
-            console.log()
-            // Create popup container if it doesn't exist
             const popupContainer = document.createElement('div');
             const popupStyles = `
                 position: fixed;
@@ -314,6 +317,17 @@ export default class Area extends EventEmitter
                     document.body.removeChild(popupContainer);
                 }
             }, 5000);
+        }
+
+        else if (this.isCustom && this.id == "concert")
+        {
+            this.areas.car.physics.car.chassis.body.position.copy(new CANNON.Vec3(-33, 23, 3));
+            //this.physics.car.chassis.body.quaternion.copy(new CANNON.Quaternion(0, 0, - Math.PI / 3, 1));
+
+            this.areas.car.physics.car.chassis.body.velocity.set(0, 0, 0);
+            this.areas.car.physics.car.chassis.body.angularVelocity.set(0, 0, 0);
+
+            this.areas.car.physics.car.chassis.body.wakeUp();
         }
     }
 
