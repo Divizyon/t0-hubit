@@ -24,7 +24,6 @@ export default class Car
         this.sectionSoundRoom = _options.sectionSoundRoom
         this.sectionJapanesePark = _options.sectionJapanesePark
         this.sectionNewton = _options.sectionNewton
-        this.sectionConcert = _options.sectionConcert
         this.sectionButterfly = _options.sectionButterfly
         this.sectionAlaaddin = _options.sectionAlaaddin
 
@@ -32,7 +31,6 @@ export default class Car
             this.sectionSoundRoom,
             this.sectionJapanesePark,
             this.sectionNewton,
-            this.sectionConcert,
             this.sectionButterfly,
             this.sectionAlaaddin
         ];
@@ -394,12 +392,6 @@ export default class Car
             rate: 0.45, // Hızı düşürmek için rate özelliği eklendi
         }); this.sectionNewtonSound.play();
 
-        this.sectionConcertSound = new Howl({
-            src: ['./sounds/SectionConcert/sound.mp3'],
-            loop: true,
-            volume: 0,
-        }); this.sectionConcertSound.play();
-
         this.sectionButterflySound = new Howl({
             src: ['./sounds/SectionButterfly/sound.mp3'],
             loop: true,
@@ -423,7 +415,6 @@ export default class Car
         this.sectionSoundRoomSound.volume(0);
         this.sectionJapaneseParkSound.volume(0);
         this.sectionNewtonSound.volume(0);
-        this.sectionConcertSound.volume(0);
         this.sectionButterflySound.volume(0);
         this.sectionAlaaddinSound.volume(0);
         switch (index)
@@ -431,7 +422,6 @@ export default class Car
             case 0: this.sectionSoundRoomSound.volume(volume); break;
             case 1: this.sectionJapaneseParkSound.volume(volume); break;
             case 2: this.sectionNewtonSound.volume(volume); break;
-            case 3: this.sectionConcertSound.volume(volume); break;
             case 4: this.sectionButterflySound.volume(volume); break;
             case 5: this.sectionAlaaddinSound.volume(volume); break;
         }
