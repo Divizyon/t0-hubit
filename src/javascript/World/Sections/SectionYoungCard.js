@@ -2,6 +2,8 @@ import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import CANNON from 'cannon'
 
+const DEFAULT_POSITION = new THREE.Vector3(42.5, -38, 1.7)
+
 export default class SectionYoungCard {
     constructor(_options) {
         this.time = _options.time;
@@ -11,6 +13,7 @@ export default class SectionYoungCard {
         this.mixer = null;
         this.model = null;
         this.collisionBody = null;
+        this.position = DEFAULT_POSITION.clone()
         this.setModel();
         
         if (this.time) {
@@ -32,7 +35,7 @@ export default class SectionYoungCard {
         loader.load('./models/SectionYoungCard/base.glb', (gltf) => {
             
             this.model = gltf.scene;
-            this.model.position.set(42.5,-38,1.7);
+            this.model.position.copy(this.position);
             this.model.scale.set(1,1,1);
             this.model.rotation.set(Math.PI,Math.PI,0)
 

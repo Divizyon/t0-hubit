@@ -159,6 +159,8 @@ export default class World {
                 loadingScreen.style.display = 'none';
             });
         }, 3200)
+
+        this.setUpperCameraZones()
     }
 
     setReveal() {
@@ -829,6 +831,8 @@ export default class World {
             physics: this.physics,
             debug: this.debugFolder,
             areas: this.areas,
+            zones: this.zones,
+            passes: this.passes,
             rotateX: 0,   // 
             rotateY: 0,
             rotateZ: Math.PI / 2, // Y ekseninde 90 derece,
@@ -964,6 +968,42 @@ export default class World {
                     area.id = building.id;
                 }
             }
+        });
+    }
+
+    setUpperCameraZones() {
+        const places = [
+            { p: { x: this.sectionScienceCenter.position.x, y: this.sectionScienceCenter.position.y + 10 }, s: { x: 10, y: 4 }},
+            { p: { x: this.sectionButterfly.position.x - 4, y: this.sectionButterfly.position.y + 4 }, s: { x: 5, y: 5 }},
+            { p: { x: this.sectionCapsule.position.x - 3, y: this.sectionButterfly.position.y + 3 }, s: { x: 3, y: 3 }},
+            { p: { x: this.sectionAlaaddin.position.x - 9, y: this.sectionAlaaddin.position.y + 9 }, s: { x: 5, y: 5 }},
+            { p: { x: this.sectionJapanesePark.position.x - 10, y: this.sectionJapanesePark.position.y + 6 }, s: { x: 5, y: 5 }},
+            { p: { x: this.stadium.position.x - 5, y: this.stadium.position.y + 5 }, s: { x: 7, y: 5 }},
+            { p: { x: this.sectionYoungCard.position.x - 3, y: this.sectionYoungCard.position.y + 3 }, s: { x: 5, y: 5 }},
+            { p: { x: this.sectionSocialInovation.position.x - 3, y: this.sectionSocialInovation.position.y + 3 }, s: { x: 5, y: 5 }},
+            { p: { x: this.sectio.position.x - 3, y: this.sectio.position.y + 3 }, s: { x: 5, y: 5 }},
+            { p: { x: this.division.position.x - 3, y: this.division.position.y + 3 }, s: { x: 5, y: 5 }},
+            { p: { x: this.sectionCoWork.position.x - 3, y: this.sectionCoWork.position.y + 3 }, s: { x: 5, y: 5 }},
+            { p: { x: this.sectionRenderRoom.position.x - 3, y: this.sectionRenderRoom.position.y + 3 }, s: { x: 5, y: 5 }},
+            { p: { x: this.sectionSoundRoom.position.x - 3, y: this.sectionSoundRoom.position.y + 3 }, s: { x: 5, y: 5 }},
+        ]
+
+        places.forEach(place => {
+            const zone = this.zones.add({
+                position: place.p,
+                halfExtents: place.s,
+            })
+
+            zone.on('in', (_data) => {
+                this.camera.angle.set('projects')
+                gsap.to(this.passes.horizontalBlurPass.material.uniforms.uStrength.value, { x: 0, duration: 2 })
+                gsap.to(this.passes.verticalBlurPass.material.uniforms.uStrength.value, { y: 0, duration: 2 })
+            })
+
+            zone.on('out', () => {
+                this.camera.angle.set('default')
+
+            })
         });
     }
 }

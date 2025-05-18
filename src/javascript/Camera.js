@@ -45,7 +45,7 @@ export default class Camera
         // Items
         this.angle.items = {
             default: new THREE.Vector3(1.135, - 1.45, 1.15),
-            projects: new THREE.Vector3(0.38, - 1.4, 1.63),
+            projects: new THREE.Vector3(1.2, - 1.4, 3),
             greenScreenCam: new THREE.Vector3(.5, - 2, 0.7)
         }
 
@@ -60,6 +60,9 @@ export default class Camera
             if(typeof angle !== 'undefined')
             {
 
+                // Kill any ongoing animations on this.angle.value
+                gsap.killTweensOf(this.angle.value);
+
                 if (_name == "greenScreenCam") {
                     this.zoom.targetValue = 0.15
                     this.pan.targetValue = {x : -.8, y: 3}
@@ -72,7 +75,7 @@ export default class Camera
                     this.pan.preventReset = false
                 }
 
-                gsap.to(this.angle.value, { ...angle, duration: 2, ease: 'power1.inOut' })
+                gsap.to(this.angle.value, { ...angle, duration: _name == "projects" ? 0.5 : 2, ease: 'power1.inOut'});
             }
         }
 
