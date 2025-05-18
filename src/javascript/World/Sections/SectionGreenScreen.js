@@ -199,8 +199,7 @@ export default class SectionGreenScreen {
     document.body.appendChild(popup);
 
     this.time.on('tick', () => {
-      const playerPosition = this.car.position;
-      const distance = playerPosition.distanceTo(this.position);
+      const distance = this.car.position.distanceTo(this.position);
 
       if (distance < 10) {
         popup.style.display = 'block';
