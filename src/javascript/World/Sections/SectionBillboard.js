@@ -1,10 +1,11 @@
 import * as THREE from 'three';
 import CANNON from 'cannon';
+import gsap from 'gsap';
 
 const DEFAULT_POSITION = new THREE.Vector3(0, 0, 0);
 
 export default class SectionBillboard {
-  constructor({ scene, resources, objects, physics, debug, areas, rotateX = 0, rotateY = 0, rotateZ = 0, camera = 0, time = 0, car = null }) {
+  constructor({ scene, resources, objects, physics, debug, areas, rotateX = 0, rotateY = 0, rotateZ = 0, camera = 0, time = 0, car = null, passes, zones }) {
     this.scene = scene;
     this.resources = resources;
     this.objects = objects;
@@ -12,6 +13,8 @@ export default class SectionBillboard {
     this.debug = debug;
     this.areas = areas;
     this.camera = camera
+    this.passes = passes;
+    this.zones = zones;
 
     this.rotateX = rotateX;
     this.rotateY = rotateY;
@@ -40,6 +43,7 @@ export default class SectionBillboard {
     });
 
     this.scene.add(this.container);
+    this.setZones()
   }
 
   _buildModel(position, name) {
@@ -186,5 +190,27 @@ export default class SectionBillboard {
         isBillboard : true,
         areaSize: 3
     })
+  }
+
+  setZones() {
+    this.billboards.forEach(billboard => {
+      const zone = this.zones.add({
+        position: {x: billboard.position.x, y : billboard.position.y + 2},
+        halfExtents: {x: 4, y: 2},
+      })
+
+      zone.on('in', (_data) => {
+        this.camera.angle.set('projects')
+        gsap.to(this.passes.horizontalBlurPass.material.uniforms.uStrength.value, { x: 0, duration: 2 })
+        gsap.to(this.passes.verticalBlurPass.material.uniforms.uStrength.value, { y: 0, duration: 2 })
+      })
+  
+      zone.on('out', () => {
+        this.camera.angle.set('default')
+
+      })
+    });
+
+
   }
 }

@@ -2,6 +2,8 @@ import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import CANNON from 'cannon'
 
+const DEFAULT_POSITION = new THREE.Vector3(75.5, -9.5, .5)
+
 export default class SectionSocialInovation {
     constructor(_options) {
         this.time = _options.time;
@@ -10,6 +12,7 @@ export default class SectionSocialInovation {
         this.mixer = null;
         this.model = null;
         this.collisionBody = null;
+        this.position = DEFAULT_POSITION.clone()
         this.setModel();
         
         if (this.time) {
@@ -33,7 +36,7 @@ export default class SectionSocialInovation {
             //console.log('Animasyonlar:', gltf.animations);
             
             this.model = gltf.scene;
-            this.model.position.set(75.5, -9.5, .5);
+            this.model.position.copy(this.position);
             this.model.scale.set(1,1,1);
             
             // Modeli döndür
