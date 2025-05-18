@@ -119,7 +119,6 @@ export default class World {
         this.setDivision()
         
         this.setRenderRoom()
-        this.setConcert()
    //     this.setBasketball()
         this.setBasketballCourt()
         this.setButterfly()
@@ -143,7 +142,7 @@ export default class World {
         this.setCar()
 
         this.setGreenScreen()
-
+        this.setConcert()
         this.setBillboard()
 
         this.areas.car = this.car
@@ -581,6 +580,12 @@ export default class World {
           resources: this.resources,
           physics:   this.physics,
           debug:     this.debugFolder,
+          passes:    this.passes,
+          time:      this.time,
+          camera:    this.camera,
+          zones:     this.zones,
+          car:       this.car,
+          areas:       this.areas,
           rotateX:   0,   // 
           rotateY:   0,
           rotateZ:   0 // Y ekseninde 90 derece,
