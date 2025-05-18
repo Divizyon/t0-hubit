@@ -35,11 +35,24 @@ export default class SectionGreenScreen {
       './uv/Iceland.webp',
     ];
 
+    this.greenScreencarImagePaths = [
+      './models/SectionGreenScreen/desert.png',
+      './models/SectionGreenScreen/lake.png',
+      './models/SectionGreenScreen/iceland.png',
+    ];
+    
+    // Fotoğraf çekme sesi için ses dosyasını yükle
+    this.cameraSound = new Audio('./sounds/camera/mixkit-camera-shutter.wav');
+    this.currentImageIndex = 0;
+    this.isPhotoMode = false;
+    this.inRoom = false;
+
     this._buildModel();
     this.scene.add(this.container);
 
     this._createPopup();
-    this.setZone()
+    this._setupKeyboardEvents(); // Klavye olaylarını dinlemeyi başlat
+    this.setZone();
   }
   
     
@@ -150,6 +163,8 @@ export default class SectionGreenScreen {
   
     body2.addShape(boxShape2);
     this.physics.world.addBody(body2);
+
+    console.log("inRoom : ",this.inRoom)
   
     if (this.objects) {
       const children = model.children.slice();
@@ -175,9 +190,8 @@ export default class SectionGreenScreen {
     popup.style.transform = 'translateX(-50%)';
     popup.style.backgroundColor = 'rgba(26, 26, 26, 0.8)';
     popup.style.padding = '10px';
-    popup.style.borderRadius = '5px';
-    popup.style.display = 'none';
     popup.style.borderRadius = '10px';
+    popup.style.display = 'none';
     popup.style.zIndex = '1000';
     
     this.greenScreenImagePaths.forEach((imagePath, index) => {
@@ -190,11 +204,34 @@ export default class SectionGreenScreen {
 
       img.addEventListener('click', () => {
         this.changeGreenscreenTexture(index);
-        popup.style.display = 'none';
       });
 
       popup.appendChild(img);
     });
+    
+    // Bilgi metni
+    const infoText = document.createElement('div');
+    infoText.textContent = 'Fotoğraf çekmek için "I" tuşuna basın';
+    infoText.style.color = 'white';
+    infoText.style.textAlign = 'center';
+    infoText.style.marginTop = '10px';
+    popup.appendChild(infoText);
+    
+    // Kapatma butonu
+    const closeButton = document.createElement('button');
+    closeButton.textContent = 'Kapat';
+    closeButton.style.display = 'block';
+    closeButton.style.margin = '10px auto 0';
+    closeButton.style.padding = '5px 15px';
+    closeButton.style.backgroundColor = '#ff3333';
+    closeButton.style.color = 'white';
+    closeButton.style.border = 'none';
+    closeButton.style.borderRadius = '5px';
+    closeButton.style.cursor = 'pointer';
+    closeButton.addEventListener('click', () => {
+      popup.style.display = 'none';
+    });
+    popup.appendChild(closeButton);
 
     document.body.appendChild(popup);
 
@@ -205,22 +242,144 @@ export default class SectionGreenScreen {
         popup.style.display = 'block';
       } else {
         popup.style.display = 'none';
+        if (this.photoOverlay) {
+          this.photoOverlay.style.display = 'none';
+        }
+        this.isPhotoMode = false;
       }
     });
+    
+    this.popup = popup;
+  }
+  
+  _setupKeyboardEvents() {
+    // Önceki olay dinleyicilerini temizle
+    if (this.keydownHandler) {
+      window.removeEventListener('keydown', this.keydownHandler);
+    }
+    
+    // Yeni olay dinleyicisi oluştur
+    this.keydownHandler = (event) => {
+      // inRoom kontrolünü her tuşa basıldığında yap
+      if (this.inRoom === true) {
+        // "I" veya "ı" tuşuna basıldığında fotoğraf çek
+        if ((event.key === 'i' || event.key === 'I' || event.key === 'ı' || event.key === 'İ') && 
+            this.popup.style.display === 'block') {
+          this.takePhoto();
+        }
+        
+        // ESC tuşuna basıldığında fotoğraf modundan çık
+        if (event.key === 'Escape' && this.isPhotoMode) {
+          if (this.photoOverlay) {
+            this.photoOverlay.style.display = 'none';
+          }
+          this.isPhotoMode = false;
+        }
+      }
+    };
+    
+    // Olay dinleyicisini ekle
+    window.addEventListener('keydown', this.keydownHandler);
+  }
+  
+  takePhoto() {
+    // Fotoğraf çekme sesi çal
+    this.cameraSound.currentTime = 0;
+    this.cameraSound.play();
+    
+    // Fotoğraf çekme animasyonu
+    if (!this.photoOverlay) {
+      this.photoOverlay = document.createElement('div');
+      this.photoOverlay.style.position = 'fixed';
+      this.photoOverlay.style.top = '0';
+      this.photoOverlay.style.left = '0';
+      this.photoOverlay.style.width = '100%';
+      this.photoOverlay.style.height = '100%';
+      this.photoOverlay.style.backgroundColor = 'white';
+      this.photoOverlay.style.opacity = '0';
+      this.photoOverlay.style.zIndex = '2000';
+      this.photoOverlay.style.pointerEvents = 'none';
+      document.body.appendChild(this.photoOverlay);
+    }
+    
+    // Flaş efekti
+    this.photoOverlay.style.display = 'block';
+    this.photoOverlay.style.opacity = '1';
+    
+    // Fotoğraf çekildikten sonra ekranda göster
+    setTimeout(() => {
+      this.photoOverlay.style.opacity = '0';
+      
+      setTimeout(() => {
+        // Fotoğraf görüntüsünü oluştur
+        const photoFrame = document.createElement('div');
+        photoFrame.style.position = 'fixed';
+        photoFrame.style.top = '50%';
+        photoFrame.style.left = '50%';
+        photoFrame.style.transform = 'translate(-50%, -50%) rotate(5deg)';
+        photoFrame.style.width = '400px';
+        photoFrame.style.height = '300px';
+        photoFrame.style.backgroundColor = 'white';
+        photoFrame.style.padding = '20px';
+        photoFrame.style.boxShadow = '0 5px 15px rgba(0,0,0,0.3)';
+        photoFrame.style.zIndex = '2001';
+        photoFrame.style.transition = 'all 0.5s ease-in-out';
+        
+        // Fotoğraf içeriği
+        const photo = document.createElement('div');
+        photo.style.width = '100%';
+        photo.style.height = '85%';
+        photo.style.backgroundImage = `url(${this.greenScreencarImagePaths[this.currentImageIndex]})`;
+        photo.style.backgroundSize = 'cover';
+        photo.style.backgroundPosition = 'center';
+        
+        // Fotoğraf altı etiket
+        const label = document.createElement('div');
+        label.style.textAlign = 'center';
+        label.style.marginTop = '10px';
+        label.style.fontFamily = 'monospace';
+        label.style.color = '#555';
+        
+        // Arka plan görüntüsüne göre etiket metnini ayarla
+        if (this.currentImageIndex === 0) {
+          label.textContent = 'Çöl Manzarası';
+        } else if (this.currentImageIndex === 1) {
+          label.textContent = 'Göl Manzarası';
+        } else {
+          label.textContent = 'İzlanda Manzarası';
+        }
+        
+        photoFrame.appendChild(photo);
+        photoFrame.appendChild(label);
+        document.body.appendChild(photoFrame);
+        this.inRoom = false;
+        
+        // Fotoğrafı ekrandan kaldır
+        setTimeout(() => {
+          photoFrame.style.transform = 'translate(-50%, -50%) rotate(5deg) scale(0.1)';
+          photoFrame.style.opacity = '0';
+          
+          setTimeout(() => {
+            document.body.removeChild(photoFrame);
+          }, 500);
+        }, 3000);
+      }, 300);
+    }, 100);
   }
 
   changeGreenscreenTexture(imageIndex) {
     try {
       this.currentImageIndex = imageIndex;
-
+      this.inRoom = true; // Görsel seçildiğinde inRoom'u true yap
+  
       const imagePath = this.greenScreenImagePaths[imageIndex];
-
+  
       const textureLoader = new THREE.TextureLoader();
-
+  
       const box = new THREE.Box3().setFromObject(this.greenScreenMesh);
       const size = new THREE.Vector3();
       box.getSize(size);
-
+  
       textureLoader.load(
         imagePath,
         (texture) => {
@@ -229,12 +388,12 @@ export default class SectionGreenScreen {
           texture.magFilter = THREE.LinearFilter;
           texture.wrapS = THREE.RepeatWrapping;
           texture.wrapT = THREE.RepeatWrapping;
-
+  
           texture.repeat.set(-1, 1);
           texture.offset.set(0, 0.5 - texture.repeat.y / 2); // Ortalamak için offset
           texture.rotation = Math.PI; // Gerekirse döndürme
           texture.center.set(0.5, 0.5); // Merkezden döndürme
- 
+       
           const material = new THREE.MeshStandardMaterial({
             map: texture,
             side: THREE.DoubleSide,
@@ -242,7 +401,7 @@ export default class SectionGreenScreen {
             emissive: 0xFFFFFF,
             emissiveIntensity: .05,
           });
-
+  
           this.greenScreenMesh.material = material;
           this.greenScreenMesh.material.needsUpdate = true;
         },
@@ -251,16 +410,21 @@ export default class SectionGreenScreen {
           console.error(`Error loading texture:`, error);
         }
       );
-
+  
       this.areas.car.physics.car.chassis.body.position.copy(new CANNON.Vec3(-54.2, 30.5, 1));
       this.physics.car.chassis.body.quaternion.copy(new CANNON.Quaternion(0, 0, - Math.PI / 3, 1));
-
+  
       this.areas.car.physics.car.chassis.body.velocity.set(0, 0, 0);
       this.areas.car.physics.car.chassis.body.angularVelocity.set(0, 0, 0);
-
+  
       this.areas.car.physics.car.chassis.body.wakeUp();
       
-
+      // inRoom değişkeninin değiştiğini konsola yazdır
+      console.log("inRoom değişti:", this.inRoom);
+      
+      // Klavye olaylarını yeniden ayarla
+      this._setupKeyboardEvents();
+  
     } catch (error) {
       console.error('Error changing greenscreen texture:', error);
     }
