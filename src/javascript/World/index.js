@@ -37,7 +37,6 @@ import SectionRenderRoom from './Sections/SectionRenderRoom.js'
 import SectionConcert from './Sections/SectionConcert.js'
 import SectionBillboard from './Sections/SectionBillboard.js'
 import SectionCoWork from './Sections/SectionCoWork.js'
-import SectionGameMechanic from './Sections/SectionGameMechanic.js'
 import SectionTram from './Sections/SectionTram.js'
 import SectionNewton from './Sections/SectionNewton.js'
 import SectionStone from './Sections/SectionStone.js'
@@ -137,7 +136,6 @@ export default class World {
         this.setStadium()
         this.setYoungCard()
         this.setYoungCenter()
-    //  this.setGameMechanic()
         this.setKademe()
         this.setSoccer()
         this.createBuildingAreas()
@@ -847,170 +845,6 @@ export default class World {
             rotateZ: Math.PI / 2 // Y ekseninde 90 derece,
         });
     }
-    setGameMechanic() {
-        /* 
-        try {
-            console.log('setGameMechanic başlatılıyor');
-
-            this.sectionGameMechanic = new SectionGameMechanic({
-                scene: this.scene,
-                resources: this.resources
-            });
-
-            // Container'a ekle
-            if (this.sectionGameMechanic && this.sectionGameMechanic.container) {
-                this.container.add(this.sectionGameMechanic.container);
-
-                // Oyun mantığı
-                const ball = this.sectionGameMechanic.ball;
-                const goal = this.sectionGameMechanic.goal;
-                const field = this.sectionGameMechanic.field;
-
-                // Oyun değişkenleri
-                let isBallMoving = false;
-                let score = 0;
-                let lastCarPosition = new THREE.Vector3();
-
-                // Her karede kontrol et
-                this.time.on('tick', () => {
-                    try {
-                        // Araba pozisyonunu kontrol et
-                        if (this.car && this.car.chassis && this.car.chassis.object) {
-                            const carPosition = this.car.chassis.object.position;
-
-                            // Top ile araba arasındaki mesafeyi hesapla
-                            const ballDistance = Math.sqrt(
-                                Math.pow(carPosition.x - ball.position.x, 2) +
-                                Math.pow(carPosition.z - ball.position.z, 2)
-                            );
-
-                            // Araba topa çarptı mı? (3 birim mesafe kontrol)
-                            if (ballDistance < 3 && !isBallMoving) {
-                                isBallMoving = true;
-
-                                // Hareket vektörünü hesapla (arabadan topa doğru)
-                                const moveVector = new THREE.Vector3(
-                                    ball.position.x - carPosition.x,
-                                    0,
-                                    ball.position.z - carPosition.z
-                                ).normalize();
-
-                                // Arabanın hızını hesapla
-                                const carVelocity = new THREE.Vector3(
-                                    carPosition.x - lastCarPosition.x,
-                                    0,
-                                    carPosition.z - lastCarPosition.z
-                                );
-
-                                const carSpeed = carVelocity.length() * 15; // Etki faktörü
-
-                                // Topu hareket ettir
-                                const animateBall = () => {
-                                    let moveDistance = carSpeed;
-                                    let steps = 0;
-
-                                    const moveBall = () => {
-                                        if (steps < 100 && moveDistance > 0.01) {
-                                            // Topu hareket ettir
-                                            ball.position.x += moveVector.x * moveDistance;
-                                            ball.position.z += moveVector.z * moveDistance;
-
-                                            // Top dönüşü
-                                            ball.rotation.x += moveDistance * 0.5;
-                                            ball.rotation.z += moveDistance * 0.3;
-
-                                            // Sürtünme - yavaşlama
-                                            moveDistance *= 0.95;
-
-                                            // Topun kaleye girip girmediğini kontrol et
-                                            const goalDistance = Math.sqrt(
-                                                Math.pow(ball.position.x - goal.position.x, 2) +
-                                                Math.pow(ball.position.z - goal.position.z, 2)
-                                            );
-
-                                            // Top kaleye yakın mı?
-                                            if (goalDistance < 6 && ball.position.z < -9) {
-                                                // GOL!
-                                                score++;
-                                                console.log('GOL! Skor:', score);
-
-                                                // Topu başlangıç pozisyonuna getir
-                                                setTimeout(() => {
-                                                    ball.position.set(0, 1, 0);
-                                                    ball.rotation.set(0, 0, 0);
-                                                }, 1000);
-
-                                                // Animasyonu bitir
-                                                steps = 100;
-                                            }
-
-                                            // Sahanın sınırlarını kontrol et
-                                            const fieldLimits = {
-                                                minX: -15,
-                                                maxX: 15,
-                                                minZ: -15,
-                                                maxZ: 15
-                                            };
-
-                                            // Top sınırların dışına çıktı mı?
-                                            if (ball.position.x < fieldLimits.minX ||
-                                                ball.position.x > fieldLimits.maxX ||
-                                                ball.position.z < fieldLimits.minZ ||
-                                                ball.position.z > fieldLimits.maxZ) {
-
-                                                // Topun saha dışına çıkmasını engelle
-                                                if (ball.position.x < fieldLimits.minX) {
-                                                    ball.position.x = fieldLimits.minX;
-                                                    moveVector.x *= -0.8; // Sekme etkisi
-                                                }
-                                                if (ball.position.x > fieldLimits.maxX) {
-                                                    ball.position.x = fieldLimits.maxX;
-                                                    moveVector.x *= -0.8;
-                                                }
-                                                if (ball.position.z < fieldLimits.minZ) {
-                                                    ball.position.z = fieldLimits.minZ;
-                                                    moveVector.z *= -0.8;
-                                                }
-                                                if (ball.position.z > fieldLimits.maxZ) {
-                                                    ball.position.z = fieldLimits.maxZ;
-                                                    moveVector.z *= -0.8;
-                                                }
-                                            }
-
-                                            steps++;
-                                            requestAnimationFrame(moveBall);
-                                        } else {
-                                            // Hareket bitti
-                                            isBallMoving = false;
-                                        }
-                                    };
-
-                                    // Hareketi başlat
-                                    moveBall();
-                                };
-
-                                // Top animasyonunu başlat
-                                animateBall();
-                            }
-
-                            // Arabanın son pozisyonunu kaydet
-                            lastCarPosition.copy(carPosition);
-                        }
-                    } catch (e) {
-                        // Hataları sessizce ignore et
-                    }
-                });
-
-                console.log('Futbol oyunu mantığı başlatıldı');
-            }
-        } catch (error) {
-            console.error('Game mechanic oluşturma hatası:', error.stack);
-        }
-        */
-        
-        // Fonksiyon içeriği devre dışı bırakıldı
-        console.log('Futbol sahası devre dışı bırakıldı - setGameMechanic() yorum satırına alındı');
-    }
 
     setLego() {
         this.sectionLego = new SectionLego({
@@ -1033,7 +867,8 @@ export default class World {
             rotateX: 0,
             rotateY: 0,
             rotateZ: 0,
-            scale: 0.5
+            scale: 0.5,
+            time: this.time
         });
     }
 
@@ -1086,7 +921,7 @@ export default class World {
             { id: 'atmosphere', name: 'Atmosfer Bosna Gençlik Merkezi', position: { x: -10, y: -9 }, size: { x: 5, y: 5 },link: "https://www.konya.bel.tr/hizmet-binalari-ve-sosyal-tesisler/atmosfer-bosna-genclik-merkezi", description: "Konya Büyükşehir Belediyesi tarafından hayata geçirilen bu merkez, gençlere sosyal, kültürel ve akademik destek sunan çok yönlü bir yaşam alanıdır." },
             { id: 'capsule', name: 'Kapsül Teknoloji Platformu', position: { x: 37, y: -18 }, size: { x: 7, y:7 },link: "https://www.kapsul.org.tr", description: "Konya Büyükşehir Belediyesi bünyesinde faaliyet gösteren Kapsül, gençleri teknoloji üretimine teşvik ederek Türkiye'nin milli teknoloji hamlesine katkı sağlar." },
             { id: 'division', name: 'Divizyon', position: { x: -65, y: 4 }, size: { x: 8, y: 8 }, link: "https://www.divizyon.org/", description: "Konya Büyükşehir Belediyesi tarafından kurulan Divizyon, yazılım ve dijital sanatlar alanında kolektif üretimi destekleyen açık inovasyon platformudur.", rotation: Math.PI / 90 * 290  },
-            { id: 'concert', name: 'Konser Alanı', position: { x: -33, y: 22 }, size: { x: 5, y: 5 } },
+            // { id: 'concert', name: 'Konser Alanı', position: { x: -33, y: 22 }, size: { x: 5, y: 5 } },
             { id: 'scienceCenter', name: 'Konya Bilim Merkezi', position: { x: 42, y: 14 }, size: { x: 12, y: 9 }, link: "https://www.konyabilimmerkezi.com", description: "Konya Büyükşehir Belediyesi tarafından kurulan Türkiye'nin TÜBİTAK destekli ilk bilim merkezi, bilimi toplumun her kesimine sevdirmeyi ve bilimsel farkındalığı artırmayı amaçlamaktadır." },
             { id: 'youngCard', name: 'Genç Kültür Kart', position: { x: 42, y: -40 }, size: { x: 7, y: 7 },link: "https://genckulturkart.konya.bel.tr/", description: "Konya Büyükşehir Belediyesi tarafından hayata geçirilen bu program, üniversite öğrencilerinin sosyal, kültürel ve sportif etkinliklere aktif katılımını teşvik eder." },
             { id: 'youngCenter', name: 'Çalışan Gençlik', position: { x: 57, y: -38 }, size: { x: 6, y: 6 },link: "https://www.calisangenclik.com", description: "Konya Büyükşehir Belediyesi tarafından hayata geçirilen merkez, gençlerin ahilik kültürünü benimseyerek iş ve yaşam alanlarında gelişimini desteklemeyi amaçlar." }

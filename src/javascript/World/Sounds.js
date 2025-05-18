@@ -258,21 +258,43 @@ export default class Sounds
         this.engine.sound.play()
 
         // Time tick
-        this.time.on('tick', () =>
-        {
-            let progress = Math.abs(this.engine.speed) * this.engine.speedMultiplier + Math.max(this.engine.acceleration, 0) * this.engine.accelerationMultiplier
-            progress = Math.min(Math.max(progress, 0), 1)
+        this.time.on('tick', () => {
+            // Progress hesaplama
+            let progress = Math.abs(this.engine.speed) * this.engine.speedMultiplier + Math.max(this.engine.acceleration, 0) * this.engine.accelerationMultiplier;
+            progress = Math.min(Math.max(progress, 0), 1);
 
-            this.engine.progress += (progress - this.engine.progress) * this.engine[progress > this.engine.progress ? 'progressEasingUp' : 'progressEasingDown']
+            // Geçersiz değer kontrolü
+            if (!isFinite(progress)) {
+                console.error('Geçersiz progress değeri:', progress);
+                return;
+            }
 
-            // Rate
-            const rateAmplitude = this.engine.rate.max - this.engine.rate.min
-            this.engine.sound.rate(this.engine.rate.min + rateAmplitude * this.engine.progress)
+            // Progress easing
+            const easingKey = progress > this.engine.progress ? 'progressEasingUp' : 'progressEasingDown';
+            this.engine.progress += (progress - this.engine.progress) * this.engine[easingKey];
 
-            // Volume
-            const volumeAmplitude = this.engine.volume.max - this.engine.volume.min
-            this.engine.sound.volume((this.engine.volume.min + volumeAmplitude * this.engine.progress) * this.engine.volume.master)
-        })
+            // Rate hesaplama
+            const rateAmplitude = this.engine.rate.max - this.engine.rate.min;
+            const rate = this.engine.rate.min + rateAmplitude * this.engine.progress;
+
+            if (!isFinite(rate)) {
+                console.error('Geçersiz rate değeri:', rate);
+                return;
+            }
+
+            this.engine.sound.rate(rate);
+
+            // Volume hesaplama
+            const volumeAmplitude = this.engine.volume.max - this.engine.volume.min;
+            const volume = (this.engine.volume.min + volumeAmplitude * this.engine.progress) * this.engine.volume.master;
+
+            if (!isFinite(volume)) {
+                console.error('Geçersiz volume değeri:', volume);
+                return;
+            }
+
+            this.engine.sound.volume(volume);
+        });
 
         // Debug
         if(this.debug)
