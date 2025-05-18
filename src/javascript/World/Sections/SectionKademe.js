@@ -292,8 +292,6 @@ export default class SectionKademe {
         this.position.z + yOffset // Yükseklik ayarı
       ),
       material: this.physics.materials.items.floor,
-      collisionFilterGroup: 1, // Arabayla çarpışsın
-      collisionFilterMask: 1 // Arabayla çarpışsın
     });
     
     this.body = body;

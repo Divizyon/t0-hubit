@@ -4,7 +4,7 @@ import CANNON from 'cannon';
 const DEFAULT_POSITION = new THREE.Vector3(0, 20, 0);
 
 export default class SectionSoccer {
-  constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0, scale }) {
+  constructor({ scene, resources, objects, physics, debug, rotateX = 0, rotateY = 0, rotateZ = 0, scale, time }) {
     this.scene = scene;
     this.resources = resources;
     this.objects = objects;
@@ -15,6 +15,8 @@ export default class SectionSoccer {
     this.rotateY = rotateY;
     this.rotateZ = rotateZ;
     this.scale = scale;
+
+    this.time = time
 
     this.container = new THREE.Object3D();
     this.position = DEFAULT_POSITION.clone();
@@ -270,24 +272,45 @@ export default class SectionSoccer {
     this.goalModel = model;
   }
 
-  _addSoccerBall() {
-    const gltf = this.resources.items.SectionSoccerBall;
+  _addSoccerBall() 
+  {
+    const ballRadius = 0.3; // Standart futbol topu yarıçapı (metre cinsinden)
+    const ballGeometry = new THREE.SphereGeometry(ballRadius, 32, 32);
+    const ballMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
+    const ballMesh = new THREE.Mesh(ballGeometry, ballMaterial);
 
-    if (!gltf) {
-        console.error('Top modeli yüklenemedi!');
-        return;
-    }
+    ballMesh.castShadow = true;
+    ballMesh.receiveShadow = true;
+    ballMesh.position.set(0, ballRadius, 0); // Topun başlangıç pozisyonu
+    ballMesh.scale.set(2, 2, 2); // Topun ölçeği
+    this.container.add(ballMesh);
 
-    const model = gltf.scene.clone(true);
-    model.scale.set(1, 1, 1);
-    model.position.set(0, -0.2, 0.3);
-    this.container.add(model);
+    const ballBody = new CANNON.Body({
+        mass: .5, // Standart futbol topu kütlesi (kg cinsinden)
+        shape: new CANNON.Sphere(ballRadius),
+        position: new CANNON.Vec3(0, ballRadius, 50),
+        material: this.physics.materials.items.dummy,
+        linearDamping: 0.5,
+        angularDamping: 0.5
+    });
+
+    this.physics.world.addBody(ballBody);
+
+    this.ball = {
+        mesh: ballMesh,
+        body: ballBody,
+    };
+
+    this.ball.body.addEventListener('collide', (event) => {
+        if (event.body === this.physics.car.chassis.body) {
+            console.log('Araba topa çarptı!');
+        }
+    });
+
+    // Topun fiziksel pozisyonunu güncelle
+    this.time.on('tick', () => {
+        ballMesh.position.copy(ballBody.position);
+        ballMesh.quaternion.copy(ballBody.quaternion);
+    });
   }
-
-  update() {
-    if (this.collisionBody && this.soccerBallModel) {
-        this.soccerBallModel.position.copy(this.collisionBody.position);
-        this.soccerBallModel.quaternion.copy(this.collisionBody.quaternion);
-    }
-}
 }
