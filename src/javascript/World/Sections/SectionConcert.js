@@ -125,11 +125,13 @@ export default class SectionConcert {
       
       // Make the car jump every ~1s
       if (this.danceTimer >= 0.8) {
-        this.physics.car.jump(true, 100); // Add randomness to strength
+        this.physics.car.jump(true, 30);
         this.danceTimer = 0;
-        
-        const angle = this.rotationToggle ? Math.PI / 32 : -Math.PI / 32;
-        this.areas.car.physics.car.chassis.body.quaternion.y = angle
+
+        const randomToggle = Math.random() > 0.5 ? 1 : 0;
+        this.rotationToggle = randomToggle === 1;
+        const angle = this.rotationToggle ? Math.PI / 48 : -Math.PI / 48;
+        this.areas.car.physics.car.chassis.body.quaternion.x = angle
       }
     });
   }
