@@ -411,7 +411,7 @@ export default class SectionGreenScreen {
         }
       );
   
-      this.areas.car.physics.car.chassis.body.position.copy(new CANNON.Vec3(-54.2, 30.5, 1));
+      this.areas.car.physics.car.chassis.body.position.copy(new CANNON.Vec3(-54.2, 30.5, 2.1));
       this.physics.car.chassis.body.quaternion.copy(new CANNON.Quaternion(0, 0, - Math.PI / 3, 1));
   
       this.areas.car.physics.car.chassis.body.velocity.set(0, 0, 0);
