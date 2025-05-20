@@ -262,12 +262,36 @@ export default class SectionSoccer {
         goalCollisionMesh.scale.set(6, 1, 1)
         goalCollisionMesh.name = "box"
 
+        model.updateMatrixWorld(true);
+        const bbox = new THREE.Box3().setFromObject(model);
+        var size = bbox.getSize(new THREE.Vector3());
+    
+        // Fizik gövdesi oluştur
+        const halfExtents = new CANNON.Vec3(size.x / 2, size.y / 4, 2);
+        const boxShape = new CANNON.Box(halfExtents);
+    
+        const body = new CANNON.Body({
+            mass: 0,
+            position: new CANNON.Vec3(this.position.x, this.position.y + 14, this.position.z),
+            material: this.physics.materials.items.floor
+        });
+    
+        // Dönüşü quaternion olarak ayarla
+        const quat = new CANNON.Quaternion();
+        quat.setFromEuler(this.rotateX, this.rotateY, this.rotateZ, 'XYZ');
+        body.quaternion.copy(quat);
+        
+        body.addShape(boxShape);
+        this.physics.world.addBody(body);
+
         const goalCollision = this.physics.addObjectFromThree({
             mass: 0,
             sleep: true,
             offset: { x: this.position.x, y: this.position.y + 12, z: this.position.z - .50 },
             meshes: [goalCollisionMesh]
         })
+
+        model.collision = { body }
 
         goalCollision.body.addEventListener('collide', (_event) => {
             //Nasıl topu alacağımı bilemedim
@@ -291,7 +315,7 @@ export default class SectionSoccer {
             collision: this.resources.items.SectionSoccerBallCollision.scene,
             offset: new THREE.Vector3(this.position.x, this.position.y, 0.3),
             duplicated: true,
-            mass: 0.5,
+            mass: 1,
         })
 
         this.ball.collision.body.addEventListener('collide', (_event) => {
