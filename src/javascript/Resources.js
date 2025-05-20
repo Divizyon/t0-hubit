@@ -159,6 +159,7 @@ export default class Resources extends EventEmitter {
             // Football mini game
             { name: 'SectionSoccerGoal', source: './models/SectionSoccer/goal.glb' },
             { name: 'SectionSoccerBall', source: './models/SectionSoccer/ball.glb' },
+            { name: 'SectionSoccerBallCollision', source: './models/SectionSoccer/ballCollision.glb' },
         ])
 
         this.loader.on('fileEnd', (_resource, _data) => {

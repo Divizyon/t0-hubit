@@ -871,8 +871,10 @@ export default class World {
         this.sectionSoccer = new SectionSoccer({
             scene: this.scene,
             resources: this.resources,
+            objects: this.objects,
             physics: this.physics,
             debug: this.debugFolder,
+            areas: this.areas,
             rotateX: 0,
             rotateY: 0,
             rotateZ: 0,
