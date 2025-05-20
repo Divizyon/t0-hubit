@@ -54,34 +54,43 @@ export default class SectionDivision {
       }
     });
   
-     // Base modelini klonla ve Kapsül modeline ekle
-     const baseModel = base.scene.clone(true);
-    
-     baseModel.position.set(-65, 4, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
-     baseModel.scale.set(1.5, 1.5, 1.5); // Base modelinin ölçeği
-     baseModel.rotation.set(this.rotateX, this.rotateY, 290.2);
-   
-     // Kapsül model pozisyonu ve dönüşü
-     model.position.copy(this.position);
-     model.rotation.set(this.rotateX, this.rotateY, 290.2);
-     this.container.add(baseModel);
-     this.container.add(model);
-     this.container.add(baseModel);
-   
-     // Bounding box hesapla
-     baseModel.updateMatrixWorld(true);
-     const bbox = new THREE.Box3().setFromObject(baseModel);
-     var size = bbox.getSize(new THREE.Vector3());
-   
-     // Fizik gövdesi oluştur
-     const halfExtents = new CANNON.Vec3(size.x / 2.8, size.y / 2.7, size.z / 2);
-     const boxShape = new CANNON.Box(halfExtents);
-   
-     const body = new CANNON.Body({
-       mass: 0,
-       position: baseModel.position,
-       material: this.physics.materials.items.floor
-     });
+    // Base modelini klonla ve Kapsül modeline ekle
+    const baseModel = base.scene.clone(true);
+  
+    baseModel.position.set(-65, 4, 0); // Base modelinin Kapsül altına yerleştirilmesi için pozisyon ayarı
+    baseModel.scale.set(1.5, 1.5, 1.5); // Base modelinin ölçeği
+    baseModel.rotation.set(this.rotateX, this.rotateY, 290.2);
+  
+    // Kapsül model pozisyonu ve dönüşü
+    model.position.copy(this.position);
+    model.rotation.set(this.rotateX, this.rotateY, 290.2);
+    this.container.add(baseModel);
+    this.container.add(model);
+    this.container.add(baseModel);
+  
+    // Bounding box hesapla
+    baseModel.updateMatrixWorld(true);
+    const bbox = new THREE.Box3().setFromObject(baseModel);
+    var size = bbox.getSize(new THREE.Vector3());
+  
+    // Fizik gövdesi oluştur
+    const halfExtents = new CANNON.Vec3(size.x / 2.8, size.y / 2.7, size.z / 2);
+    const boxShape = new CANNON.Box(halfExtents);
+  
+    const body = new CANNON.Body({
+      mass: 0,
+      position: baseModel.position,
+      material: this.physics.materials.items.floor
+    });
+
+    baseModel.traverse(child => {
+    if (child.isMesh) {
+        child.material = child.material.clone();
+        child.material.color.r = .6;
+        child.material.color.g = 0;
+        child.material.color.b = .6;
+    }
+  });
   
     // Dönüşü quaternion olarak ayarla
     const quat = new CANNON.Quaternion();
