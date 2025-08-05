@@ -2,6 +2,17 @@
 
 Bu proje GitHub Actions kullanılarak otomatik olarak GitHub Pages'e deploy edilmektedir.
 
+
+
+
+
+
+
+
+
+
+
+
 ## İlk Kurulum Adımları
 
 **ÖNEMLİ:** GitHub Actions'ın çalışması için önce GitHub Pages'i manuel olarak etkinleştirmeniz gerekiyor:
